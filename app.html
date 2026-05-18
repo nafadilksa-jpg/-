@@ -30,13 +30,17 @@
             border: 1px solid #f2efea; 
         }
 
-        /* الهوية البصرية */
+        /* الهوية البصرية الرسمية السابقة لـ نافادل */
         .brand-section { display: flex; flex-direction: column; align-items: center; margin-bottom: 25px; }
         .brand-logo { display: flex; flex-direction: column; align-items: center; position: relative; margin-bottom: 15px; }
-        .logo-dots { display: flex; gap: 10px; margin-bottom: 4px; margin-left: -20px; }
-        .logo-dot { width: 8px; height: 8px; background-color: #e67e22; border-radius: 50%; }
-        .logo-curve { width: 45px; height: 45px; border: 5px solid #e67e22; border-top: none; border-radius: 0 0 25px 25px; position: relative; }
-        .logo-curve::after { content: ''; position: absolute; top: -5px; right: -5px; width: 5px; height: 12px; background-color: #e67e22; }
+        
+        /* ضبط النقاط لتعود للشكل الجانبي العمودي الأصلي */
+        .logo-dots { position: absolute; top: -12px; right: 8px; display: flex; flex-direction: column; gap: 6px; }
+        .logo-dot { width: 7px; height: 7px; background-color: #e67e22; border-radius: 50%; }
+        .logo-dot:nth-child(1) { margin-right: -12px; } /* نقطة علوية مزاحة يميناً */
+        
+        .logo-curve { width: 45px; height: 45px; border: 5px solid #e67e22; border-top: none; border-radius: 0 0 25px 25px; position: relative; margin-top: 15px; }
+        
         .brand-name-ar { color: #e67e22; font-size: 30px; font-weight: bold; margin-bottom: 2px; }
         .brand-name-en { color: #e67e22; font-size: 24px; font-weight: 500; }
         .brand-desc { color: #7f8c8d; font-size: 13px; margin-bottom: 25px; line-height: 1.5; }
@@ -58,7 +62,7 @@
         .btn-primary:hover { background-color: #d35400; }
         .btn-back { background: none; border: none; color: #7f8c8d; font-size: 13px; margin-top: 15px; cursor: pointer; text-decoration: underline; }
 
-        /* شاشة الحظر التلقائي للأب المسرف */
+        /* شاشة الحظر التلقائي */
         .banned-box { background: #fff1f0; border: 2px dashed #f5222d; padding: 25px 20px; border-radius: 24px; color: #cf1322; text-align: center; display: none; }
         .banned-title { font-size: 18px; font-weight: bold; margin-bottom: 12px; }
         .banned-desc { font-size: 13px; color: #333; line-height: 1.6; margin-bottom: 20px; }
@@ -66,7 +70,7 @@
         /* شاشات لوحة التحكم وهيدر النظام */
         .main-header { background-color: #ffffff; padding: 15px 25px; border-bottom: 1px solid #f2efea; display: none; width: 100%; position: fixed; top: 0; left: 0; z-index: 100; }
         .header-right-brand { display: flex; align-items: center; gap: 12px; float: right; }
-        .header-logo-container { transform: scale(0.6); margin-bottom: -15px; margin-top: -10px; }
+        .header-logo-container { transform: scale(0.6); margin-bottom: -15px; margin-top: -10px; position: relative; width: 50px; height: 50px; }
         .header-brand-text { color: #e67e22; font-size: 18px; font-weight: bold; }
 
         .dashboard-container { max-width: 480px; width: 100%; margin-top: 100px; padding: 0 15px 40px 15px; display: none; }
@@ -74,18 +78,12 @@
         .panel-title-label { font-size: 14px; color: #7f8c8d; font-weight: bold; }
         .btn-add { background-color: #e67e22; color: white; border: none; padding: 10px 18px; border-radius: 20px; font-weight: bold; cursor: pointer; font-size: 13px; }
 
-        .policy-alert-bar { background-color: #fff1f0; border: 1px solid #ffa39e; border-radius: 12px; padding: 10px 15px; font-size: 11px; color: #cf1322; text-align: right; margin-bottom: 15px; font-weight: bold; }
         .device-card { background-color: #ffffff; border-radius: 20px; padding: 20px; margin-bottom: 15px; border: 1px solid #f2efea; text-align: right; }
         .device-info-row { display: flex; justify-content: space-between; align-items: center; margin-bottom: 15px; }
         .device-name { color: #2c3e50; font-size: 15px; font-weight: bold; }
         
         .btn-toggle { padding: 8px 16px; border: none; border-radius: 20px; font-weight: bold; cursor: pointer; font-size: 12px; }
         .btn-toggle.lock { background-color: #fce4d6; color: #c0392b; }
-        .btn-toggle.unlock { background-color: #eafaf1; color: #2ecc71; }
-
-        .apps-container { background: #faf9f6; border-radius: 14px; padding: 12px; margin-top: 12px; }
-        .app-row { display: flex; justify-content: space-between; align-items: center; padding: 8px 0; border-bottom: 1px solid #f2efea; font-size: 13px; }
-        .btn-block-app { background: #ffffff; border: 1px solid #f2efea; color: #e67e22; padding: 4px 12px; border-radius: 8px; font-size: 11px; cursor: pointer; font-weight: bold; }
 
         .success-subscription-box { background-color: #eafaf1; border: 1px solid #2ecc71; border-radius: 20px; padding: 18px; margin-bottom: 20px; text-align: right; color: #27ae60; font-size: 14px; display: none; }
 
@@ -96,13 +94,20 @@
         .video-wrapper { width: 100%; position: relative; padding-bottom: 56.25%; height: 0; border-radius: 14px; overflow: hidden; border: 2px solid #e67e22; }
         .video-wrapper iframe { position: absolute; top: 0; left: 0; width: 100%; height: 100%; border: none; }
 
+        .pricing-title { font-size: 15px; font-weight: bold; color: #2c3e50; margin-bottom: 15px; }
         .plans-grid { display: flex; flex-direction: column; gap: 15px; margin-top: 15px; }
         .plan-card { border: 1px solid #f2efea; border-radius: 18px; padding: 15px; background: #faf9f6; cursor: pointer; }
         .plan-card.featured { border-color: #e67e22; background: #fffcf9; }
         .plan-header-row { display: flex; justify-content: space-between; align-items: center; margin-bottom: 8px; font-weight: bold; }
         .plan-features { font-size: 12px; color: #7f8c8d; }
 
-        /* قسم الشكاوى (المستقبل للآباء المحظورين والشكاوى العادية) */
+        /* التقسيط تابي وتمارا */
+        .split-pay-logos { display: flex; align-items: center; gap: 8px; margin-top: 10px; font-size: 11px; }
+        .pay-text { color: #7f8c8d; }
+        .brand-badge-tabby { background: #c6f8e5; color: #000; padding: 2px 8px; border-radius: 6px; font-weight: bold; }
+        .brand-badge-tamara { background: #ffecd1; color: #ff9f43; padding: 2px 8px; border-radius: 6px; font-weight: bold; }
+
+        /* قسم الشكاوى */
         .feedback-section { background-color: #ffffff; border: 1px solid #f2efea; border-radius: 20px; padding: 20px; margin-top: 20px; text-align: right; }
         .feedback-title { font-size: 14px; font-weight: bold; color: #e67e22; margin-bottom: 10px; }
         .feedback-textarea { width: 100%; height: 70px; padding: 12px; border: 1px solid #f2efea; border-radius: 12px; background: #faf9f6; resize: none; outline: none; font-size: 13px; margin-bottom: 12px; }
@@ -110,8 +115,15 @@
 
         /* النوافذ المنبثقة */
         .modal-overlay { position: fixed; top:0; left:0; width:100%; height:100%; background: rgba(0,0,0,0.4); z-index: 200; display: none; justify-content: center; align-items: center; }
-        .modal-box { background: #ffffff; border-radius: 24px; padding: 30px 25px; max-width: 400px; width: 90%; text-align: center; border: 1px solid #f2efea; }
+        .modal-box { background: #ffffff; border-radius: 24px; padding: 30px 25px; max-width: 420px; width: 90%; text-align: center; border: 1px solid #f2efea; }
         .code-display { font-size: 32px; font-weight: bold; color: #e67e22; letter-spacing: 6px; margin: 15px 0; background: #faf9f6; padding: 10px; border-radius: 12px; border: 2px dashed #e67e22; }
+        
+        .modal-buttons { display: flex; gap: 10px; margin-top: 15px; }
+        .btn-modal-action { background-color: #e67e22; color: white; flex: 1; padding: 12px; border: none; border-radius: 12px; font-weight: bold; cursor: pointer; font-size: 14px; }
+        .btn-modal-cancel { background-color: #faf9f6; border: 1px solid #f2efea; color: #7f8c8d; padding: 12px; border-radius: 12px; cursor: pointer; font-size: 14px; }
+
+        /* صندوق شروط التراخيص قبل السداد */
+        .terms-alert-box { background-color: #fff1f0; border: 1px solid #ffa39e; border-radius: 14px; padding: 12px; font-size: 12px; color: #cf1322; text-align: right; margin-bottom: 20px; line-height: 1.6; }
     </style>
 </head>
 <body>
@@ -135,7 +147,7 @@
             <div class="brand-name-ar">نافادل</div>
             <div class="brand-name-en">Nafadil</div>
         </div>
-        <p class="brand-desc">مرحباً بك في نافادل، يرجى اختيار نوع الحساب لبدء الاستخدام الحمي والموجه:</p>
+        <p class="brand-desc">مرحباً بك في نافادل، يرجى اختيار نوع الحساب لبدء الاستخدام:</p>
         
         <div class="role-selection-grid">
             <div class="btn-role" onclick="selectRole('parent')">
@@ -161,7 +173,7 @@
             <label class="input-label">رقم جوال الوالد المسجل:</label>
             <input type="tel" id="parentPhoneInput" class="auth-input" placeholder="05xxxxxxx">
         </div>
-        <button class="btn-primary" onclick="triggerParentSms()">إرسال رمز التحقق (SMS)</button>
+        <button class="btn-primary" onclick="triggerParentSms()">إرسال رمز التحقق</button>
         <button class="btn-back" onclick="backToRole()">رجوع للخلف</button>
     </div>
 
@@ -194,23 +206,20 @@
     <div class="main-header" id="mainHeader">
         <div class="header-right-brand">
             <div class="header-logo-container">
-                <div class="brand-logo"><div class="logo-dots"><div class="logo-dot"></div><div class="logo-dot"></div></div><div class="logo-curve"></div></div>
+                <div class="brand-logo" style="transform: scale(0.6); margin: 0;"><div class="logo-dots"><div class="logo-dot"></div><div class="logo-dot"></div></div><div class="logo-curve"></div></div>
             </div>
-            <div class="header-brand-text">لوحة تحكم نافادل العليا</div>
+            <div class="header-brand-text" style="margin-right: 15px;">لوحة تحكم نافادل العليا</div>
         </div>
     </div>
 
     <div class="dashboard-container" id="mainDashboard">
-        <div class="policy-alert-bar">
-            🛡️ حماية مالية وأمنية: حساب الأب مرخص للعمل على جهاز واحد حالي. متبقي لك (<span id="deviceSwapsLeft">3</span>) محاولات نقل وتبديل أجهزة للسنة الحالية لتجنب إغلاق الحساب تلقائياً. أجهزة الأطفال غير محدودة الربط.
-        </div>
 
         <div class="success-subscription-box" id="successSubBox">
             🎉 <strong>تم تفعيل الباقة واحتساب الاشتراك بنجاح!</strong> لوحتك جاهزة الآن بالكامل لحماية أجهزتهم.
         </div>
 
         <div class="panel-top-bar">
-            <span class="panel-title-label">أجهزة أطفالك المحمية (لا محدودة الربط):</span>
+            <span class="panel-title-label">أجهزة أطفالك المحمية:</span>
             <button class="btn-add" onclick="openAddDeviceModal()">➕ ربط جهاز طفل جديد</button>
         </div>
 
@@ -236,11 +245,11 @@
 
             <div class="pricing-title">💎 ترقية الحساب واشتراكات نافادل الرسمية</div>
             <div class="plans-grid">
-                <div class="plan-card" onclick="triggerPayment('الفضية')">
+                <div class="plan-card" onclick="openPaymentModal('الفضية')">
                     <div class="plan-header-row"><span>الباقة الفضية</span><span>19 ريال / شهر</span></div>
                     <div class="plan-features">ربط جهاز طفل واحد • ترخيص تحكم لأب واحد • حماية ومتابعة موقع</div>
                 </div>
-                <div class="plan-card featured" onclick="triggerPayment('الذهبية')">
+                <div class="plan-card featured" onclick="openPaymentModal('الذهبية')">
                     <div class="plan-header-row" style="color: #e67e22;"><span>الباقة الذهبية (الأكثر طلباً)</span><span>39 ريال / شهر</span></div>
                     <div class="plan-features">أجهزة أطفال غير محدودة الربط • تقارير فورية • التحكم الكلي بالتطبيقات</div>
                     <div class="split-pay-logos">
@@ -254,7 +263,7 @@
 
         <div class="feedback-section" id="globalFeedbackSection">
             <div class="feedback-title" id="feedbackTitleText">✉️ الشكاوى والاقتراحات الفنية</div>
-            <textarea id="feedbackText" class="feedback-textarea" placeholder="اكتب مشكلتك أو طلبك هنا ليتم مراجعته فوراً من إدارة نافادل وضبط الترخيص..."></textarea>
+            <textarea id="feedbackText" class="feedback-textarea" placeholder="اكتب مشكلتك أو طلبك هنا ليتم مراجعته فوراً من إدارة نافادل..."></textarea>
             <button class="btn-submit-feedback" onclick="submitFeedback()">إرسال الطلب للإدارة</button>
         </div>
     </div>
@@ -277,21 +286,40 @@
         <div class="modal-box">
             <div class="modal-title" style="color: #e67e22; font-weight: bold;">🔗 الكود المولد لجهاز الطفل</div>
             <div class="instruction-text" style="font-size: 13px; color: #34495e; margin-bottom: 15px; text-align: right; background: #faf9f6; padding: 10px; border-radius: 10px;">
-                💡 افتح تطبيق نافادل في جوال ابنك، واختر حساب <strong>(طفل)</strong> ثم أدخل هذا الكود ليرتبط بلوحتك مباشرة وبدون استهلاك أي رسائل SMS.
+                💡 افتح تطبيق نافادل في جوال ابنك، واختر حساب <strong>(طفل)</strong> ثم أدخل هذا الكود ليرتبط بلوحتك مباشرة.
             </div>
-            <div class="code-display" id="generatedCodeTxt">8843</div>
+            <div class="code-display" id="generatedCodeTxt">9267</div>
             <button class="btn-primary" onclick="finalizeDeviceAddition()">تم الإدخال في جهاز الطفل بنجاح</button>
         </div>
     </div>
 
+    <div class="modal-overlay" id="paymentModal">
+        <div class="modal-box">
+            <div class="modal-title" style="font-weight: bold; font-size: 16px; color: #e67e22; margin-bottom: 15px;">🔒 مراجعة الشروط وإتمام السداد</div>
+            
+            <div class="terms-alert-box">
+                🛡️ <strong>سياسة الاستخدام العادل للأجهزة الأبوية:</strong><br>
+                حساب الأب مرخص للعمل على جهاز واحد فقط. يُسمح لك بنقل الحساب أو تبديل جهاز الأب بحد أقصى (3 محاولات فقط في السنة) لمنع التلاعب وإساءة استخدام النظام الفني.
+            </div>
+
+            <p style="font-size: 13px; color: #555; text-align: right; margin-bottom: 15px;">
+                بالضغط على تأكيد السداد، أنت توافق على شروط ترخيص نافادل المذكورة أعلاه وسيتم تفعيل حسابك فوراً.
+            </p>
+
+            <div class="modal-buttons">
+                <button class="btn-modal-action" id="confirmPayBtn" onclick="finalizePayment()">موافق، الانتقال للسداد</button>
+                <button class="btn-modal-cancel" onclick="closeModal('paymentModal')">إلغاء</button>
+            </div>
+        </div>
+    </div>
+
     <script>
-        // محاكاة قاعدة البيانات المحلية لضبط الأمان المالي والحد من السرقة والخسائر
-        let parentSwapsCount = 3; // عدد مرات التنقل المسموحة للأب بين الجوالات في السنة
+        let parentSwapsCount = 3; 
+        let currentSelectedPlan = "";
 
         function selectRole(role) {
             document.getElementById('roleStep').style.display = 'none';
             if (role === 'parent') {
-                // إذا الأب مستهلك الـ 3 محاولات، يتم حظره مباشرة وحماية السيرفر من الرسائل
                 if (parentSwapsCount <= 0) {
                     document.getElementById('banScreen').style.display = 'block';
                 } else {
@@ -314,7 +342,7 @@
                 alert("يرجى إدخال رقم جوال صحيح.");
                 return;
             }
-            alert("تم خصم تكلفة SMS وإرسال الرمز لجوال الوالد لتأكيد ملكية الحساب الموحد.");
+            alert("تم إرسال رمز التحقق بنجاح.");
             document.getElementById('parentPhoneStep').style.display = 'none';
             document.getElementById('parentPinStep').style.display = 'block';
         }
@@ -322,31 +350,35 @@
         function verifyParentLogin() {
             let pin = document.getElementById('parentPinInput').value;
             if (pin === '1234') {
-                // تفعيل سياسة خصم المحاولة السنوية عند كل عملية تسجيل دخول ناجحة من جهاز لحساب الأمان
                 parentSwapsCount--; 
-                document.getElementById('deviceSwapsLeft').innerText = parentSwapsCount;
-
                 document.getElementById('parentPinStep').style.display = 'none';
                 document.body.style.justifyContent = 'flex-start';
                 document.getElementById('mainHeader').style.display = 'block';
                 document.getElementById('mainDashboard').style.display = 'block';
             } else {
-                alert('رمز الـ SMS خطأ. أدخل 1234 للتجربة.');
+                alert('رمز التحقق خطأ. أدخل 1234 للتجربة.');
             }
         }
 
         function verifyChildCode() {
             let code = document.getElementById('childCodeInput').value;
             if (code.trim().length === 4) {
-                alert("🎉 مبروك يا بطل! تم ربط جهازك بلوحة تحكم الوالد بنجاح، أنت الآن محمي وآمن بالكامل بدون استهلاك أي رسائل نصية.");
+                alert("🎉 تم ربط جهاز الطفل بنجاح، الجهاز محمي وآمن الآن.");
                 location.reload();
             } else {
-                alert("الرجاء إدخال كود ربط صحيح مكون من 4 أرقام مأخوذ من جوال الوالد.");
+                alert("الرجاء إدخال كود ربط صحيح مكون من 4 أرقام.");
             }
         }
 
-        function triggerPayment(planName) {
-            alert(`جاري توجيهك لبوابة الدفع لباقة نافادل ${planName}.`);
+        // إظهار نافذة السداد مع التحذير والشروط
+        function openPaymentModal(planName) {
+            currentSelectedPlan = planName;
+            document.getElementById('paymentModal').style.display = 'flex';
+        }
+
+        function finalizePayment() {
+            closeModal('paymentModal');
+            alert(`جاري توجيهك لبوابة الدفع لباقة نافادل ${currentSelectedPlan}.`);
             document.getElementById('pricingSection').style.display = 'none';
             document.getElementById('successSubBox').style.display = 'block';
             window.scrollTo({top: 0, behavior: 'smooth'});
@@ -379,7 +411,7 @@
             card.innerHTML = `
                 <div class="device-info-row">
                     <div>
-                        <div class="device-name">جهاز ${tempChildName} (مرتبط عبر الكود المجاني)</div>
+                        <div class="device-name">جهاز ${tempChildName}</div>
                         <div style="font-size:12px; color:#2ecc71; font-weight:bold;">الحالة: محمي ونشط</div>
                     </div>
                     <button class="btn-toggle lock" onclick="alert('تم قفل الجهاز')">قفل الجهاز</button>
@@ -392,20 +424,18 @@
             document.getElementById('banScreen').style.display = 'none';
             document.body.style.justifyContent = 'flex-start';
             document.getElementById('mainDashboard').style.display = 'block';
-            // إخفاء اللوحة وإظهار قسم الشكاوى فقط لحل مشكلته
             document.getElementById('pricingSection').style.display = 'none';
             document.getElementById('devicesList').style.display = 'none';
             document.querySelector('.panel-top-bar').style.display = 'none';
-            document.querySelector('.policy-alert-bar').style.display = 'none';
             
             document.getElementById('feedbackTitleText').innerHTML = "🛑 طلب فك حظر حساب ولي أمر (استنفاد محاولات النقل)";
-            document.getElementById('feedbackText').placeholder = "يرجى كتابة سبب رغبتك في نقل الحساب لجهاز جديد ليقوم فريق نافادل بمراجعة طلبك يدويّاً وتصفير العداد وتجنب إيقاف حسابك...";
+            document.getElementById('feedbackText').placeholder = "يرجى كتابة سبب رغبتك في نقل الحساب لجهاز جديد ليقوم فريق نافادل بمراجعة طلبك يدويّاً...";
         }
 
         function submitFeedback() {
             let text = document.getElementById('feedbackText').value;
             if(text.trim() === "") { alert("اكتب طلبك أولاً."); return; }
-            alert("تم إرسال طلبك بنجاح لإدارة نافادل. سيتم مراجعة سجل حركات حسابك وجوالك والتواصل معك خلال 24 ساعة لفك الحظر.");
+            alert("تم إرسال طلبك بنجاح لإدارة نافادل. سيتم مراجعة طلبك والتواصل معك خلال 24 ساعة.");
             location.reload();
         }
     </script>
