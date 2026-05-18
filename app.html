@@ -3,212 +3,212 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>تطبيق نافادل | نظام الموافقات الذكي</title>
+    <title>نافادل | Nafadil</title>
     <style>
         * { box-sizing: border-box; margin: 0; padding: 0; font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; }
-        body { background-color: #f7f9fa; color: #333; padding-bottom: 60px; }
+        body { background-color: #fcfbf9; color: #333; padding-bottom: 40px; }
 
-        /* شاشة تسجيل الدخول */
-        .login-screen { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background-color: #f7f9fa; display: flex; justify-content: center; align-items: center; z-index: 9999; padding: 20px; }
-        .login-card { background: #fff; padding: 30px 20px; border-radius: 20px; box-shadow: 0 10px 25px rgba(230, 126, 34, 0.1); text-align: center; max-width: 400px; width: 100%; border: 1px solid #f0f2f5; }
-        .login-card h2 { color: #e67e22; margin-bottom: 10px; font-size: 24px; }
-        .login-card input { width: 100%; padding: 12px; border: 2px solid #f0f2f5; border-radius: 12px; margin-bottom: 15px; text-align: center; font-size: 16px; outline: none; }
-        .btn-login { background-color: #e67e22; color: white; width: 100%; padding: 12px; border: none; border-radius: 12px; font-weight: bold; font-size: 16px; cursor: pointer; }
+        /* الشعار المرسوم بالـ CSS ليطابق هوية نافادل (نـ) */
+        .brand-logo-container { display: inline-flex; flex-direction: column; align-items: center; justify-content: center; margin-bottom: 20px; position: relative; }
+        .brand-dots { display: flex; gap: 12px; margin-bottom: 5px; margin-left: -20px; }
+        .brand-dot { width: 8px; height: 8px; background-color: #e67e22; border-radius: 50%; }
+        .brand-curve { width: 45px; height: 45px; border: 5px solid #e67e22; border-top: none; border-radius: 0 0 25px 25px; position: relative; }
+        .brand-curve::after { content: ''; position: absolute; top: -5px; right: -5px; width: 5px; height: 12px; background-color: #e67e22; }
+        .brand-text-main { color: #e67e22; font-size: 28px; font-weight: bold; margin-top: 10px; letter-spacing: 0.5px; }
 
-        /* الهيدر */
-        .header { background-color: #ffffff; padding: 20px; text-align: center; border-bottom: 2px solid #f0f2f5; position: relative; }
-        .header h1 { color: #e67e22; font-size: 24px; }
-        .subscription-badge { position: absolute; top: 15px; left: 15px; background: linear-gradient(135deg, #e67e22, #d35400); box-shadow: 0 2px 8px rgba(230,126,34,0.4); color: white; padding: 5px 12px; border-radius: 15px; font-size: 11px; font-weight: bold; }
-
-        /* الحاوية الرئيسية */
-        .container { max-width: 500px; margin: 20px auto; padding: 0 15px; display: none; }
-
-        /* تنبيهات التحميل الفورية من الأطفال (ميزة جديدة) */
-        .notification-box { background: #fff5eb; border: 2px solid #ffd8b3; border-radius: 16px; padding: 15px; margin-bottom: 20px; display: none; box-shadow: 0 4px 10px rgba(230,126,34,0.05); }
-        .notification-header { display: flex; align-items: center; gap: 8px; color: #d35400; font-weight: bold; font-size: 14px; margin-bottom: 10px; }
-        .notification-body { font-size: 14px; color: #2c3e50; line-height: 1.5; margin-bottom: 12px; }
-        .notification-actions { display: flex; gap: 10px; }
-        .btn-approve { background-color: #2ecc71; color: white; border: none; padding: 8px 15px; border-radius: 10px; font-weight: bold; cursor: pointer; font-size: 13px; flex: 1; }
-        .btn-reject { background-color: #e74c3c; color: white; border: none; padding: 8px 15px; border-radius: 10px; font-weight: bold; cursor: pointer; font-size: 13px; flex: 1; }
-
-        /* بطاقة الجهاز */
-        .device-card { background-color: #ffffff; border-radius: 16px; padding: 20px; margin-bottom: 20px; border: 1px solid #f0f2f5; }
-        .device-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 15px; border-bottom: 1px dashed #f0f2f5; padding-bottom: 10px; }
-        .device-info h3 { color: #2c3e50; font-size: 18px; }
+        /* شاشات تسجيل الدخول والتحقق */
+        .auth-screen { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background-color: #fcfbf9; display: flex; justify-content: center; align-items: center; z-index: 9999; padding: 20px; }
+        .auth-card { background: #ffffff; padding: 40px 25px; border-radius: 24px; box-shadow: 0 10px 35px rgba(230, 126, 34, 0.06); text-align: center; max-width: 400px; width: 100%; border: 1px solid #f2efea; position: relative; overflow: hidden; }
         
-        .btn { padding: 10px 20px; border: none; border-radius: 25px; font-weight: bold; cursor: pointer; font-size: 14px; }
-        .btn-view-child { background-color: #3498db; color: white; margin-top: 10px; width: 100%; }
+        /* خلفية مائية خفيفة داخل الكرت لحماية الهوية */
+        .auth-card::before { content: 'نـ'; position: absolute; bottom: -30px; left: -20px; font-size: 180px; color: rgba(230, 126, 34, 0.03); font-weight: bold; pointer-events: none; }
 
-        /* الموقت */
-        .timer-box { background-color: #fff8f5; border: 1px solid #ffe5d4; padding: 15px; border-radius: 12px; margin: 15px 0; text-align: center; }
-        .timer-title { font-size: 14px; color: #d35400; font-weight: bold; }
-        .timer-display { font-size: 28px; font-weight: bold; color: #e67e22; }
+        .auth-card p { color: #7f8c8d; font-size: 14px; margin-bottom: 25px; }
+        .auth-card input { width: 100%; padding: 14px; border: 2px solid #f2efea; border-radius: 14px; margin-bottom: 18px; text-align: center; font-size: 16px; outline: none; transition: 0.3s; background: #faf9f6; }
+        .auth-card input:focus { border-color: #e67e22; background: #fff; }
+        .btn-action { background-color: #e67e22; color: white; width: 100%; padding: 14px; border: none; border-radius: 14px; font-weight: bold; font-size: 16px; cursor: pointer; transition: 0.3s; }
+        .btn-action:hover { background-color: #d35400; }
 
-        /* قائمة التطبيقات */
-        .apps-list { margin-top: 15px; }
-        .apps-title { font-size: 14px; color: #e67e22; font-weight: bold; margin-bottom: 10px; }
-        .app-item { display: flex; justify-content: space-between; align-items: center; padding: 10px 0; border-bottom: 1px solid #f9f9f9; font-size: 14px; }
-        .app-status-badge { padding: 4px 10px; border-radius: 12px; font-size: 12px; font-weight: bold; }
-        .app-status-badge.allowed { background: #eafaf1; color: #2ecc71; }
-        .app-status-badge.blocked { background: #fce4d6; color: #c0392b; }
-
-        /* شاشة محاكاة جوال سارة */
-        .child-phone-sim { display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: #2c3e50; z-index: 10000; padding: 20px; color: white; text-align: center; }
-        .phone-screen { background: #1a252f; width: 100%; max-width: 360px; height: 85%; margin: 20px auto; border-radius: 30px; border: 8px solid #34495e; overflow: hidden; display: flex; flex-direction: column; justify-content: center; align-items: center; padding: 20px; position: relative; }
-        .app-grid { display: grid; grid-template-columns: repeat(2, 120px); gap: 20px; margin-top: 20px; }
-        .btn-download-sim { background: #e67e22; color: white; border: none; padding: 12px 20px; border-radius: 12px; font-weight: bold; cursor: pointer; margin-bottom: 15px; }
+        /* الهيدر الموحد والملغي منه الكلام الزائد */
+        .main-header { background-color: #ffffff; padding: 25px; text-align: center; border-bottom: 1px solid #f2efea; display: none; }
         
-        /* قفل تطبيق معين */
-        .app-lock-overlay { display: none; position: absolute; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.95); z-index: 10002; flex-direction: column; justify-content: center; align-items: center; padding: 20px; }
+        /* الحاوية الرئيسية للوحة التحكم */
+        .container { max-width: 500px; margin: 25px auto; padding: 0 15px; display: none; }
+        
+        .panel-top-bar { display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px; }
+        .panel-title-label { font-size: 15px; color: #7f8c8d; font-weight: 500; }
+        .btn-add { background-color: #e67e22; color: white; border: none; padding: 8px 16px; border-radius: 20px; font-weight: bold; cursor: pointer; font-size: 13px; }
+
+        /* بطاقات التحكم بالأجهزة (هادئة وبدون حشو) */
+        .device-card { background-color: #ffffff; border-radius: 20px; padding: 20px; margin-bottom: 20px; border: 1px solid #f2efea; box-shadow: 0 4px 20px rgba(0,0,0,0.01); }
+        .device-info-row { display: flex; justify-content: space-between; align-items: center; margin-bottom: 15px; }
+        .device-name { color: #2c3e50; font-size: 16px; font-weight: bold; }
+        .device-status { font-size: 13px; margin-top: 4px; }
+        
+        .btn-toggle { padding: 8px 16px; border: none; border-radius: 20px; font-weight: bold; cursor: pointer; font-size: 13px; }
+        .btn-toggle.lock { background-color: #fce4d6; color: #c0392b; }
+        .btn-toggle.unlock { background-color: #eafaf1; color: #2ecc71; }
+
+        /* صندوق التطبيقات المكتشفة مؤخراً */
+        .apps-container { background: #faf9f6; border-radius: 14px; padding: 15px; margin-top: 15px; }
+        .app-row { display: flex; justify-content: space-between; align-items: center; padding: 8px 0; border-bottom: 1px solid #f2efea; font-size: 13px; }
+        .app-row:last-child { border-bottom: none; }
+        .btn-block-app { background: #ffffff; border: 1px solid #f2efea; color: #e67e22; padding: 4px 12px; border-radius: 8px; font-size: 11px; cursor: pointer; font-weight: bold; transition: 0.2s; }
+        .btn-block-app:hover { background: #e67e22; color: #fff; border-color: #e67e22; }
+
+        /* نافذة إضافة جهاز جديد */
+        .modal-overlay { display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.4); justify-content: center; align-items: center; z-index: 10000; padding: 20px; }
+        .modal-box { background: white; padding: 30px 20px; border-radius: 24px; width: 100%; max-width: 380px; border: 1px solid #f2efea; }
+        .modal-box h3 { color: #2c3e50; font-size: 18px; margin-bottom: 15px; text-align: center; }
+        .modal-box input, .modal-box select { width: 100%; padding: 12px; border: 2px solid #f2efea; border-radius: 12px; margin-bottom: 15px; font-size: 14px; outline: none; background: #faf9f6; }
+        .modal-buttons { display: flex; gap: 10px; }
+        .btn-modal-save { background: #e67e22; color: white; border: none; padding: 10px; border-radius: 12px; font-weight: bold; flex: 1; cursor: pointer; }
+        .btn-modal-cancel { background: #f2efea; color: #7f8c8d; border: none; padding: 10px; border-radius: 12px; font-weight: bold; flex: 1; cursor: pointer; }
     </style>
 </head>
 <body>
 
-    <div class="login-screen" id="loginScreen">
-        <div class="login-card">
-            <h2>🔐 تسجيل دخول الآباء</h2>
-            <p>تطبيق نافادل لحماية أجهزة الأبناء</p>
-            <input type="password" id="pinInput" placeholder="أدخل الرمز السري التجريبي (1234)">
-            <button class="btn-login" onclick="checkLogin()">دخول لوحة التحكم</button>
+    <div class="auth-screen" id="phoneAuthScreen">
+        <div class="auth-card">
+            <div class="brand-logo-container">
+                <div class="brand-dots">
+                    <div class="brand-dot"></div>
+                    <div class="brand-dot"></div>
+                </div>
+                <div class="brand-curve"></div>
+                <div class="brand-text-main">نافادل • Nafadil</div>
+            </div>
+            <p>منصة التحكم الأبوية الذكية لأجهزة الأبناء</p>
+            <input type="tel" id="phoneInput" placeholder="أدخل رقم الجوال (05xxxxxxx)" pattern="[0-5]{2}[0-9]{8}">
+            <button class="btn-action" onclick="sendOTP()">إرسال رمز التحقق</button>
         </div>
     </div>
 
-    <div class="header">
-        <div class="subscription-badge">⭐ باقة نافادل بلس نشطة</div>
-        <h1>نافادل | لوحة التحكم الذكية 📱</h1>
-        <p>نظام كشف التطبيقات والموافقة الفورية في نفس اللحظة</p>
+    <div class="auth-screen" id="pinAuthScreen" style="display: none;">
+        <div class="auth-card">
+            <div class="brand-logo-container">
+                <div class="brand-dots">
+                    <div class="brand-dot"></div>
+                    <div class="brand-dot"></div>
+                </div>
+                <div class="brand-curve"></div>
+                <div class="brand-text-main">نافادل • Nafadil</div>
+            </div>
+            <p>تم إرسال رمز التحقق المباشر لجوالك</p>
+            <input type="password" id="pinInput" placeholder="أدخل رمز التحقق التجريبي (1234)" maxlength="4">
+            <button class="btn-action" onclick="verifyPIN()">تأكيد الدخول</button>
+        </div>
     </div>
 
-    <div class="container" id="mainContainer">
-        
-        <div class="notification-box" id="appAlertBox">
-            <div class="notification-header">🔔 تنبيه أمني فوري من خوادم نافادل:</div>
-            <div class="notification-body">
-                قامت طفلتك <b>سارة</b> بتحميل لعبة جديدة الآن: <span style="color:#e67e22; font-weight:bold;">TikTok 🎬</span>.<br>
-                <small style="color:#7f8c8d;">تم حظر اللعبة تلقائياً في جوالها مؤقتاً لحين اتخاذ قرارك:</small>
+    <div class="main-header" id="mainHeader">
+        <div class="brand-logo-container" style="margin-bottom: 0;">
+            <div class="brand-dots" style="transform: scale(0.8); margin-bottom: 2px;">
+                <div class="brand-dot"></div>
+                <div class="brand-dot"></div>
             </div>
-            <div class="notification-actions">
-                <button class="btn-approve" onclick="parentDecision('allow')">✅ سماح بالتشغيل</button>
-                <button class="btn-reject" onclick="parentDecision('block')">🚫 حظر نهائي مباشر</button>
-            </div>
+            <div class="brand-curve" style="transform: scale(0.8); width: 35px; height: 35px;"></div>
+            <div class="brand-text-main" style="font-size: 22px; margin-top: 5px;">نافادل • Nafadil</div>
+        </div>
+    </div>
+
+    <div class="container" id="mainDashboard">
+        <div class="panel-top-bar">
+            <span class="panel-title-label">الأجهزة المتصلة بحسابك:</span>
+            <button class="btn-add" onclick="openAddModal()">➕ إضافة جهاز طفل</button>
         </div>
 
-        <div id="devicesList">
+        <div id="devicesContainer">
             <div class="device-card">
-                <div class="device-header">
-                    <div class="device-info">
-                        <h3>جهاز سارة (آيفون)</h3>
-                        <p>الحالة: <span style="color:#2ecc71; font-weight:bold;">نشط ومراقب بالكامل</span></p>
+                <div class="device-info-row">
+                    <div>
+                        <div class="device-name">جهاز أحمد (أندرويد)</div>
+                        <div class="device-status" id="status-1">الحالة: <span style="color:#2ecc71; font-weight:bold;">مفتوح ومتصل بالخادم</span></div>
                     </div>
+                    <button class="btn-toggle lock" id="btn-1" onclick="toggleDeviceState(1)">قفل الجهاز الآن</button>
                 </div>
                 
-                <div class="timer-box">
-                    <div class="timer-title">⏳ الوقت المتبقي لسارة اليوم:</div>
-                    <div class="timer-display">02:45:00</div>
-                </div>
-
-                <div class="apps-list">
-                    <div class="apps-title">📊 حالة تطبيقات جهاز سارة:</div>
-                    <div class="app-item">
-                        <span>📚 منصة مدرستي</span>
-                        <span class="app-status-badge allowed">مسموح تلقائياً</span>
+                <div class="apps-container">
+                    <div class="app-row">
+                        <span>🎮 لعبة PUBG Mobile</span>
+                        <button class="btn-block-app" onclick="alert('تم حظر اللعبة مباشرة عبر السيرفر')">حظر التطبيق</button>
                     </div>
-                    <div class="app-item">
+                    <div class="app-row">
                         <span>🎬 تطبيق TikTok</span>
-                        <span class="app-status-badge" id="tiktokStatus">لم يتم تحميله بعد</span>
+                        <button class="btn-block-app" onclick="alert('تم حظر التطبيق مباشرة عبر السيرفر')">حظر التطبيق</button>
                     </div>
                 </div>
-
-                <button class="btn btn-view-child" onclick="openChildSim()">👁️ فتح شاشة جوال سارة والتحميل منها</button>
             </div>
         </div>
     </div>
 
-    <div class="child-phone-sim" id="childPhoneSim">
-        <button style="background:#e74c3c; color:white; border:none; padding:8px 15px; border-radius:8px; float:right;" onclick="closeChildSim()">❌ إغلاق شاشة سارة</button>
-        <h2>📱 شاشة جوال الطفلة: سارة</h2>
-        <p style="margin-bottom: 20px; color:#bdc3c7;">اضغط الزر البرتقالي لمحاكاة تحميل تطبيق جديد من المتجر</p>
-        
-        <div class="phone-screen">
-            <div class="app-lock-overlay" id="appLockOverlay">
-                <span style="font-size:50px;">🚫</span>
-                <h3 style="color:#e67e22; margin-top:10px;">التطبيق محظور بـأمر الأب</h3>
-                <p style="font-size:14px; color:#f1f2f6; margin-top:10px; text-align:center;">عذراً يا سارة، قام والداك بحظر تطبيق TikTok لحمايتك!</p>
-            </div>
-
-            <button class="btn-download-sim" id="downloadBtn" onclick="childDownloadsApp()">📥 محاكاة: سارة تقوم بتحميل TikTok الآن</button>
-            
-            <div class="app-grid">
-                <div class="child-app-icon" onclick="alert('منصة مدرستي تعمل بنجاح')">📚 مدرستي</div>
-                <div class="child-app-icon" id="tiktokIcon" style="opacity: 0.3;" onclick="clickTiktok()">🎬 TikTok</div>
+    <div class="modal-overlay" id="addDeviceModal">
+        <div class="modal-box">
+            <h3>إضافة جهاز طفل جديد</h3>
+            <input type="text" id="childNameInput" placeholder="اسم الطفل (مثال: سارة، محمد)">
+            <select id="childOsInput">
+                <option value="Android">أندرويد (Android)</option>
+                <option value="iOS">آيفون (iOS)</option>
+            </select>
+            <div class="modal-buttons">
+                <button class="btn-modal-save" onclick="saveNewDevice()">حفظ وتوليد كود الربط</button>
+                <button class="btn-modal-cancel" onclick="closeAddModal()">إلغاء</button>
             </div>
         </div>
     </div>
 
     <script>
-        let appState = "not_downloaded"; // حالات التطبيق: not_downloaded, pending, allowed, blocked
+        let deviceStatus = { 1: "open" };
 
-        function checkLogin() {
-            if (document.getElementById('pinInput').value === '1234') {
-                document.getElementById('loginScreen').style.display = 'none';
-                document.getElementById('mainContainer').style.display = 'block';
-            } else { alert('الرمز السري 1234'); }
+        function sendOTP() {
+            let phone = document.getElementById('phoneInput').value;
+            if (phone.trim() === "" || phone.length < 9) {
+                alert("يرجى إدخال رقم جوال صحيح أولاً.");
+                return;
+            }
+            // الانتقال للشاشة الثانية للتحقق من الرمز
+            document.getElementById('phoneAuthScreen').style.display = 'none';
+            document.getElementById('pinAuthScreen').style.display = 'flex';
         }
 
-        function openChildSim() { document.getElementById('childPhoneSim').style.display = 'block'; }
-        function closeChildSim() { document.getElementById('childPhoneSim').style.display = 'none'; }
-
-        // 1. الطفلة تحمل التطبيق من جهازها
-        function childDownloadsApp() {
-            if(appState !== "not_downloaded") return;
-            
-            appState = "pending";
-            document.getElementById('downloadBtn').innerText = "⏳ بانتظار موافقة الأب دايركت...";
-            document.getElementById('downloadBtn').style.background = "#7f8c8d";
-            document.getElementById('tiktokIcon').style.opacity = "1";
-            
-            // تحديث لوحة الأب بالخلفية وإظهار صندوق التنبيه الفوري
-            document.getElementById('appAlertBox').style.display = 'block';
-            document.getElementById('tiktokStatus').innerText = "⏳ معلق بانتظار قرارك";
-            document.getElementById('tiktokStatus').className = "app-status-badge";
-            document.getElementById('tiktokStatus').style.background = "#fff3cd";
-            document.getElementById('tiktokStatus').style.color = "#856404";
-            
-            alert("🔔 تم الإرسال المباشر! ظهر تنبيه فوري في لوحة تحكم الأب لإعطاء الصلاحية أو الحظر الفوري.");
-            closeChildSim(); // نرجع شاشة الأب عشان يشوف التنبيه اللي ظهر له فوق
-        }
-
-        // 2. قرار الأب من لوحة التحكم (سماح أو حظر مباشر)
-        function parentDecision(decision) {
-            document.getElementById('appAlertBox').style.display = 'none'; // إخفاء التنبيه بعد اتخاذ القرار
-            
-            if (decision === 'allow') {
-                appState = "allowed";
-                document.getElementById('tiktokStatus').innerText = "✅ مسموح بالتشغيل";
-                document.getElementById('tiktokStatus').className = "app-status-badge allowed";
-                document.getElementById('downloadBtn').innerText = "✅ تم السماح من الوالدين";
-                alert("تم إرسال أمر السماح لجهاز سارة بنجاح، التطبيق متاح للفتح الآن.");
+        function verifyPIN() {
+            let pin = document.getElementById('pinInput').value;
+            if (pin === '1234') {
+                document.getElementById('pinAuthScreen').style.display = 'none';
+                document.getElementById('mainHeader').style.display = 'block';
+                document.getElementById('mainDashboard').style.display = 'block';
             } else {
-                appState = "blocked";
-                document.getElementById('tiktokStatus').innerText = "🚫 محظور نهائياً";
-                document.getElementById('tiktokStatus').className = "app-status-badge blocked";
-                document.getElementById('downloadBtn').innerText = "🚫 محظور من الوالدين";
-                alert("تم تفعيل الحظر الصارم الفوري! لن تتمكن سارة من فتح التطبيق بتاتاً.");
+                alert('رمز التحقق خاطئ! للتجربة استخدم الرمز: 1234');
             }
         }
 
-        // 3. ماذا يحدث لو حاولت سارة فتح التطبيق بجوالها؟
-        function clickTiktok() {
-            if (appState === "pending") {
-                alert("التطبيق مقفل مؤقتاً تلقائياً بواسطة نافادل لحين موافقة الأب!");
-            } else if (appState === "allowed") {
-                alert("🎉 التطبيق يعمل الآن بنجاح لأن والدك أعطى سماح!");
-            } else if (appState === "blocked") {
-                // إظهار شاشة القفل الصارم فوراً
-                document.getElementById('appLockOverlay').style.display = 'flex';
+        function toggleDeviceState(id) {
+            let btn = document.getElementById(`btn-${id}`);
+            let status = document.getElementById(`status-${id}`);
+            
+            if (deviceStatus[id] === "open") {
+                deviceStatus[id] = "locked";
+                btn.innerText = 'فتح الجهاز الآن';
+                btn.className = "btn-toggle unlock";
+                status.innerHTML = 'الحالة: <span style="color:#e74c3c; font-weight:bold;">مغلق بالكامل 🔒</span>';
             } else {
-                alert("قم بتحميل التطبيق أولاً لرؤية المحاكاة.");
+                deviceStatus[id] = "open";
+                btn.innerText = 'قفل الجهاز الآن';
+                btn.className = "btn-toggle lock";
+                status.innerHTML = 'الحالة: <span style="color:#2ecc71; font-weight:bold;">مفتوح ومتصل بالخادم</span>';
             }
+        }
+
+        function openAddModal() { document.getElementById('addDeviceModal').style.display = 'flex'; }
+        function closeAddModal() { document.getElementById('addDeviceModal').style.display = 'none'; }
+
+        function saveNewDevice() {
+            let name = document.getElementById('childNameInput').value;
+            let os = document.getElementById('childOsInput').value;
+            
+            if(name.trim() === "") { alert("يرجى كتابة اسم الطفل."); return; }
+            
+            alert(`تم حفظ جهاز (${name}) بنجاح! كود الربط السيرفري الخاص به هو: NAV-${Math.floor(1000 + Math.random() * 9000)}`);
+            closeAddModal();
         }
     </script>
 </body>
