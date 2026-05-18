@@ -161,19 +161,27 @@
         .app-row:last-child { border-bottom: none; }
         .btn-block-app { background: #ffffff; border: 1px solid #f2efea; color: #e67e22; padding: 4px 12px; border-radius: 8px; font-size: 11px; cursor: pointer; font-weight: bold; }
 
-        /* --- قسم الباقات والاشتراكات المطوّر --- */
-        .pricing-section { background-color: #ffffff; border: 1px solid #f2efea; border-radius: 24px; padding: 20px; margin-top: 25px; text-align: right; }
+        /* --- قسم الباقات والاشتراكات المطوّر والتحفيزي --- */
+        .pricing-section { background-color: #ffffff; border: 1px solid #f2efea; border-radius: 24px; padding: 22px 20px; margin-top: 25px; text-align: right; }
+        
+        .pricing-motivation-box { background: #fffcf9; border: 1px dashed #e67e22; border-radius: 16px; padding: 15px; margin-bottom: 20px; text-align: center; }
+        .motivation-main-text { font-size: 15px; font-weight: bold; color: #d35400; margin-bottom: 5px; }
+        .motivation-sub-text { font-size: 12px; color: #27ae60; font-weight: bold; display: flex; align-items: center; justify-content: center; gap: 4px; }
+
         .pricing-title { font-size: 15px; font-weight: bold; color: #2c3e50; margin-bottom: 15px; display: flex; align-items: center; gap: 6px; }
         
         .plans-grid { display: flex; flex-direction: column; gap: 15px; margin-bottom: 10px; }
-        .plan-card { border: 1px solid #f2efea; border-radius: 18px; padding: 15px; background: #faf9f6; position: relative; transition: 0.3s; cursor: pointer; }
+        .plan-card { border: 1px solid #f2efea; border-radius: 18px; padding: 15px; background: #faf9f6; position: relative; transition: 0.3s; cursor: pointer; padding-left: 85px; }
         .plan-card.featured { border-color: #e67e22; background: #fffcf9; box-shadow: 0 4px 15px rgba(230, 126, 34, 0.05); }
+        
+        /* شارات الباقات المحدثة */
         .plan-badge { position: absolute; top: 12px; left: 12px; background: #e67e22; color: #fff; font-size: 10px; padding: 3px 8px; border-radius: 10px; font-weight: bold; }
+        .free-trial-badge { position: absolute; bottom: 12px; left: 12px; background: #2ecc71; color: white; font-size: 10px; padding: 3px 8px; border-radius: 8px; font-weight: bold; }
         
         .plan-header-row { display: flex; justify-content: space-between; align-items: center; margin-bottom: 8px; }
         .plan-name { font-size: 14px; font-weight: bold; color: #2c3e50; }
-        .plan-price { font-size: 15px; font-weight: bold; color: #e67e22; }
-        .plan-features { font-size: 12px; color: #7f8c8d; line-height: 1.4; }
+        .plan-price { font-size: 15px; font-weight: bold; color: #e67e22; padding-left: 10px; }
+        .plan-features { font-size: 12px; color: #7f8c8d; line-height: 1.4; padding-left: 10px; }
         
         /* بوابات الدفع تابي وتمارا */
         .split-pay-logos { display: flex; gap: 8px; margin-top: 10px; border-top: 1px solid #f2efea; padding-top: 10px; align-items: center; }
@@ -277,10 +285,17 @@
         </div>
 
         <div class="pricing-section">
+            
+            <div class="pricing-motivation-box">
+                <div class="motivation-main-text">🛡️ احمِ أطفالك اليوم.. فهم مستقبلك المشرق</div>
+                <div class="motivation-sub-text">🎁 اختر باقتك الآن وجرّب المزايا كاملة لمدة 3 أيام مجاناً!</div>
+            </div>
+
             <div class="pricing-title">💎 باقات الاشتراك وترقية الحساب</div>
             <div class="plans-grid">
                 
                 <div class="plan-card" onclick="triggerPayment('الفضية')">
+                    <span class="free-trial-badge">3 أيام مجاناً</span>
                     <div class="plan-header-row">
                         <span class="plan-name">الباقة الفضية</span>
                         <span class="plan-price">19 ريال / شهر</span>
@@ -290,6 +305,7 @@
 
                 <div class="plan-card featured" onclick="triggerPayment('الذهبية')">
                     <span class="plan-badge">الأكثر طلباً</span>
+                    <span class="free-trial-badge">3 أيام مجاناً</span>
                     <div class="plan-header-row">
                         <span class="plan-name" style="color: #e67e22;">الباقة الذهبية</span>
                         <span class="plan-price">39 ريال / شهر</span>
@@ -303,6 +319,7 @@
                 </div>
 
                 <div class="plan-card" onclick="triggerPayment('الماسية')">
+                    <span class="free-trial-badge">3 أيام مجاناً</span>
                     <div class="plan-header-row">
                         <span class="plan-name">الباقة الماسية</span>
                         <span class="plan-price">79 ريال / شهر</span>
@@ -485,9 +502,8 @@
             document.getElementById('feedbackText').value = "";
         }
 
-        // محاكاة بوابات تابي وتمارا عند الضغط على الباقة
         function triggerPayment(planName) {
-            alert(`سيتم توجيهك الآن لبوابة الدفع الآمن لتفعيل الباقة ${planName} (يدعم التقسيط عبر تابي وتمارا لراحتك)`);
+            alert(`بدأت فترة تجربتك المجانية (3 أيام) لباقة نافادل ${planName}! يمكنك الإلغاء في أي وقت، أو إكمال الدفع المريح لاحقاً عبر تابي وتمارا.`);
         }
         
         DOMTokenList.prototype.contains = HTMLButtonElement.prototype.contains || function(className) {
