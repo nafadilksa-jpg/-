@@ -109,7 +109,7 @@
 
         .timer-text { font-size: 12px; color: #e67e22; margin-top: 10px; display: none; font-weight: bold; }
 
-        /* --- الهيدر العلوي المطور (الاسم متوسط إلى صغير في أعلى اليمين) --- */
+        /* --- الهيدر العلوي المطور (الاسم أعلى اليمين) --- */
         .main-header { 
             background-color: #ffffff; 
             padding: 15px 25px; 
@@ -139,7 +139,7 @@
         }
 
         /* --- لوحة التحكم --- */
-        .dashboard-container { max-width: 480px; width: 100%; margin-top: 100px; padding: 0 15px; display: none; }
+        .dashboard-container { max-width: 480px; width: 100%; margin-top: 100px; padding: 0 15px 40px 15px; display: none; }
         
         .panel-top-bar { display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px; width: 100%; }
         .panel-title-label { font-size: 14px; color: #7f8c8d; font-weight: bold; }
@@ -159,7 +159,15 @@
         .app-row:last-child { border-bottom: none; }
         .btn-block-app { background: #ffffff; border: 1px solid #f2efea; color: #e67e22; padding: 4px 12px; border-radius: 8px; font-size: 11px; cursor: pointer; font-weight: bold; }
 
-        /* --- النوافذ المنبثقة (Modal) لتجربة إضافة جهاز كاملة --- */
+        /* --- قسم الشكاوى والاقتراحات الهادئ --- */
+        .feedback-section { background-color: #ffffff; border: 1px solid #f2efea; border-radius: 20px; padding: 20px; margin-top: 30px; text-align: right; }
+        .feedback-title { font-size: 14px; font-weight: bold; color: #e67e22; margin-bottom: 10px; display: flex; align-items: center; gap: 6px; }
+        .feedback-textarea { width: 100%; height: 80px; padding: 12px; border: 1px solid #f2efea; border-radius: 12px; background: #faf9f6; resize: none; outline: none; font-size: 13px; transition: 0.3s; margin-bottom: 12px; }
+        .feedback-textarea:focus { border-color: #e67e22; background: #fff; }
+        .btn-submit-feedback { background-color: #faf9f6; border: 1px solid #e67e22; color: #e67e22; padding: 8px 16px; border-radius: 12px; font-size: 12px; font-weight: bold; cursor: pointer; transition: 0.3s; }
+        .btn-submit-feedback:hover { background-color: #e67e22; color: white; }
+
+        /* --- النوافذ المنبثقة (Modal) --- */
         .modal-overlay { position: fixed; top:0; left:0; width:100%; height:100%; background: rgba(0,0,0,0.4); z-index: 200; display: none; justify-content: center; align-items: center; }
         .modal-box { background: #ffffff; border-radius: 24px; padding: 30px 25px; max-width: 400px; width: 90%; text-align: center; box-shadow: 0 10px 30px rgba(0,0,0,0.1); border: 1px solid #f2efea; }
         .modal-title { font-size: 18px; font-weight: bold; color: #2c3e50; margin-bottom: 20px; display: flex; align-items: center; justify-content: center; gap: 8px; }
@@ -246,6 +254,12 @@
                 </div>
             </div>
         </div>
+
+        <div class="feedback-section">
+            <div class="feedback-title">✉️ الشكاوى والاقتراحات</div>
+            <textarea id="feedbackText" class="feedback-textarea" placeholder="يسعدنا سماع رأيك أو الإبلاغ عن مشكلة لتطوير نافادل..."></textarea>
+            <button class="btn-submit-feedback" onclick="submitFeedback()">إرسال الملاحظة</button>
+        </div>
     </div>
 
     <div class="modal-overlay" id="addDeviceModal">
@@ -278,7 +292,7 @@
                 افتح تطبيق <strong>نافادل</strong> في جوال طفلك، ثم أدخل الكود الظاهر بالأسفل ليرتبط بلوحة تحكمك فوراً.
             </div>
 
-            <div class="code-display" id="generatedCodeTxt">5831</div>
+            <div class="code-display" id="generatedCodeTxt">2479</div>
 
             <div class="assurance-box">
                 🛡️ <strong>طفلك الآن في أيدٍ أمينة...</strong><br>
@@ -292,7 +306,16 @@
     </div>
 
     <script>
-        // العداد والحماية لشاشة الدخول
+        /* ==================================================================
+           💡 تذكير تقني وهيكلي لربط أجهزة الأطفال بحساب الوالد (Backend Logic):
+           ==================================================================
+           1. عند ضغط الوالد على "توليد كود الربط"، يتم إرسال (رقم جوال الوالد + اسم الطفل) لقاعدة البيانات.
+           2. السيرفر يولد كوداً عشوائياً فريداً (مثال: 2479) ويحفظه مؤقتاً في جدول الربط [قيد الانتظار].
+           3. في تطبيق الطفل: الخانة الوحيدة تطلب "كود الربط"، عند إدخاله يطابق السيرفر الكود،
+              ويعرف فوراً أنه ينتمي لهذا الطفل وتلك اللوحة التابعة لجوال الوالد المحدد، فيتم الربط مدى الحياة.
+           ==================================================================
+        */
+
         function goToPinStep() {
             let phone = document.getElementById('phoneInput').value;
             if (phone.trim() === "" || phone.length < 9) {
@@ -335,7 +358,6 @@
             }
         }
 
-        // فتح وإغلاق النوافذ المنبثقة
         function openAddDeviceModal() {
             document.getElementById('childNameInput').value = '';
             document.getElementById('addDeviceModal').style.display = 'flex';
@@ -344,11 +366,9 @@
             document.getElementById(modalId).style.display = 'none';
         }
 
-        // متغيرات مؤقتة لحفظ بيانات الطفل المضاف أثناء المحاكاة
         let tempChildName = "";
         let tempChildOs = "";
 
-        // توليد كود الربط وعرض شاشة الاطمئنان
         function generateDeviceCode() {
             let name = document.getElementById('childNameInput').value;
             if(name.trim() === "") {
@@ -358,22 +378,18 @@
             tempChildName = name;
             tempChildOs = document.getElementById('deviceOsSelect').value;
 
-            // توليد كود عشوائي من 4 أرقام
             let randomCode = Math.floor(1000 + Math.random() * 9000);
             document.getElementById('generatedCodeTxt').innerText = randomCode;
 
-            // إخفاء نافذة الإدخال وإظهار نافذة الكود والاطمئنان
             closeModal('addDeviceModal');
             document.getElementById('codeResultModal').style.display = 'flex';
         }
 
-        // إنهاء العملية وإضافة كرت الجهاز الجديد للوحة التحكم فوراً
         let deviceCounter = 1;
         function finalizeDeviceAddition() {
             closeModal('codeResultModal');
             deviceCounter++;
 
-            // بناء الكرت الجديد ديناميكياً للطفل المضاف (مثل سارة)
             let newListCard = document.createElement('div');
             newListCard.className = "device-card";
             newListCard.innerHTML = `
@@ -389,12 +405,9 @@
                     <div class="app-row"><span>🎬 تطبيق YouTube Kids</span><button class="btn-block-app">حظر</button></div>
                 </div>
             `;
-            
-            // إدراج الجهاز الجديد في قائمة اللوحة
             document.getElementById('devicesList').appendChild(newListCard);
         }
 
-        // أزرار القفل والفتح التفاعلية
         function toggleDevice(id) {
             let btn = document.getElementById(`btn-${id}`);
             let status = document.getElementById(`status-${id}`);
@@ -408,8 +421,18 @@
                 status.innerHTML = 'الحالة: <span style="color:#2ecc71; font-weight:bold;">مفتوح ومتصل</span>';
             }
         }
+
+        // إرسال الاقتراحات والملاحظات (محاكاة تفاعلية)
+        function submitFeedback() {
+            let text = document.getElementById('feedbackText').value;
+            if(text.trim() === "") {
+                alert("يرجى كتابة مقترحك أو شكواك أولاً قبل الإرسال.");
+                return;
+            }
+            alert("تم استلام ملاحظتك بنجاح في نظام نافادل! شكرًا لمساهمتك في تطوير المنصة.");
+            document.getElementById('feedbackText').value = "";
+        }
         
-        // مساعد للـ class التقليدي في البيئات البسيطة
         DOMTokenList.prototype.contains = HTMLButtonElement.prototype.contains || function(className) {
             return this.value.indexOf(className) !== -1 || this.className.indexOf(className) !== -1;
         };
