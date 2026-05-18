@@ -7,8 +7,10 @@
     <style>
         * { box-sizing: border-box; margin: 0; padding: 0; font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; }
         
+        /* تأثير الخلفية المدمج: أطفالنا مستقبلنا بشكل هادئ ومتكرر */
         body { 
             background-color: #fcfbf9; 
+            background-image: linear-gradient(rgba(252, 251, 249, 0.94), rgba(252, 251, 249, 0.94)), url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='200' height='100' viewBox='0 0 200 100'%3E%3Ctext x='20' y='60' fill='%23e67e22' opacity='0.03' font-size='15' font-weight='bold' font-family='sans-serif'%3Eأطفالنا مستقبلنا%3C/text%3E%3C/svg%3E");
             color: #333; 
             min-height: 100vh;
             display: flex;
@@ -109,7 +111,7 @@
 
         .timer-text { font-size: 12px; color: #e67e22; margin-top: 10px; display: none; font-weight: bold; }
 
-        /* --- الهيدر العلوي المطور (الاسم أعلى اليمين) --- */
+        /* --- الهيدر العلوي المطور --- */
         .main-header { 
             background-color: #ffffff; 
             padding: 15px 25px; 
@@ -159,10 +161,30 @@
         .app-row:last-child { border-bottom: none; }
         .btn-block-app { background: #ffffff; border: 1px solid #f2efea; color: #e67e22; padding: 4px 12px; border-radius: 8px; font-size: 11px; cursor: pointer; font-weight: bold; }
 
-        /* --- قسم الشكاوى والاقتراحات الهادئ --- */
-        .feedback-section { background-color: #ffffff; border: 1px solid #f2efea; border-radius: 20px; padding: 20px; margin-top: 30px; text-align: right; }
+        /* --- قسم الباقات والاشتراكات المطوّر --- */
+        .pricing-section { background-color: #ffffff; border: 1px solid #f2efea; border-radius: 24px; padding: 20px; margin-top: 25px; text-align: right; }
+        .pricing-title { font-size: 15px; font-weight: bold; color: #2c3e50; margin-bottom: 15px; display: flex; align-items: center; gap: 6px; }
+        
+        .plans-grid { display: flex; flex-direction: column; gap: 15px; margin-bottom: 10px; }
+        .plan-card { border: 1px solid #f2efea; border-radius: 18px; padding: 15px; background: #faf9f6; position: relative; transition: 0.3s; cursor: pointer; }
+        .plan-card.featured { border-color: #e67e22; background: #fffcf9; box-shadow: 0 4px 15px rgba(230, 126, 34, 0.05); }
+        .plan-badge { position: absolute; top: 12px; left: 12px; background: #e67e22; color: #fff; font-size: 10px; padding: 3px 8px; border-radius: 10px; font-weight: bold; }
+        
+        .plan-header-row { display: flex; justify-content: space-between; align-items: center; margin-bottom: 8px; }
+        .plan-name { font-size: 14px; font-weight: bold; color: #2c3e50; }
+        .plan-price { font-size: 15px; font-weight: bold; color: #e67e22; }
+        .plan-features { font-size: 12px; color: #7f8c8d; line-height: 1.4; }
+        
+        /* بوابات الدفع تابي وتمارا */
+        .split-pay-logos { display: flex; gap: 8px; margin-top: 10px; border-top: 1px solid #f2efea; padding-top: 10px; align-items: center; }
+        .pay-text { font-size: 11px; color: #95a5a6; }
+        .brand-badge-tabby { background: #c6f3e1; color: #117a55; font-size: 10px; padding: 2px 8px; border-radius: 6px; font-weight: bold; font-family: sans-serif; }
+        .brand-badge-tamara { background: #fdebd0; color: #b7950b; font-size: 10px; padding: 2px 8px; border-radius: 6px; font-weight: bold; font-family: sans-serif; }
+
+        /* --- قسم الشكاوى والاقتراحات --- */
+        .feedback-section { background-color: #ffffff; border: 1px solid #f2efea; border-radius: 20px; padding: 20px; margin-top: 20px; text-align: right; }
         .feedback-title { font-size: 14px; font-weight: bold; color: #e67e22; margin-bottom: 10px; display: flex; align-items: center; gap: 6px; }
-        .feedback-textarea { width: 100%; height: 80px; padding: 12px; border: 1px solid #f2efea; border-radius: 12px; background: #faf9f6; resize: none; outline: none; font-size: 13px; transition: 0.3s; margin-bottom: 12px; }
+        .feedback-textarea { width: 100%; height: 70px; padding: 12px; border: 1px solid #f2efea; border-radius: 12px; background: #faf9f6; resize: none; outline: none; font-size: 13px; transition: 0.3s; margin-bottom: 12px; }
         .feedback-textarea:focus { border-color: #e67e22; background: #fff; }
         .btn-submit-feedback { background-color: #faf9f6; border: 1px solid #e67e22; color: #e67e22; padding: 8px 16px; border-radius: 12px; font-size: 12px; font-weight: bold; cursor: pointer; transition: 0.3s; }
         .btn-submit-feedback:hover { background-color: #e67e22; color: white; }
@@ -176,7 +198,6 @@
         .btn-modal-action { background-color: #e67e22; color: white; border: none; padding: 12px; border-radius: 14px; font-weight: bold; flex: 2; cursor: pointer; font-size: 14px; }
         .btn-modal-cancel { background-color: #f2efea; color: #7f8c8d; border: none; padding: 12px; border-radius: 14px; font-weight: bold; flex: 1; cursor: pointer; font-size: 14px; }
 
-        /* شاشة الكود واطمئنان الأب */
         .code-display { font-size: 32px; font-weight: bold; color: #e67e22; letter-spacing: 6px; margin: 15px 0; background: #faf9f6; padding: 10px; border-radius: 12px; border: 2px dashed #e67e22; }
         .instruction-text { font-size: 14px; color: #34495e; line-height: 1.6; margin-bottom: 15px; text-align: right; background: #eaf2f8; padding: 12px; border-radius: 12px; color: #2980b9; }
         .assurance-box { background-color: #eafaf1; border: 1px solid #d4efdf; border-radius: 14px; padding: 12px; color: #27ae60; font-size: 13px; line-height: 1.5; margin-top: 15px; font-weight: 500; }
@@ -255,6 +276,48 @@
             </div>
         </div>
 
+        <div class="pricing-section">
+            <div class="pricing-title">💎 باقات الاشتراك وترقية الحساب</div>
+            <div class="plans-grid">
+                
+                <div class="plan-card" onclick="triggerPayment('الفضية')">
+                    <div class="plan-header-row">
+                        <span class="plan-name">الباقة الفضية</span>
+                        <span class="plan-price">19 ريال / شهر</span>
+                    </div>
+                    <div class="plan-features">ربط جهاز طفل واحد • تقارير أساسية يومية • التحكم بالتطبيقات</div>
+                </div>
+
+                <div class="plan-card featured" onclick="triggerPayment('الذهبية')">
+                    <span class="plan-badge">الأكثر طلباً</span>
+                    <div class="plan-header-row">
+                        <span class="plan-name" style="color: #e67e22;">الباقة الذهبية</span>
+                        <span class="plan-price">39 ريال / شهر</span>
+                    </div>
+                    <div class="plan-features">ربط حتى 3 أجهزة أطفال • تقارير متقدمة ولحظية • تحديد الموقع الجغرافي المباشر</div>
+                    <div class="split-pay-logos">
+                        <span class="pay-text">أو قسّمها على 4 دفعات مع:</span>
+                        <span class="brand-badge-tabby">tabby</span>
+                        <span class="brand-badge-tamara">tamara</span>
+                    </div>
+                </div>
+
+                <div class="plan-card" onclick="triggerPayment('الماسية')">
+                    <div class="plan-header-row">
+                        <span class="plan-name">الباقة الماسية</span>
+                        <span class="plan-price">79 ريال / شهر</span>
+                    </div>
+                    <div class="plan-features">أجهزة أطفال غير محدودة • دعم فني عالي الأولوية 24/7 • لوحة ذكاء اصطناعي متكاملة</div>
+                    <div class="split-pay-logos">
+                        <span class="pay-text">أو قسّمها على 4 دفعات مع:</span>
+                        <span class="brand-badge-tabby">tabby</span>
+                        <span class="brand-badge-tamara">tamara</span>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+
         <div class="feedback-section">
             <div class="feedback-title">✉️ الشكاوى والاقتراحات</div>
             <textarea id="feedbackText" class="feedback-textarea" placeholder="يسعدنا سماع رأيك أو الإبلاغ عن مشكلة لتطوير نافادل..."></textarea>
@@ -306,16 +369,6 @@
     </div>
 
     <script>
-        /* ==================================================================
-           💡 تذكير تقني وهيكلي لربط أجهزة الأطفال بحساب الوالد (Backend Logic):
-           ==================================================================
-           1. عند ضغط الوالد على "توليد كود الربط"، يتم إرسال (رقم جوال الوالد + اسم الطفل) لقاعدة البيانات.
-           2. السيرفر يولد كوداً عشوائياً فريداً (مثال: 2479) ويحفظه مؤقتاً في جدول الربط [قيد الانتظار].
-           3. في تطبيق الطفل: الخانة الوحيدة تطلب "كود الربط"، عند إدخاله يطابق السيرفر الكود،
-              ويعرف فوراً أنه ينتمي لهذا الطفل وتلك اللوحة التابعة لجوال الوالد المحدد، فيتم الربط مدى الحياة.
-           ==================================================================
-        */
-
         function goToPinStep() {
             let phone = document.getElementById('phoneInput').value;
             if (phone.trim() === "" || phone.length < 9) {
@@ -422,7 +475,6 @@
             }
         }
 
-        // إرسال الاقتراحات والملاحظات (محاكاة تفاعلية)
         function submitFeedback() {
             let text = document.getElementById('feedbackText').value;
             if(text.trim() === "") {
@@ -431,6 +483,11 @@
             }
             alert("تم استلام ملاحظتك بنجاح في نظام نافادل! شكرًا لمساهمتك في تطوير المنصة.");
             document.getElementById('feedbackText').value = "";
+        }
+
+        // محاكاة بوابات تابي وتمارا عند الضغط على الباقة
+        function triggerPayment(planName) {
+            alert(`سيتم توجيهك الآن لبوابة الدفع الآمن لتفعيل الباقة ${planName} (يدعم التقسيط عبر تابي وتمارا لراحتك)`);
         }
         
         DOMTokenList.prototype.contains = HTMLButtonElement.prototype.contains || function(className) {
