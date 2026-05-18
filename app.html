@@ -3,212 +3,188 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>نافادل | Nafadil</title>
+    <title>نافادل | Nafadil - دخول</title>
     <style>
         * { box-sizing: border-box; margin: 0; padding: 0; font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; }
-        body { background-color: #fcfbf9; color: #333; padding-bottom: 40px; }
-
-        /* الشعار المرسوم بالـ CSS ليطابق هوية نافادل (نـ) */
-        .brand-logo-container { display: inline-flex; flex-direction: column; align-items: center; justify-content: center; margin-bottom: 20px; position: relative; }
-        .brand-dots { display: flex; gap: 12px; margin-bottom: 5px; margin-left: -20px; }
-        .brand-dot { width: 8px; height: 8px; background-color: #e67e22; border-radius: 50%; }
-        .brand-curve { width: 45px; height: 45px; border: 5px solid #e67e22; border-top: none; border-radius: 0 0 25px 25px; position: relative; }
-        .brand-curve::after { content: ''; position: absolute; top: -5px; right: -5px; width: 5px; height: 12px; background-color: #e67e22; }
-        .brand-text-main { color: #e67e22; font-size: 28px; font-weight: bold; margin-top: 10px; letter-spacing: 0.5px; }
-
-        /* شاشات تسجيل الدخول والتحقق */
-        .auth-screen { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background-color: #fcfbf9; display: flex; justify-content: center; align-items: center; z-index: 9999; padding: 20px; }
-        .auth-card { background: #ffffff; padding: 40px 25px; border-radius: 24px; box-shadow: 0 10px 35px rgba(230, 126, 34, 0.06); text-align: center; max-width: 400px; width: 100%; border: 1px solid #f2efea; position: relative; overflow: hidden; }
         
-        /* خلفية مائية خفيفة داخل الكرت لحماية الهوية */
-        .auth-card::before { content: 'نـ'; position: absolute; bottom: -30px; left: -20px; font-size: 180px; color: rgba(230, 126, 34, 0.03); font-weight: bold; pointer-events: none; }
+        body { 
+            background-color: #fcfbf9; /* لون الخلفية الكريمي الفاتح من كرت العمل */
+            color: #333; 
+            display: flex; 
+            justify-content: center; 
+            align-items: center; 
+            height: 100vh; 
+            padding: 20px; 
+        }
 
-        .auth-card p { color: #7f8c8d; font-size: 14px; margin-bottom: 25px; }
-        .auth-card input { width: 100%; padding: 14px; border: 2px solid #f2efea; border-radius: 14px; margin-bottom: 18px; text-align: center; font-size: 16px; outline: none; transition: 0.3s; background: #faf9f6; }
-        .auth-card input:focus { border-color: #e67e22; background: #fff; }
-        .btn-action { background-color: #e67e22; color: white; width: 100%; padding: 14px; border: none; border-radius: 14px; font-weight: bold; font-size: 16px; cursor: pointer; transition: 0.3s; }
-        .btn-action:hover { background-color: #d35400; }
+        /* حاوية التسجيل (الكرت الأبيض المركزي) */
+        .auth-card { 
+            background: #ffffff; 
+            padding: 50px 30px; 
+            border-radius: 28px; 
+            box-shadow: 0 15px 40px rgba(230, 126, 34, 0.05); /* ظل ناعم جداً برتقالي */
+            text-align: center; 
+            max-width: 400px; 
+            width: 100%; 
+            border: 1px solid #f2efea; 
+        }
 
-        /* الهيدر الموحد والملغي منه الكلام الزائد */
-        .main-header { background-color: #ffffff; padding: 25px; text-align: center; border-bottom: 1px solid #f2efea; display: none; }
-        
-        /* الحاوية الرئيسية للوحة التحكم */
-        .container { max-width: 500px; margin: 25px auto; padding: 0 15px; display: none; }
-        
-        .panel-top-bar { display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px; }
-        .panel-title-label { font-size: 15px; color: #7f8c8d; font-weight: 500; }
-        .btn-add { background-color: #e67e22; color: white; border: none; padding: 8px 16px; border-radius: 20px; font-weight: bold; cursor: pointer; font-size: 13px; }
+        /* --- تصميم الهوية البصرية (اللوقو والكتابة فوق بعض) --- */
+        .brand-section { 
+            display: flex; 
+            flex-direction: column; 
+            align-items: center; 
+            margin-bottom: 35px; 
+        }
 
-        /* بطاقات التحكم بالأجهزة (هادئة وبدون حشو) */
-        .device-card { background-color: #ffffff; border-radius: 20px; padding: 20px; margin-bottom: 20px; border: 1px solid #f2efea; box-shadow: 0 4px 20px rgba(0,0,0,0.01); }
-        .device-info-row { display: flex; justify-content: space-between; align-items: center; margin-bottom: 15px; }
-        .device-name { color: #2c3e50; font-size: 16px; font-weight: bold; }
-        .device-status { font-size: 13px; margin-top: 4px; }
-        
-        .btn-toggle { padding: 8px 16px; border: none; border-radius: 20px; font-weight: bold; cursor: pointer; font-size: 13px; }
-        .btn-toggle.lock { background-color: #fce4d6; color: #c0392b; }
-        .btn-toggle.unlock { background-color: #eafaf1; color: #2ecc71; }
+        /* تصميم شعار نافادل (نـ) بالـ CSS مطابق للكرت */
+        .brand-logo { 
+            display: flex; 
+            flex-direction: column; 
+            align-items: center; 
+            position: relative; 
+            margin-bottom: 15px; 
+        }
+        .logo-dots { 
+            display: flex; 
+            gap: 12px; 
+            margin-bottom: 5px; 
+            margin-left: -22px; /* إزاحة النقطتين لليمين قليلاً لضبطها فوق المنحنى */
+        }
+        .logo-dot { 
+            width: 9px; 
+            height: 9px; 
+            background-color: #e67e22; /* اللون البرتقالي الرسمي */
+            border-radius: 50%; 
+        }
+        .logo-curve { 
+            width: 48px; 
+            height: 48px; 
+            border: 5.5px solid #e67e22; 
+            border-top: none; /* إزالة الضلع العلوي لعمل المنحنى U */
+            border-radius: 0 0 28px 28px; /* تدوير الحواف السفلية */
+            position: relative; 
+        }
+        /* إضافة الضلع الصغير الصاعد على اليمين */
+        .logo-curve::after { 
+            content: ''; 
+            position: absolute; 
+            top: -5.5px; 
+            right: -5.5px; 
+            width: 5.5px; 
+            height: 14px; 
+            background-color: #e67e22; 
+        }
 
-        /* صندوق التطبيقات المكتشفة مؤخراً */
-        .apps-container { background: #faf9f6; border-radius: 14px; padding: 15px; margin-top: 15px; }
-        .app-row { display: flex; justify-content: space-between; align-items: center; padding: 8px 0; border-bottom: 1px solid #f2efea; font-size: 13px; }
-        .app-row:last-child { border-bottom: none; }
-        .btn-block-app { background: #ffffff; border: 1px solid #f2efea; color: #e67e22; padding: 4px 12px; border-radius: 8px; font-size: 11px; cursor: pointer; font-weight: bold; transition: 0.2s; }
-        .btn-block-app:hover { background: #e67e22; color: #fff; border-color: #e67e22; }
+        /* تصميم الكتابة (العربي وتحته الإنجليزي) */
+        .brand-name-ar { 
+            color: #e67e22; 
+            font-size: 32px; 
+            font-weight: bold; 
+            margin-bottom: 2px; 
+            letter-spacing: 1px; 
+        }
+        .brand-name-en { 
+            color: #e67e22; 
+            font-size: 26px; 
+            font-weight: 500; /* وزن أخف قليلاً للإنجليزي */
+            letter-spacing: 0.5px; 
+        }
 
-        /* نافذة إضافة جهاز جديد */
-        .modal-overlay { display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.4); justify-content: center; align-items: center; z-index: 10000; padding: 20px; }
-        .modal-box { background: white; padding: 30px 20px; border-radius: 24px; width: 100%; max-width: 380px; border: 1px solid #f2efea; }
-        .modal-box h3 { color: #2c3e50; font-size: 18px; margin-bottom: 15px; text-align: center; }
-        .modal-box input, .modal-box select { width: 100%; padding: 12px; border: 2px solid #f2efea; border-radius: 12px; margin-bottom: 15px; font-size: 14px; outline: none; background: #faf9f6; }
-        .modal-buttons { display: flex; gap: 10px; }
-        .btn-modal-save { background: #e67e22; color: white; border: none; padding: 10px; border-radius: 12px; font-weight: bold; flex: 1; cursor: pointer; }
-        .btn-modal-cancel { background: #f2efea; color: #7f8c8d; border: none; padding: 10px; border-radius: 12px; font-weight: bold; flex: 1; cursor: pointer; }
+        /* وصف المنصة الهادئ */
+        .brand-desc { 
+            color: #7f8c8d; 
+            font-size: 14px; 
+            margin-bottom: 30px; 
+            line-height: 1.6; 
+        }
+
+        /* --- تصميم حقول الإدخال والأزرار --- */
+        .input-group { 
+            margin-bottom: 20px; 
+            text-align: right; 
+        }
+        .input-label { 
+            display: block; 
+            font-size: 13px; 
+            color: #7f8c8d; 
+            margin-bottom: 8px; 
+            margin-right: 5px; 
+        }
+        .auth-input { 
+            width: 100%; 
+            padding: 15px; 
+            border: 2px solid #f2efea; 
+            border-radius: 16px; 
+            text-align: center; 
+            font-size: 16px; 
+            outline: none; 
+            transition: 0.3s; 
+            background: #faf9f6; 
+        }
+        .auth-input:focus { 
+            border-color: #e67e22; 
+            background: #fff; 
+            box-shadow: 0 0 0 4px rgba(230, 126, 34, 0.1); 
+        }
+
+        .btn-primary { 
+            background-color: #e67e22; 
+            color: white; 
+            width: 100%; 
+            padding: 15px; 
+            border: none; 
+            border-radius: 16px; 
+            font-weight: bold; 
+            font-size: 16px; 
+            cursor: pointer; 
+            transition: 0.3s; 
+            box-shadow: 0 5px 15px rgba(230, 126, 34, 0.2); 
+        }
+        .btn-primary:hover { 
+            background-color: #d35400; 
+            transform: translateY(-2px); 
+        }
+
     </style>
 </head>
 <body>
 
-    <div class="auth-screen" id="phoneAuthScreen">
-        <div class="auth-card">
-            <div class="brand-logo-container">
-                <div class="brand-dots">
-                    <div class="brand-dot"></div>
-                    <div class="brand-dot"></div>
+    <div class="auth-card">
+        
+        <div class="brand-section">
+            <div class="brand-logo">
+                <div class="logo-dots">
+                    <div class="logo-dot"></div>
+                    <div class="logo-dot"></div>
                 </div>
-                <div class="brand-curve"></div>
-                <div class="brand-text-main">نافادل • Nafadil</div>
+                <div class="logo-curve"></div>
             </div>
-            <p>منصة التحكم الأبوية الذكية لأجهزة الأبناء</p>
-            <input type="tel" id="phoneInput" placeholder="أدخل رقم الجوال (05xxxxxxx)" pattern="[0-5]{2}[0-9]{8}">
-            <button class="btn-action" onclick="sendOTP()">إرسال رمز التحقق</button>
-        </div>
-    </div>
-
-    <div class="auth-screen" id="pinAuthScreen" style="display: none;">
-        <div class="auth-card">
-            <div class="brand-logo-container">
-                <div class="brand-dots">
-                    <div class="brand-dot"></div>
-                    <div class="brand-dot"></div>
-                </div>
-                <div class="brand-curve"></div>
-                <div class="brand-text-main">نافادل • Nafadil</div>
-            </div>
-            <p>تم إرسال رمز التحقق المباشر لجوالك</p>
-            <input type="password" id="pinInput" placeholder="أدخل رمز التحقق التجريبي (1234)" maxlength="4">
-            <button class="btn-action" onclick="verifyPIN()">تأكيد الدخول</button>
-        </div>
-    </div>
-
-    <div class="main-header" id="mainHeader">
-        <div class="brand-logo-container" style="margin-bottom: 0;">
-            <div class="brand-dots" style="transform: scale(0.8); margin-bottom: 2px;">
-                <div class="brand-dot"></div>
-                <div class="brand-dot"></div>
-            </div>
-            <div class="brand-curve" style="transform: scale(0.8); width: 35px; height: 35px;"></div>
-            <div class="brand-text-main" style="font-size: 22px; margin-top: 5px;">نافادل • Nafadil</div>
-        </div>
-    </div>
-
-    <div class="container" id="mainDashboard">
-        <div class="panel-top-bar">
-            <span class="panel-title-label">الأجهزة المتصلة بحسابك:</span>
-            <button class="btn-add" onclick="openAddModal()">➕ إضافة جهاز طفل</button>
+            <div class="brand-name-ar">نافادل</div>
+            <div class="brand-name-en">Nafadil</div>
         </div>
 
-        <div id="devicesContainer">
-            <div class="device-card">
-                <div class="device-info-row">
-                    <div>
-                        <div class="device-name">جهاز أحمد (أندرويد)</div>
-                        <div class="device-status" id="status-1">الحالة: <span style="color:#2ecc71; font-weight:bold;">مفتوح ومتصل بالخادم</span></div>
-                    </div>
-                    <button class="btn-toggle lock" id="btn-1" onclick="toggleDeviceState(1)">قفل الجهاز الآن</button>
-                </div>
-                
-                <div class="apps-container">
-                    <div class="app-row">
-                        <span>🎮 لعبة PUBG Mobile</span>
-                        <button class="btn-block-app" onclick="alert('تم حظر اللعبة مباشرة عبر السيرفر')">حظر التطبيق</button>
-                    </div>
-                    <div class="app-row">
-                        <span>🎬 تطبيق TikTok</span>
-                        <button class="btn-block-app" onclick="alert('تم حظر التطبيق مباشرة عبر السيرفر')">حظر التطبيق</button>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
+        <p class="brand-desc">منصة التحكم الأبوية الذكية لأجهزة الأبناء <br> حماية، توجيه، واطمئنان.</p>
 
-    <div class="modal-overlay" id="addDeviceModal">
-        <div class="modal-box">
-            <h3>إضافة جهاز طفل جديد</h3>
-            <input type="text" id="childNameInput" placeholder="اسم الطفل (مثال: سارة، محمد)">
-            <select id="childOsInput">
-                <option value="Android">أندرويد (Android)</option>
-                <option value="iOS">آيفون (iOS)</option>
-            </select>
-            <div class="modal-buttons">
-                <button class="btn-modal-save" onclick="saveNewDevice()">حفظ وتوليد كود الربط</button>
-                <button class="btn-modal-cancel" onclick="closeAddModal()">إلغاء</button>
-            </div>
+        <div class="input-group">
+            <label class="input-label" for="phoneInput">رقم الجوال المسجل:</label>
+            <input type="tel" id="phoneInput" class="auth-input" placeholder="05xxxxxxx" pattern="[0-5]{2}[0-9]{8}" required>
         </div>
+
+        <button class="btn-primary" onclick="requestOTP()">إرسال رمز التحقق</button>
+
     </div>
 
     <script>
-        let deviceStatus = { 1: "open" };
-
-        function sendOTP() {
+        function requestOTP() {
             let phone = document.getElementById('phoneInput').value;
             if (phone.trim() === "" || phone.length < 9) {
-                alert("يرجى إدخال رقم جوال صحيح أولاً.");
+                alert("يرجى إدخال رقم جوال صحيح (05xxxxxxx).");
                 return;
             }
-            // الانتقال للشاشة الثانية للتحقق من الرمز
-            document.getElementById('phoneAuthScreen').style.display = 'none';
-            document.getElementById('pinAuthScreen').style.display = 'flex';
-        }
-
-        function verifyPIN() {
-            let pin = document.getElementById('pinInput').value;
-            if (pin === '1234') {
-                document.getElementById('pinAuthScreen').style.display = 'none';
-                document.getElementById('mainHeader').style.display = 'block';
-                document.getElementById('mainDashboard').style.display = 'block';
-            } else {
-                alert('رمز التحقق خاطئ! للتجربة استخدم الرمز: 1234');
-            }
-        }
-
-        function toggleDeviceState(id) {
-            let btn = document.getElementById(`btn-${id}`);
-            let status = document.getElementById(`status-${id}`);
-            
-            if (deviceStatus[id] === "open") {
-                deviceStatus[id] = "locked";
-                btn.innerText = 'فتح الجهاز الآن';
-                btn.className = "btn-toggle unlock";
-                status.innerHTML = 'الحالة: <span style="color:#e74c3c; font-weight:bold;">مغلق بالكامل 🔒</span>';
-            } else {
-                deviceStatus[id] = "open";
-                btn.innerText = 'قفل الجهاز الآن';
-                btn.className = "btn-toggle lock";
-                status.innerHTML = 'الحالة: <span style="color:#2ecc71; font-weight:bold;">مفتوح ومتصل بالخادم</span>';
-            }
-        }
-
-        function openAddModal() { document.getElementById('addDeviceModal').style.display = 'flex'; }
-        function closeAddModal() { document.getElementById('addDeviceModal').style.display = 'none'; }
-
-        function saveNewDevice() {
-            let name = document.getElementById('childNameInput').value;
-            let os = document.getElementById('childOsInput').value;
-            
-            if(name.trim() === "") { alert("يرجى كتابة اسم الطفل."); return; }
-            
-            alert(`تم حفظ جهاز (${name}) بنجاح! كود الربط السيرفري الخاص به هو: NAV-${Math.floor(1000 + Math.random() * 9000)}`);
-            closeAddModal();
+            // محاكاة إرسال الرمز وتوجيه المستخدم (يمكن استبداله بطلب حقيقي لاحقاً)
+            alert("سيتم إرسال رمز التحقق المباشر إلى رقم الجوال: " + phone);
+            // window.location.href = 'verify.html'; // مثال للتوجيه لصفحة التحقق
         }
     </script>
 </body>
