@@ -1,1 +1,281 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>تطبيق نافادل | لوحة تحكم الأب</title>
+    <style>
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+
+        body {
+            background-color: #f7f9fa;
+            color: #333;
+            padding-bottom: 60px;
+        }
+
+        /* الهيدر العلوي */
+        .header {
+            background-color: #ffffff;
+            padding: 20px;
+            text-align: center;
+            border-bottom: 2px solid #f0f2f5;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.05);
+        }
+
+        .header h1 {
+            color: #e67e22;
+            font-size: 24px;
+            margin-bottom: 5px;
+        }
+
+        .header p {
+            color: #7f8c8d;
+            font-size: 14px;
+        }
+
+        /* الحاوية الرئيسية */
+        .container {
+            max-width: 500px;
+            margin: 20px auto;
+            padding: 0 15px;
+        }
+
+        /* بطاقة حالة السيرفر */
+        .status-card {
+            background-color: #fff;
+            border-radius: 12px;
+            padding: 15px;
+            margin-bottom: 20px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            border: 1px solid #eef2f3;
+        }
+
+        .status-badge {
+            background-color: #2ecc71;
+            color: white;
+            padding: 5px 12px;
+            border-radius: 20px;
+            font-size: 12px;
+            font-weight: bold;
+        }
+
+        /* بطاقة الجهاز */
+        .device-card {
+            background-color: #ffffff;
+            border-radius: 16px;
+            padding: 20px;
+            margin-bottom: 20px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.02);
+            border: 1px solid #f0f2f5;
+            transition: all 0.3s ease;
+        }
+
+        .device-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 15px;
+            border-bottom: 1px dashed #f0f2f5;
+            padding-bottom: 10px;
+        }
+
+        .device-info h3 {
+            color: #2c3e50;
+            font-size: 18px;
+        }
+
+        .device-info p {
+            font-size: 13px;
+            color: #95a5a6;
+            margin-top: 3px;
+        }
+
+        /* أزرار التحكم والتفاعل */
+        .btn {
+            padding: 10px 20px;
+            border: none;
+            border-radius: 25px;
+            font-weight: bold;
+            cursor: pointer;
+            font-size: 14px;
+            transition: background 0.2s;
+        }
+
+        .btn-lock {
+            background-color: #e74c3c;
+            color: white;
+        }
+
+        .btn-unlock {
+            background-color: #2ecc71;
+            color: white;
+        }
+
+        /* قائمة التطبيقات المحظورة والمسموحة */
+        .apps-list {
+            margin-top: 15px;
+        }
+
+        .apps-title {
+            font-size: 14px;
+            color: #e67e22;
+            font-weight: bold;
+            margin-bottom: 10px;
+        }
+
+        .app-item {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 10px 0;
+            border-bottom: 1px solid #f9f9f9;
+        }
+
+        .app-name {
+            font-size: 14px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .btn-block-toggle {
+            background: #fdf2e9;
+            color: #e67e22;
+            padding: 5px 12px;
+            border-radius: 15px;
+            font-size: 12px;
+        }
+
+        .btn-block-toggle.blocked {
+            background: #fce4d6;
+            color: #c0392b;
+            font-weight: bold;
+        }
+
+        /* الجدولة الذكية */
+        .schedule-box {
+            background-color: #fdf8f5;
+            border-right: 4px solid #e67e22;
+            padding: 12px;
+            border-radius: 4px;
+            margin-top: 15px;
+            font-size: 13px;
+            color: #6e7a7a;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="header">
+        <h1>نافادل | لوحة التحكم 📱</h1>
+        <p>إدارة أجهزة الأبناء وحمايتها بكل سهولة</p>
+    </div>
+
+    <div class="container">
+        
+        <div class="status-card">
+            <span>حالة اتصال الأجهزة:</span>
+            <span class="status-badge">السيرفر متصل ونشط</span>
+        </div>
+
+        <div class="device-card" id="device-ahmed">
+            <div class="device-header">
+                <div class="device-info">
+                    <h3>جهاز أحمد (أندرويد)</h3>
+                    <p id="status-text-ahmed">الحالة الحالية: <span style="color:#2ecc71; font-weight:bold;">مفتوح ومتاح</span></p>
+                </div>
+                <button class="btn btn-lock" id="btn-ahmed" onclick="toggleDevice('ahmed')">قفل الجهاز بالكامل</button>
+            </div>
+
+            <div class="apps-list">
+                <div class="apps-title">📊 تطبيقات تم تحميلها مؤخراً بالخلفية:</div>
+                <div class="app-item">
+                    <span class="app-name">🎮 لعبة PUBG Mobile</span>
+                    <button class="btn-block-toggle" id="app-pubg" onclick="toggleApp('pubg')">حظر التطبيق</button>
+                </div>
+                <div class="app-item">
+                    <span class="app-name">🎬 تطبيق TikTok</span>
+                    <button class="btn-block-toggle" id="app-tiktok" onclick="toggleApp('tiktok')">حظر التطبيق</button>
+                </div>
+            </div>
+
+            <div class="schedule-box">
+                ⏰ <b>الجدولة النشطة:</b> قفل تلقائي للراحة 7:00 مساءً | فتح تلقائي 7:00 صباحاً.
+            </div>
+        </div>
+
+        <div class="device-card" id="device-sara">
+            <div class="device-header">
+                <div class="device-info">
+                    <h3>تابلت سارة (أندرويد)</h3>
+                    <p id="status-text-sara">الحالة الحالية: <span style="color:#2ecc71; font-weight:bold;">مفتوح ومتاح</span></p>
+                </div>
+                <button class="btn btn-lock" id="btn-sara" onclick="toggleDevice('sara')">قفل الجهاز بالكامل</button>
+            </div>
+
+            <div class="apps-list">
+                <div class="apps-title">📊 تطبيقات تم تحميلها مؤخراً بالخلفية:</div>
+                <div class="app-item">
+                    <span class="app-name">🟥 لعبة Roblox</span>
+                    <button class="btn-block-toggle" id="app-roblox" onclick="toggleApp('roblox')">حظر التطبيق</button>
+                </div>
+                <div class="app-item">
+                    <span class="app-name">📺 YouTube Kids</span>
+                    <button class="btn-block-toggle" id="app-ytkids" onclick="toggleApp('ytkids')">حظر التطبيق</button>
+                </div>
+            </div>
+
+            <div class="schedule-box">
+                ⏰ <b>الجدولة النشطة:</b> قفل تلقائي وقت النوم 8:30 مساءً.
+            </div>
+        </div>
+
+    </div>
+
+    <script>
+        // دالة قفل وفتح الجهاز بالكامل
+        function toggleDevice(deviceName) {
+            const btn = document.getElementById('btn-' + deviceName);
+            const statusText = document.getElementById('status-text-' + deviceName);
+            
+            if (btn.classList.contains('btn-lock')) {
+                // تحويل لحالة القفل
+                btn.classList.remove('btn-lock');
+                btn.classList.add('btn-unlock');
+                btn.innerText = 'فتح الجهاز الان';
+                statusText.innerHTML = 'الحالة الحالية: <span style="color:#e74c3c; font-weight:bold;">مغلق بالكامل 🔒</span>';
+                alert('تم إرسال أمر القفل الفوري لجهاز ' + (deviceName === 'ahmed' ? 'أحمد' : 'سارة') + ' عبر السيرفر بنجاح!');
+            } else {
+                // العودة لحالة الفتح
+                btn.classList.remove('btn-unlock');
+                btn.classList.add('btn-lock');
+                btn.innerText = 'قفل الجهاز بالكامل';
+                statusText.innerHTML = 'الحالة الحالية: <span style="color:#2ecc71; font-weight:bold;">مفتوح ومتاح</span>';
+                alert('تم إلغاء القفل وفتح الجهاز عن بُعد.');
+            }
+        }
+
+        // دالة حظر التطبيقات المنفردة
+        function toggleApp(appId) {
+            const appBtn = document.getElementById('app-' + appId);
+            if (appBtn.classList.contains('blocked')) {
+                appBtn.classList.remove('blocked');
+                appBtn.innerText = 'حظر التطبيق';
+                appBtn.style.color = '#e67e22';
+            } else {
+                appBtn.classList.add('blocked');
+                appBtn.innerText = '🚫 تم الحظر';
+                appBtn.style.color = '#c0392b';
+            }
+        }
+    </script>
+</body>
+</html>
 
