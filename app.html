@@ -3,41 +3,45 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>نافادل | Nafadil - دخول</title>
+    <title>نافادل | Nafadil</title>
     <style>
         * { box-sizing: border-box; margin: 0; padding: 0; font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; }
         
         body { 
-            background-color: #fcfbf9; /* لون الخلفية الكريمي الفاتح من كرت العمل */
+            background-color: #fcfbf9; 
             color: #333; 
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+        }
+
+        /* حاوية الشاشات المركزية (التسجيل والتحقق) */
+        .auth-container {
+            flex: 1;
             display: flex; 
             justify-content: center; 
             align-items: center; 
-            height: 100vh; 
-            padding: 20px; 
+            padding: 20px;
         }
 
-        /* حاوية التسجيل (الكرت الأبيض المركزي) */
         .auth-card { 
             background: #ffffff; 
-            padding: 50px 30px; 
+            padding: 40px 25px; 
             border-radius: 28px; 
-            box-shadow: 0 15px 40px rgba(230, 126, 34, 0.05); /* ظل ناعم جداً برتقالي */
+            box-shadow: 0 15px 40px rgba(230, 126, 34, 0.04); 
             text-align: center; 
             max-width: 400px; 
             width: 100%; 
             border: 1px solid #f2efea; 
         }
 
-        /* --- تصميم الهوية البصرية (اللوقو والكتابة فوق بعض) --- */
+        /* --- الهوية البصرية الرسمية (متطابقة عمودياً) --- */
         .brand-section { 
             display: flex; 
             flex-direction: column; 
             align-items: center; 
-            margin-bottom: 35px; 
+            margin-bottom: 25px; 
         }
-
-        /* تصميم شعار نافادل (نـ) بالـ CSS مطابق للكرت */
         .brand-logo { 
             display: flex; 
             flex-direction: column; 
@@ -47,70 +51,40 @@
         }
         .logo-dots { 
             display: flex; 
-            gap: 12px; 
-            margin-bottom: 5px; 
-            margin-left: -22px; /* إزاحة النقطتين لليمين قليلاً لضبطها فوق المنحنى */
+            gap: 10px; 
+            margin-bottom: 4px; 
+            margin-left: -20px; 
         }
         .logo-dot { 
-            width: 9px; 
-            height: 9px; 
-            background-color: #e67e22; /* اللون البرتقالي الرسمي */
+            width: 8px; 
+            height: 8px; 
+            background-color: #e67e22; 
             border-radius: 50%; 
         }
         .logo-curve { 
-            width: 48px; 
-            height: 48px; 
-            border: 5.5px solid #e67e22; 
-            border-top: none; /* إزالة الضلع العلوي لعمل المنحنى U */
-            border-radius: 0 0 28px 28px; /* تدوير الحواف السفلية */
+            width: 45px; 
+            height: 45px; 
+            border: 5px solid #e67e22; 
+            border-top: none; 
+            border-radius: 0 0 25px 25px; 
             position: relative; 
         }
-        /* إضافة الضلع الصغير الصاعد على اليمين */
         .logo-curve::after { 
             content: ''; 
             position: absolute; 
-            top: -5.5px; 
-            right: -5.5px; 
-            width: 5.5px; 
-            height: 14px; 
+            top: -5px; 
+            right: -5px; 
+            width: 5px; 
+            height: 12px; 
             background-color: #e67e22; 
         }
+        .brand-name-ar { color: #e67e22; font-size: 30px; font-weight: bold; margin-bottom: 2px; }
+        .brand-name-en { color: #e67e22; font-size: 24px; font-weight: 500; }
+        .brand-desc { color: #7f8c8d; font-size: 13px; margin-bottom: 25px; line-height: 1.5; }
 
-        /* تصميم الكتابة (العربي وتحته الإنجليزي) */
-        .brand-name-ar { 
-            color: #e67e22; 
-            font-size: 32px; 
-            font-weight: bold; 
-            margin-bottom: 2px; 
-            letter-spacing: 1px; 
-        }
-        .brand-name-en { 
-            color: #e67e22; 
-            font-size: 26px; 
-            font-weight: 500; /* وزن أخف قليلاً للإنجليزي */
-            letter-spacing: 0.5px; 
-        }
-
-        /* وصف المنصة الهادئ */
-        .brand-desc { 
-            color: #7f8c8d; 
-            font-size: 14px; 
-            margin-bottom: 30px; 
-            line-height: 1.6; 
-        }
-
-        /* --- تصميم حقول الإدخال والأزرار --- */
-        .input-group { 
-            margin-bottom: 20px; 
-            text-align: right; 
-        }
-        .input-label { 
-            display: block; 
-            font-size: 13px; 
-            color: #7f8c8d; 
-            margin-bottom: 8px; 
-            margin-right: 5px; 
-        }
+        /* --- الحقول والأزرار --- */
+        .input-group { margin-bottom: 20px; text-align: right; }
+        .input-label { display: block; font-size: 13px; color: #7f8c8d; margin-bottom: 8px; margin-right: 5px; }
         .auth-input { 
             width: 100%; 
             padding: 15px; 
@@ -122,12 +96,8 @@
             transition: 0.3s; 
             background: #faf9f6; 
         }
-        .auth-input:focus { 
-            border-color: #e67e22; 
-            background: #fff; 
-            box-shadow: 0 0 0 4px rgba(230, 126, 34, 0.1); 
-        }
-
+        .auth-input:focus { border-color: #e67e22; background: #fff; }
+        
         .btn-primary { 
             background-color: #e67e22; 
             color: white; 
@@ -139,52 +109,155 @@
             font-size: 16px; 
             cursor: pointer; 
             transition: 0.3s; 
-            box-shadow: 0 5px 15px rgba(230, 126, 34, 0.2); 
         }
-        .btn-primary:hover { 
-            background-color: #d35400; 
-            transform: translateY(-2px); 
-        }
+        .btn-primary:hover { background-color: #d35400; }
 
+        /* --- لوحة التحكم المركزية الهادئة --- */
+        .main-header { background-color: #ffffff; padding: 20px; text-align: center; border-bottom: 1px solid #f2efea; display: none; }
+        .dashboard-container { max-width: 480px; width: 100%; margin: 25px auto; padding: 0 15px; display: none; }
+        
+        .panel-top-bar { display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px; }
+        .panel-title-label { font-size: 14px; color: #7f8c8d; font-weight: bold; }
+        .btn-add { background-color: #e67e22; color: white; border: none; padding: 8px 16px; border-radius: 20px; font-weight: bold; cursor: pointer; font-size: 12px; }
+
+        .device-card { background-color: #ffffff; border-radius: 20px; padding: 20px; margin-bottom: 15px; border: 1px solid #f2efea; }
+        .device-info-row { display: flex; justify-content: space-between; align-items: center; margin-bottom: 15px; }
+        .device-name { color: #2c3e50; font-size: 15px; font-weight: bold; }
+        .device-status { font-size: 12px; margin-top: 4px; }
+        
+        .btn-toggle { padding: 8px 16px; border: none; border-radius: 20px; font-weight: bold; cursor: pointer; font-size: 12px; }
+        .btn-toggle.lock { background-color: #fce4d6; color: #c0392b; }
+        .btn-toggle.unlock { background-color: #eafaf1; color: #2ecc71; }
+
+        .apps-container { background: #faf9f6; border-radius: 14px; padding: 12px; margin-top: 12px; }
+        .app-row { display: flex; justify-content: space-between; align-items: center; padding: 8px 0; border-bottom: 1px solid #f2efea; font-size: 13px; }
+        .app-row:last-child { border-bottom: none; }
+        .btn-block-app { background: #ffffff; border: 1px solid #f2efea; color: #e67e22; padding: 4px 12px; border-radius: 8px; font-size: 11px; cursor: pointer; font-weight: bold; }
     </style>
 </head>
 <body>
 
-    <div class="auth-card">
+    <div class="auth-container" id="authWrapper">
         
-        <div class="brand-section">
-            <div class="brand-logo">
-                <div class="logo-dots">
-                    <div class="logo-dot"></div>
-                    <div class="logo-dot"></div>
+        <div class="auth-card" id="phoneStep">
+            <div class="brand-section">
+                <div class="brand-logo">
+                    <div class="logo-dots"><div class="logo-dot"></div><div class="logo-dot"></div></div>
+                    <div class="logo-curve"></div>
                 </div>
-                <div class="logo-curve"></div>
+                <div class="brand-name-ar">نافادل</div>
+                <div class="brand-name-en">Nafadil</div>
             </div>
-            <div class="brand-name-ar">نافادل</div>
-            <div class="brand-name-en">Nafadil</div>
+            <p class="brand-desc">منصة التحكم الأبوية الذكية لأجهزة الأبناء<br>حماية، توجيه، واطمئنان.</p>
+            
+            <div class="input-group">
+                <label class="input-label">رقم الجوال المسجل:</label>
+                <input type="tel" id="phoneInput" class="auth-input" placeholder="05xxxxxxx">
+            </div>
+            <button class="btn-primary" onclick="goToPinStep()">إرسال رمز التحقق</button>
         </div>
 
-        <p class="brand-desc">منصة التحكم الأبوية الذكية لأجهزة الأبناء <br> حماية، توجيه، واطمئنان.</p>
-
-        <div class="input-group">
-            <label class="input-label" for="phoneInput">رقم الجوال المسجل:</label>
-            <input type="tel" id="phoneInput" class="auth-input" placeholder="05xxxxxxx" pattern="[0-5]{2}[0-9]{8}" required>
+        <div class="auth-card" id="pinStep" style="display: none;">
+            <div class="brand-section">
+                <div class="brand-logo">
+                    <div class="logo-dots"><div class="logo-dot"></div><div class="logo-dot"></div></div>
+                    <div class="logo-curve"></div>
+                </div>
+                <div class="brand-name-ar">نافادل</div>
+                <div class="brand-name-en">Nafadil</div>
+            </div>
+            <p class="brand-desc">أدخل الرمز السري الخاص باللوحة لإتمام الدخول</p>
+            
+            <div class="input-group">
+                <label class="input-label">رمز التحقق / PIN:</label>
+                <input type="password" id="pinInput" class="auth-input" placeholder="أدخل الرمز التجريبي 1234" maxlength="4">
+            </div>
+            <button class="btn-primary" onclick="loginToDashboard()">تأكيد الدخول</button>
         </div>
-
-        <button class="btn-primary" onclick="requestOTP()">إرسال رمز التحقق</button>
 
     </div>
 
+    <div class="main-header" id="mainHeader">
+        <div class="brand-section" style="margin-bottom: 0;">
+            <div class="brand-logo" style="transform: scale(0.75); margin-bottom: 5px;">
+                <div class="logo-dots"><div class="logo-dot"></div><div class="logo-dot"></div></div>
+                <div class="logo-curve"></div>
+            </div>
+            <div class="brand-name-ar" style="font-size: 22px;">نافادل • Nafadil</div>
+        </div>
+    </div>
+
+    <div class="dashboard-container" id="mainDashboard">
+        <div class="panel-top-bar">
+            <span class="panel-title-label">الأجهزة المتصلة بالحساب:</span>
+            <button class="btn-add">➕ إضافة جهاز</button>
+        </div>
+
+        <div class="device-card">
+            <div class="device-info-row">
+                <div>
+                    <div class="device-name">جهاز أحمد (أندرويد)</div>
+                    <div class="device-status" id="status-1">الحالة: <span style="color:#2ecc71; font-weight:bold;">مفتوح ومتصل</span></div>
+                </div>
+                <button class="btn-toggle lock" id="btn-1" onclick="toggleDevice(1)">قفل الجهاز</button>
+            </div>
+            
+            <div class="apps-container">
+                <div class="app-row">
+                    <span>🎮 لعبة PUBG Mobile</span>
+                    <button class="btn-block-app">حظر</button>
+                </div>
+                <div class="app-row">
+                    <span>🎬 تطبيق TikTok</span>
+                    <button class="btn-block-app">حظر</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
     <script>
-        function requestOTP() {
+        // الانتقال من خطوة الجوال إلى خطوة الرمز السري
+        function goToPinStep() {
             let phone = document.getElementById('phoneInput').value;
             if (phone.trim() === "" || phone.length < 9) {
-                alert("يرجى إدخال رقم جوال صحيح (05xxxxxxx).");
+                alert("يرجى إدخال رقم جوال صحيح أولاً.");
                 return;
             }
-            // محاكاة إرسال الرمز وتوجيه المستخدم (يمكن استبداله بطلب حقيقي لاحقاً)
-            alert("سيتم إرسال رمز التحقق المباشر إلى رقم الجوال: " + phone);
-            // window.location.href = 'verify.html'; // مثال للتوجيه لصفحة التحقق
+            document.getElementById('phoneStep').style.display = 'none';
+            document.getElementById('pinStep').style.display = 'block';
+        }
+
+        // التحقق من الرمز وفتح لوحة التحكم مباشرة
+        function loginToDashboard() {
+            let pin = document.getElementById('pinInput').value;
+            if (pin === '1234') {
+                // إخفاء شاشات التسجيل بالكامل
+                document.getElementById('authWrapper').style.display = 'none';
+                
+                // إظهار اللوحة والهيدر العلوي بنجاح
+                document.getElementById('mainHeader').style.display = 'block';
+                document.getElementById('mainDashboard').style.display = 'block';
+            } else {
+                alert('الرمز خاطئ. يرجى إدخال الرمز التجريبي: 1234');
+            }
+        }
+
+        // تشغيل زر الحظر والقفل التفاعلي داخل اللوحة
+        let isLocked = false;
+        function toggleDevice(id) {
+            let btn = document.getElementById(`btn-${id}`);
+            let status = document.getElementById(`status-${id}`);
+            if (!isLocked) {
+                btn.innerText = 'فتح الجهاز';
+                btn.className = "btn-toggle unlock";
+                status.innerHTML = 'الحالة: <span style="color:#e74c3c; font-weight:bold;">مغلق 🔒</span>';
+                isLocked = true;
+            } else {
+                btn.innerText = 'قفل الجهاز';
+                btn.className = "btn-toggle lock";
+                status.innerHTML = 'الحالة: <span style="color:#2ecc71; font-weight:bold;">مفتوح ومتصل</span>';
+                isLocked = false;
+            }
         }
     </script>
 </body>
