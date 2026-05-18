@@ -4,6 +4,8 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>نافادل | Nafadil</title>
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
+    <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
     <style>
         * { box-sizing: border-box; margin: 0; padding: 0; font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; }
         
@@ -30,14 +32,13 @@
             border: 1px solid #f2efea; 
         }
 
-        /* الهوية البصرية الرسمية السابقة لـ نافادل */
+        /* الهوية البصرية الرسمية */
         .brand-section { display: flex; flex-direction: column; align-items: center; margin-bottom: 25px; }
         .brand-logo { display: flex; flex-direction: column; align-items: center; position: relative; margin-bottom: 15px; }
         
-        /* ضبط النقاط لتعود للشكل الجانبي العمودي الأصلي */
         .logo-dots { position: absolute; top: -12px; right: 8px; display: flex; flex-direction: column; gap: 6px; }
         .logo-dot { width: 7px; height: 7px; background-color: #e67e22; border-radius: 50%; }
-        .logo-dot:nth-child(1) { margin-right: -12px; } /* نقطة علوية مزاحة يميناً */
+        .logo-dot:nth-child(1) { margin-right: -12px; }
         
         .logo-curve { width: 45px; height: 45px; border: 5px solid #e67e22; border-top: none; border-radius: 0 0 25px 25px; position: relative; margin-top: 15px; }
         
@@ -78,12 +79,16 @@
         .panel-title-label { font-size: 14px; color: #7f8c8d; font-weight: bold; }
         .btn-add { background-color: #e67e22; color: white; border: none; padding: 10px 18px; border-radius: 20px; font-weight: bold; cursor: pointer; font-size: 13px; }
 
+        /* كروت الأجهزة المدمج بها الخريطة */
         .device-card { background-color: #ffffff; border-radius: 20px; padding: 20px; margin-bottom: 15px; border: 1px solid #f2efea; text-align: right; }
         .device-info-row { display: flex; justify-content: space-between; align-items: center; margin-bottom: 15px; }
         .device-name { color: #2c3e50; font-size: 15px; font-weight: bold; }
         
         .btn-toggle { padding: 8px 16px; border: none; border-radius: 20px; font-weight: bold; cursor: pointer; font-size: 12px; }
         .btn-toggle.lock { background-color: #fce4d6; color: #c0392b; }
+
+        /* حاوية الخريطة التفاعلية */
+        .child-map-container { width: 100%; height: 180px; border-radius: 14px; margin-top: 12px; border: 1px solid #f2efea; z-index: 10; }
 
         .success-subscription-box { background-color: #eafaf1; border: 1px solid #2ecc71; border-radius: 20px; padding: 18px; margin-bottom: 20px; text-align: right; color: #27ae60; font-size: 14px; display: none; }
 
@@ -215,11 +220,11 @@
     <div class="dashboard-container" id="mainDashboard">
 
         <div class="success-subscription-box" id="successSubBox">
-            🎉 <strong>تم تفعيل الباقة واحتساب الاشتراك بنجاح!</strong> لوحتك جاهزة الآن بالكامل لحماية أجهزتهم.
+            🎉 <strong>تم تفعيل الباقة واحتساب الاشتراك بنجاح!</strong> لوحتك جاهزة الآن بالكامل لحماية أجهزتهم ومتابعتهم.
         </div>
 
         <div class="panel-top-bar">
-            <span class="panel-title-label">أجهزة أطفالك المحمية:</span>
+            <span class="panel-title-label">أجهزة أطفالك ومواقعهم الحية:</span>
             <button class="btn-add" onclick="openAddDeviceModal()">➕ ربط جهاز طفل جديد</button>
         </div>
 
@@ -228,10 +233,11 @@
                 <div class="device-info-row">
                     <div>
                         <div class="device-name">جهاز أحمد (أندرويد)</div>
-                        <div style="font-size: 12px; color: #2ecc71; font-weight: bold;">الحالة: محمي ونشط</div>
+                        <div style="font-size: 12px; color: #2ecc71; font-weight: bold;">📍 الموقع: نشط الآن (بطارية 88%)</div>
                     </div>
-                    <button class="btn-toggle lock" onclick="alert('تم قفل الجهاز بنجاح من الخادم الأبوي.')">قفل الجهاز</button>
+                    <button class="btn-toggle lock" onclick="updateMapLocation('map_default', 26.3290, 43.9650, 'أحمد تحرك لموقع جديد!')">تحديث الموقع</button>
                 </div>
+                <div id="map_default" class="child-map-container"></div>
             </div>
         </div>
 
@@ -251,7 +257,7 @@
                 </div>
                 <div class="plan-card featured" onclick="openPaymentModal('الذهبية')">
                     <div class="plan-header-row" style="color: #e67e22;"><span>الباقة الذهبية (الأكثر طلباً)</span><span>39 ريال / شهر</span></div>
-                    <div class="plan-features">أجهزة أطفال غير محدودة الربط • تقارير فورية • التحكم الكلي بالتطبيقات</div>
+                    <div class="plan-features">أجهزة أطفال غير محدودة الربط • تقارير فورية • التحكم الكلي بالتطبيقات • تتبع حي ومباشر</div>
                     <div class="split-pay-logos">
                         <span class="pay-text">قسّمها عبر:</span>
                         <span class="brand-badge-tabby">tabby</span>
@@ -288,7 +294,7 @@
             <div class="instruction-text" style="font-size: 13px; color: #34495e; margin-bottom: 15px; text-align: right; background: #faf9f6; padding: 10px; border-radius: 10px;">
                 💡 افتح تطبيق نافادل في جوال ابنك، واختر حساب <strong>(طفل)</strong> ثم أدخل هذا الكود ليرتبط بلوحتك مباشرة.
             </div>
-            <div class="code-display" id="generatedCodeTxt">9267</div>
+            <div class="code-display" id="generatedCodeTxt">0000</div>
             <button class="btn-primary" onclick="finalizeDeviceAddition()">تم الإدخال في جهاز الطفل بنجاح</button>
         </div>
     </div>
@@ -316,6 +322,7 @@
     <script>
         let parentSwapsCount = 3; 
         let currentSelectedPlan = "";
+        let mapObjects = {}; // لتخزين كائنات الخرائط والمؤشرات لكل طفل
 
         function selectRole(role) {
             document.getElementById('roleStep').style.display = 'none';
@@ -355,8 +362,37 @@
                 document.body.style.justifyContent = 'flex-start';
                 document.getElementById('mainHeader').style.display = 'block';
                 document.getElementById('mainDashboard').style.display = 'block';
+                
+                // تشغيل خريطة الطفل الافتراضية مباشرة بعد الدخول للوحة
+                setTimeout(() => {
+                    initSingleMap('map_default', 26.3256, 43.9612, 'أحمد متواجد هنا');
+                }, 200);
             } else {
                 alert('رمز التحقق خطأ. أدخل 1234 للتجربة.');
+            }
+        }
+
+        // دالة بناء الخريطة وتخزينها
+        function initSingleMap(mapId, lat, lng, popupText) {
+            if (document.getElementById(mapId)) {
+                let map = L.map(mapId).setView([lat, lng], 14);
+                L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+                    attribution: 'Nafadil ©'
+                }).addTo(map);
+                let marker = L.marker([lat, lng]).addTo(map).bindPopup(popupText).openPopup();
+                
+                // حفظ الخريطة والمؤشر للوصول لهما عند التحديث
+                mapObjects[mapId] = { map: map, marker: marker };
+            }
+        }
+
+        // دالة تحديث موقع الخريطة برمجياً وجلب الإحداثيات الجديدة
+        function updateMapLocation(mapId, newLat, newLng, alertMsg) {
+            if (mapObjects[mapId]) {
+                let obj = mapObjects[mapId];
+                obj.marker.setLatLng([newLat, newLng]);
+                obj.map.setView([newLat, newLng], 15);
+                alert(alertMsg);
             }
         }
 
@@ -370,7 +406,6 @@
             }
         }
 
-        // إظهار نافذة السداد مع التحذير والشروط
         function openPaymentModal(planName) {
             currentSelectedPlan = planName;
             document.getElementById('paymentModal').style.display = 'flex';
@@ -403,21 +438,30 @@
             document.getElementById('codeResultModal').style.display = 'flex';
         }
 
+        // عند تأكيد إضافة طفل جديد، يتم توليد حاوية وخريطة مخصصة له تلقائياً
         function finalizeDeviceAddition() {
             closeModal('codeResultModal');
             let list = document.getElementById('devicesList');
+            let newMapId = "map_" + Date.now(); // معرف فريد للخريطة الجديدة
+            
             let card = document.createElement('div');
             card.className = "device-card";
             card.innerHTML = `
                 <div class="device-info-row">
                     <div>
                         <div class="device-name">جهاز ${tempChildName}</div>
-                        <div style="font-size:12px; color:#2ecc71; font-weight:bold;">الحالة: محمي ونشط</div>
+                        <div style="font-size:12px; color:#2ecc71; font-weight:bold;">📍 الموقع: نشط (تم الربط التلقائي)</div>
                     </div>
-                    <button class="btn-toggle lock" onclick="alert('تم قفل الجهاز')">قفل الجهاز</button>
+                    <button class="btn-toggle lock" onclick="updateMapLocation('${newMapId}', 26.3300, 43.9700, 'تم تحديث موقع ${tempChildName} حيّاً!')">تحديث الموقع</button>
                 </div>
+                <div id="${newMapId}" class="child-map-container"></div>
             `;
             list.appendChild(card);
+            
+            // تشغيل خريطة الطفل الجديد فوراً بإحداثيات افتراضية دقيقة
+            setTimeout(() => {
+                initSingleMap(newMapId, 26.3256, 43.9612, `موقع ${tempChildName} الحالي`);
+            }, 200);
         }
 
         function showBanFeedback() {
