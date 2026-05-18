@@ -140,7 +140,7 @@
             font-weight: bold;
         }
 
-        /* --- لوحة التحكم --- */
+        /* --- لوحة التحكم المركزية --- */
         .dashboard-container { max-width: 480px; width: 100%; margin-top: 100px; padding: 0 15px 40px 15px; display: none; }
         
         .panel-top-bar { display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px; width: 100%; }
@@ -161,35 +161,36 @@
         .app-row:last-child { border-bottom: none; }
         .btn-block-app { background: #ffffff; border: 1px solid #f2efea; color: #e67e22; padding: 4px 12px; border-radius: 8px; font-size: 11px; cursor: pointer; font-weight: bold; }
 
-        /* --- قسم الباقات والاشتراكات المطوّر والتحفيزي --- */
+        /* حالة الاشتراك الناجح */
+        .success-subscription-box { background-color: #eafaf1; border: 1px solid #2ecc71; border-radius: 20px; padding: 18px; margin-bottom: 20px; text-align: right; color: #27ae60; font-size: 14px; display: none; }
+
+        /* --- قسم الفيديو والباقات --- */
         .pricing-section { background-color: #ffffff; border: 1px solid #f2efea; border-radius: 24px; padding: 22px 20px; margin-top: 25px; text-align: right; }
         
-        .pricing-motivation-box { background: #fffcf9; border: 1px dashed #e67e22; border-radius: 16px; padding: 15px; margin-bottom: 20px; text-align: center; }
-        .motivation-main-text { font-size: 15px; font-weight: bold; color: #d35400; margin-bottom: 5px; }
-        .motivation-sub-text { font-size: 12px; color: #27ae60; font-weight: bold; display: flex; align-items: center; justify-content: center; gap: 4px; }
+        /* صندوق الفيديو المطور كعنصر أمان وثقة */
+        .video-explainer-container { background: #fffcf9; border: 1px solid #f2efea; border-radius: 20px; padding: 15px; margin-bottom: 25px; text-align: center; }
+        .video-title { font-size: 14px; font-weight: bold; color: #2c3e50; margin-bottom: 12px; display: flex; align-items: center; justify-content: center; gap: 6px; }
+        .video-wrapper { width: 100%; position: relative; padding-bottom: 56.25%; height: 0; border-radius: 14px; overflow: hidden; border: 2px solid #e67e22; box-shadow: 0 8px 20px rgba(230, 126, 34, 0.05); }
+        .video-wrapper video, .video-wrapper iframe { position: absolute; top: 0; left: 0; width: 100%; height: 100%; border: none; }
 
         .pricing-title { font-size: 15px; font-weight: bold; color: #2c3e50; margin-bottom: 15px; display: flex; align-items: center; gap: 6px; }
         
         .plans-grid { display: flex; flex-direction: column; gap: 15px; margin-bottom: 10px; }
-        .plan-card { border: 1px solid #f2efea; border-radius: 18px; padding: 15px; background: #faf9f6; position: relative; transition: 0.3s; cursor: pointer; padding-left: 85px; }
+        .plan-card { border: 1px solid #f2efea; border-radius: 18px; padding: 15px; background: #faf9f6; position: relative; transition: 0.3s; cursor: pointer; }
         .plan-card.featured { border-color: #e67e22; background: #fffcf9; box-shadow: 0 4px 15px rgba(230, 126, 34, 0.05); }
         
-        /* شارات الباقات المحدثة */
         .plan-badge { position: absolute; top: 12px; left: 12px; background: #e67e22; color: #fff; font-size: 10px; padding: 3px 8px; border-radius: 10px; font-weight: bold; }
-        .free-trial-badge { position: absolute; bottom: 12px; left: 12px; background: #2ecc71; color: white; font-size: 10px; padding: 3px 8px; border-radius: 8px; font-weight: bold; }
         
         .plan-header-row { display: flex; justify-content: space-between; align-items: center; margin-bottom: 8px; }
         .plan-name { font-size: 14px; font-weight: bold; color: #2c3e50; }
-        .plan-price { font-size: 15px; font-weight: bold; color: #e67e22; padding-left: 10px; }
-        .plan-features { font-size: 12px; color: #7f8c8d; line-height: 1.4; padding-left: 10px; }
+        .plan-price { font-size: 15px; font-weight: bold; color: #e67e22; }
+        .plan-features { font-size: 12px; color: #7f8c8d; line-height: 1.4; }
         
-        /* بوابات الدفع تابي وتمارا */
         .split-pay-logos { display: flex; gap: 8px; margin-top: 10px; border-top: 1px solid #f2efea; padding-top: 10px; align-items: center; }
         .pay-text { font-size: 11px; color: #95a5a6; }
         .brand-badge-tabby { background: #c6f3e1; color: #117a55; font-size: 10px; padding: 2px 8px; border-radius: 6px; font-weight: bold; font-family: sans-serif; }
         .brand-badge-tamara { background: #fdebd0; color: #b7950b; font-size: 10px; padding: 2px 8px; border-radius: 6px; font-weight: bold; font-family: sans-serif; }
 
-        /* --- قسم الشكاوى والاقتراحات --- */
         .feedback-section { background-color: #ffffff; border: 1px solid #f2efea; border-radius: 20px; padding: 20px; margin-top: 20px; text-align: right; }
         .feedback-title { font-size: 14px; font-weight: bold; color: #e67e22; margin-bottom: 10px; display: flex; align-items: center; gap: 6px; }
         .feedback-textarea { width: 100%; height: 70px; padding: 12px; border: 1px solid #f2efea; border-radius: 12px; background: #faf9f6; resize: none; outline: none; font-size: 13px; transition: 0.3s; margin-bottom: 12px; }
@@ -197,7 +198,6 @@
         .btn-submit-feedback { background-color: #faf9f6; border: 1px solid #e67e22; color: #e67e22; padding: 8px 16px; border-radius: 12px; font-size: 12px; font-weight: bold; cursor: pointer; transition: 0.3s; }
         .btn-submit-feedback:hover { background-color: #e67e22; color: white; }
 
-        /* --- النوافذ المنبثقة (Modal) --- */
         .modal-overlay { position: fixed; top:0; left:0; width:100%; height:100%; background: rgba(0,0,0,0.4); z-index: 200; display: none; justify-content: center; align-items: center; }
         .modal-box { background: #ffffff; border-radius: 24px; padding: 30px 25px; max-width: 400px; width: 90%; text-align: center; box-shadow: 0 10px 30px rgba(0,0,0,0.1); border: 1px solid #f2efea; }
         .modal-title { font-size: 18px; font-weight: bold; color: #2c3e50; margin-bottom: 20px; display: flex; align-items: center; justify-content: center; gap: 8px; }
@@ -263,6 +263,11 @@
     </div>
 
     <div class="dashboard-container" id="mainDashboard">
+        
+        <div class="success-subscription-box" id="successSubBox">
+            🎉 <strong>تم تفعيل اشتراكك بنجاح!</strong> شكراً لثقتك في نافادل، يمكنك الآن البدء بإضافة وإدارة أجهزة أطفالك فوراً وحمايتهم.
+        </div>
+
         <div class="panel-top-bar">
             <span class="panel-title-label">الأجهزة المتصلة بحسابك:</span>
             <button class="btn-add" onclick="openAddDeviceModal()">➕ إضافة جهاز</button>
@@ -284,18 +289,19 @@
             </div>
         </div>
 
-        <div class="pricing-section">
+        <div class="pricing-section" id="pricingSection">
             
-            <div class="pricing-motivation-box">
-                <div class="motivation-main-text">🛡️ احمِ أطفالك اليوم.. فهم مستقبلك المشرق</div>
-                <div class="motivation-sub-text">🎁 اختر باقتك الآن وجرّب المزايا كاملة لمدة 3 أيام مجاناً!</div>
+            <div class="video-explainer-container">
+                <div class="video-title">🎥 تعرّف على طريقة عمل "نافادل" في دقيقة واحدة:</div>
+                <div class="video-wrapper">
+                    <iframe src="https://www.youtube.com/embed/dQw4w9WgXcQ" allowfullscreen></iframe>
+                </div>
             </div>
 
-            <div class="pricing-title">💎 باقات الاشتراك وترقية الحساب</div>
+            <div class="pricing-title">💎 باقات الاشتراك وترقية الحساب الرسمي</div>
             <div class="plans-grid">
                 
                 <div class="plan-card" onclick="triggerPayment('الفضية')">
-                    <span class="free-trial-badge">3 أيام مجاناً</span>
                     <div class="plan-header-row">
                         <span class="plan-name">الباقة الفضية</span>
                         <span class="plan-price">19 ريال / شهر</span>
@@ -305,7 +311,6 @@
 
                 <div class="plan-card featured" onclick="triggerPayment('الذهبية')">
                     <span class="plan-badge">الأكثر طلباً</span>
-                    <span class="free-trial-badge">3 أيام مجاناً</span>
                     <div class="plan-header-row">
                         <span class="plan-name" style="color: #e67e22;">الباقة الذهبية</span>
                         <span class="plan-price">39 ريال / شهر</span>
@@ -319,7 +324,6 @@
                 </div>
 
                 <div class="plan-card" onclick="triggerPayment('الماسية')">
-                    <span class="free-trial-badge">3 أيام مجاناً</span>
                     <div class="plan-header-row">
                         <span class="plan-name">الباقة الماسية</span>
                         <span class="plan-price">79 ريال / شهر</span>
@@ -366,19 +370,15 @@
     <div class="modal-overlay" id="codeResultModal">
         <div class="modal-box">
             <div class="modal-title" style="color: #e67e22;">🔗 كود ربط التطبيق</div>
-            
             <div class="instruction-text">
                 📌 <strong>طريقة التفعيل:</strong><br>
                 افتح تطبيق <strong>نافادل</strong> في جوال طفلك، ثم أدخل الكود الظاهر بالأسفل ليرتبط بلوحة تحكمك فوراً.
             </div>
-
             <div class="code-display" id="generatedCodeTxt">2479</div>
-
             <div class="assurance-box">
                 🛡️ <strong>طفلك الآن في أيدٍ أمينة...</strong><br>
                 نحن نسهر على حمايتهم وتوجيههم رقمياً لتستمتع أنت دائمًا براحة البال والاطمئنان.
             </div>
-
             <div class="modal-buttons">
                 <button class="btn-modal-action" onclick="finalizeDeviceAddition()">تم، تم إدخال الكود في جهاز الطفل</button>
             </div>
@@ -426,6 +426,18 @@
             } else {
                 alert('رمز التحقق غير صحيح، للتجربة أدخل: 1234');
             }
+        }
+
+        // معالجة عملية الدفع وإخفاء الفيديو والباقات معاً لإبقاء لوحة التحكم مخصصة للإدارة فقط
+        function triggerPayment(planName) {
+            alert(`سيتم توجيهك الآن لإتمام الدفع الآمن لباقة نافادل ${planName} عبر البوابة المختارة.`);
+            
+            // إخفاء قسم الباقات والفيديو بالكامل
+            document.getElementById('pricingSection').style.display = 'none';
+            document.getElementById('successSubBox').style.display = 'block';
+            
+            // رفع الصفحة للأعلى بسلاسة للتركيز على لوحة التحكم
+            window.scrollTo({top: 0, behavior: 'smooth'});
         }
 
         function openAddDeviceModal() {
@@ -481,13 +493,15 @@
         function toggleDevice(id) {
             let btn = document.getElementById(`btn-${id}`);
             let status = document.getElementById(`status-${id}`);
-            if (btn.className.contains("lock")) {
+            if (btn.classList.contains("lock")) {
                 btn.innerText = 'فتح الجهاز';
-                btn.className = "btn-toggle unlock";
+                btn.classList.remove("lock");
+                btn.classList.add("unlock");
                 status.innerHTML = 'الحالة: <span style="color:#c0392b; font-weight:bold;">مغلق 🔒</span>';
             } else {
                 btn.innerText = 'قفل الجهاز';
-                btn.className = "btn-toggle lock";
+                btn.classList.remove("unlock");
+                btn.classList.add("lock");
                 status.innerHTML = 'الحالة: <span style="color:#2ecc71; font-weight:bold;">مفتوح ومتصل</span>';
             }
         }
@@ -501,14 +515,6 @@
             alert("تم استلام ملاحظتك بنجاح في نظام نافادل! شكرًا لمساهمتك في تطوير المنصة.");
             document.getElementById('feedbackText').value = "";
         }
-
-        function triggerPayment(planName) {
-            alert(`بدأت فترة تجربتك المجانية (3 أيام) لباقة نافادل ${planName}! يمكنك الإلغاء في أي وقت، أو إكمال الدفع المريح لاحقاً عبر تابي وتمارا.`);
-        }
-        
-        DOMTokenList.prototype.contains = HTMLButtonElement.prototype.contains || function(className) {
-            return this.value.indexOf(className) !== -1 || this.className.indexOf(className) !== -1;
-        };
     </script>
 </body>
 </html>
