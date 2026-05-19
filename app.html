@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>نفادل العالمي — حماية خصوصية العائلة</title>
+<title>نفادل — نظام مراقبة الأطفال والتحكم</title>
 <link href="https://fonts.googleapis.com/css2?family=Tajawal:wght@300;400;500;700;800;900&display=swap" rel="stylesheet">
 <style>
   :root {
@@ -15,9 +15,13 @@
     --text-dark: #1A1A1A;
     --text-mid: #555;
     --text-soft: #999;
-    --iam-green: #006C35;
-    --blue-global: #1A73E8;
-    --green-success: #4CAF50;
+    --shadow-lg: 0 20px 60px rgba(200,90,26,0.15);
+    --green: #4CAF50;
+    --yellow: #FFB300;
+    --blue: #2196F3;
+    --purple: #9C27B0;
+    --bg-child: #FFF8F4;
+    --nafath-green: #006C35;
   }
   
   * { box-sizing: border-box; margin: 0; padding: 0; }
@@ -50,7 +54,19 @@
     flex-direction: column;
   }
   
-  .system-flow.active, .screen.active { display: flex; }
+  .system-flow.active, .screen.active {
+    display: flex;
+  }
+
+  @keyframes fadeIn {
+    from { opacity:0; transform:translateY(10px); }
+    to   { opacity:1; transform:translateY(0); }
+  }
+  
+  @keyframes pop {
+    from { opacity:0; transform:scale(0.97); }
+    to   { opacity:1; transform:scale(1); }
+  }
 
   .pill-card {
     background: white;
@@ -75,276 +91,994 @@
     box-shadow: 0 6px 18px rgba(200,90,26,0.3);
   }
   .btn-primary:active { transform: scale(0.97); }
-
-  .btn-iam {
-    background: var(--iam-green); color: white; border: none;
-    border-radius: 50px; padding: 16px 24px;
-    font-family: 'Tajawal', sans-serif; font-size: 15px; font-weight: 700;
-    cursor: pointer; width: 100%; margin-bottom: 10px;
-    display: flex; align-items: center; justify-content: center; gap: 8px;
-  }
-
-  .btn-global-verify {
-    background: var(--blue-global); color: white; border: none;
-    border-radius: 50px; padding: 16px 24px;
-    font-family: 'Tajawal', sans-serif; font-size: 15px; font-weight: 700;
-    cursor: pointer; width: 100%; margin-bottom: 10px;
-    display: flex; align-items: center; justify-content: center; gap: 8px;
-    box-shadow: 0 6px 18px rgba(26, 115, 232, 0.3);
+  
+  .btn-outline {
+    background: transparent; color: var(--orange);
+    border: 2px solid var(--orange); border-radius: 50px;
+    padding: 14px 24px; font-family: 'Tajawal', sans-serif;
+    font-size: 15px; font-weight: 600; cursor: pointer; width: 100%; margin-bottom: 10px;
   }
   
+  .btn-nafath {
+    background: var(--nafath-green); color: white; border: none;
+    border-radius: 50px; padding: 17px 24px;
+    font-family: 'Tajawal', sans-serif; font-size: 16px; font-weight: 700;
+    cursor: pointer; width: 100%; margin-bottom: 14px;
+    display: flex; align-items: center; justify-content: center; gap: 8px;
+    box-shadow: 0 6px 18px rgba(0,108,53,0.25);
+  }
+  .btn-nafath:active { transform: scale(0.97); }
+
   .input-label { font-size: 13px; font-weight: 600; color: var(--text-mid); margin-bottom: 7px; display: block; }
   .input-field {
-    width: 100%; padding: 14px 18px; border: 2px solid #EEE;
+    width: 100%; padding: 15px 18px; border: 2px solid #EEE;
     border-radius: 18px; font-family: 'Tajawal', sans-serif;
-    font-size: 15px; color: var(--text-dark); outline: none;
+    font-size: 16px; color: var(--text-dark); outline: none;
     text-align: right; direction: rtl; margin-bottom: 14px;
   }
   .input-field:focus { border-color: var(--orange); }
-
-  .global-input { text-align: left !important; direction: ltr !important; }
-
-  .identity-tabs { display: flex; gap: 10px; margin-bottom: 20px; }
-  .id-tab {
-    flex: 1; padding: 12px; border: 2px solid #EEE; border-radius: 14px;
-    text-align: center; font-weight: 700; font-size: 13px; cursor: pointer; color: var(--text-mid);
-  }
-  .id-tab.active { border-color: var(--orange); background: var(--orange-pale); color: var(--orange); }
   
+  .otp-wrap { display: flex; justify-content: center; gap: 12px; margin: 18px 0; direction: ltr; }
+  .otp-box {
+    width: 58px; height: 66px; border: 2.5px solid #EEE;
+    border-radius: 18px; font-size: 26px; font-weight: 800;
+    text-align: center; color: var(--orange); font-family: 'Tajawal', sans-serif; outline: none;
+  }
+  .otp-box:focus { border-color: var(--orange); }
+  
+  .choice-card {
+    background: var(--gray); border-radius: 22px; padding: 20px 18px;
+    margin-bottom: 12px; cursor: pointer; display: flex; align-items: center;
+    gap: 14px; border: 2px solid transparent; transition: all 0.2s;
+  }
+  .choice-card:active, .choice-card:hover { border-color: var(--orange); background: var(--orange-pale); }
+  .choice-icon {
+    width: 50px; height: 50px; background: var(--orange);
+    border-radius: 15px; display: flex; align-items: center;
+    justify-content: center; font-size: 22px; flex-shrink: 0;
+  }
+  .choice-text h3 { font-size: 16px; font-weight: 700; color: var(--text-dark); margin-bottom: 2px; }
+  .choice-text p  { font-size: 12px; color: var(--text-soft); }
+  
+  .device-card {
+    background: var(--gray); border-radius: 18px;
+    padding: 14px 16px; margin-bottom: 10px;
+    display: flex; align-items: center; gap: 12px;
+  }
+  .device-avatar {
+    width: 42px; height: 42px; background: var(--orange);
+    border-radius: 13px; display: flex; align-items: center;
+    justify-content: center; font-size: 20px; flex-shrink: 0;
+  }
+  .device-info h4 { font-size: 15px; font-weight: 700; color: var(--text-dark); }
+  .device-info p  { font-size: 11px; color: var(--text-soft); margin-top: 2px; }
+  .status-badge {
+    margin-right: auto; background: #E8F5E9; color: #2E7D32;
+    font-size: 11px; font-weight: 700; padding: 4px 10px; border-radius: 20px;
+  }
+  
+  .map-mock {
+    background: linear-gradient(135deg, #E8F0E8, #D4E4D4);
+    border-radius: 18px; height: 130px; margin-bottom: 14px;
+    position: relative; overflow: hidden;
+    display: flex; align-items: center; justify-content: center;
+  }
+  .map-grid {
+    position: absolute; inset: 0;
+    background-image:
+      linear-gradient(rgba(200,90,26,0.07) 1px, transparent 1px),
+      linear-gradient(90deg, rgba(200,90,26,0.07) 1px, transparent 1px);
+    background-size: 22px 22px;
+  }
+  .map-pin { position: relative; z-index: 2; display: flex; flex-direction: column; align-items: center; }
+  .map-pin-dot {
+    width: 18px; height: 18px; background: var(--orange);
+    border-radius: 50%; border: 3px solid white;
+    animation: pulse 2s infinite;
+  }
+  @keyframes pulse {
+    0%   { box-shadow: 0 0 0 0 rgba(200,90,26,0.5); }
+    70%  { box-shadow: 0 0 0 10px rgba(200,90,26,0); }
+    100% { box-shadow: 0 0 0 0 rgba(200,90,26,0); }
+  }
+  .map-label {
+    margin-top: 5px; background: white; padding: 3px 10px;
+    border-radius: 10px; font-size: 11px; font-weight: 700;
+    color: var(--orange); box-shadow: 0 2px 6px rgba(0,0,0,0.1);
+  }
+  
+  .video-card {
+    background: #1A1A1A; border-radius: 18px; height: 140px;
+    margin-bottom: 14px; display: flex; align-items: center;
+    justify-content: center; flex-direction: column; gap: 8px;
+    cursor: pointer; position: relative; overflow: hidden;
+  }
+  .video-card::before {
+    content: ''; position: absolute; inset: 0;
+    background: linear-gradient(135deg, rgba(200,90,26,0.5), transparent);
+  }
+  .play-btn {
+    width: 50px; height: 50px; background: white; border-radius: 50%;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 18px; position: relative; z-index: 2;
+    box-shadow: 0 4px 16px rgba(0,0,0,0.3);
+  }
+  .video-label { color: white; font-size: 13px; font-weight: 600; position: relative; z-index: 2; text-align: center; padding: 0 16px; }
+  
+  .sub-card {
+    border-radius: 20px; padding: 20px 18px; margin-bottom: 12px;
+    border: 2px solid #EEE; cursor: pointer; transition: all 0.2s; position: relative;
+  }
+  .sub-card.featured { border-color: var(--orange); background: var(--orange-pale); }
+  .sub-badge {
+    position: absolute; top: -10px; right: 18px;
+    background: var(--orange); color: white;
+    font-size: 11px; font-weight: 700; padding: 3px 10px; border-radius: 20px;
+  }
+  .sub-title { font-size: 17px; font-weight: 800; color: var(--text-dark); margin-bottom: 4px; }
+  .sub-price { font-size: 22px; font-weight: 800; color: var(--orange); margin-bottom: 8px; }
+  .sub-price span { font-size: 13px; font-weight: 400; color: var(--text-soft); }
+  .sub-features { font-size: 12px; color: var(--text-mid); line-height: 2; }
+  
+  .section-label { font-size: 12px; font-weight: 700; color: var(--text-soft); margin-bottom: 10px; margin-top: 14px; }
   .screen-title { font-size: 21px; font-weight: 800; color: var(--text-dark); text-align: center; margin-bottom: 5px; }
   .screen-sub   { font-size: 13px; color: var(--text-soft); text-align: center; margin-bottom: 22px; line-height: 1.6; }
-  .back-btn { background: none; border: none; color: white; font-size: 14px; font-family: 'Tajawal', sans-serif; cursor: pointer; font-weight: 600; margin-bottom: 16px; }
+  
+  .back-btn {
+    background: none; border: none; color: white; font-size: 14px;
+    font-family: 'Tajawal', sans-serif; cursor: pointer; font-weight: 600;
+    margin-bottom: 16px; display: flex; align-items: center; gap: 4px;
+  }
+  
+  .toggle-row { display: flex; align-items: center; justify-content: space-between; padding: 13px 0; border-bottom: 1px solid #F5F5F5; }
+  .toggle-label { font-size: 15px; font-weight: 600; color: var(--text-dark); }
+  .toggle-sub   { font-size: 11px; color: var(--text-soft); margin-top: 2px; }
+  .toggle {
+    width: 48px; height: 26px; background: var(--orange);
+    border-radius: 50px; position: relative; cursor: pointer; flex-shrink: 0;
+  }
+  .toggle::after {
+    content: ''; position: absolute; width: 20px; height: 20px;
+    background: white; border-radius: 50%; top: 3px; right: 3px; transition: right 0.2s;
+  }
+  .toggle.off { background: #DDD; }
+  .toggle.off::after { right: 25px; }
+  
+  .code-display { display: flex; justify-content: center; gap: 10px; margin: 18px 0; direction: ltr; }
+  .code-digit {
+    width: 56px; height: 64px; background: var(--orange-pale);
+    border-radius: 16px; display: flex; align-items: center;
+    justify-content: center; font-size: 28px; font-weight: 800; color: var(--orange);
+  }
+  
+  .notif-badge {
+    background: var(--orange-pale); border-radius: 14px;
+    padding: 11px 14px; margin-bottom: 10px;
+    display: flex; align-items: center; gap: 10px;
+  }
+  .notif-badge-text { font-size: 13px; color: var(--text-mid); font-weight: 600; }
+  
+  .tab-bar {
+    display: flex; justify-content: space-around;
+    padding: 12px 8px 18px; background: white;
+    border-top: 1px solid #F0F0F0;
+    margin: 0 -26px -24px; flex-shrink: 0;
+  }
+  .tab-item {
+    display: flex; flex-direction: column; align-items: center; gap: 3px;
+    cursor: pointer; opacity: 0.35; font-size: 10px;
+    color: var(--text-dark); font-weight: 600; transition: opacity 0.2s;
+  }
+  .tab-item.active { opacity: 1; color: var(--orange); }
+  .tab-icon { font-size: 20px; }
+  
+  .feedback-area {
+    width: 100%; min-height: 90px; border: 2px solid #EEE;
+    border-radius: 18px; padding: 14px; font-family: 'Tajawal', sans-serif;
+    font-size: 14px; resize: none; outline: none;
+    text-align: right; direction: rtl; margin-bottom: 14px;
+  }
+  .feedback-area:focus { border-color: var(--orange); }
   .spacer { flex: 1; }
 
-  .compliance-note {
-    background: #E8F0FE; border: 1px solid #D2E3FC; border-radius: 16px;
-    padding: 12px; font-size: 11px; color: #1967D2; line-height: 1.6; margin-bottom: 14px;
+  /* ── واجهة الطفل ── */
+  .child-header {
+    background: var(--orange);
+    padding: 48px 24px 20px;
+    border-radius: 0 0 36px 36px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+  }
+  .child-avatar {
+    width: 48px; height: 48px;
+    background: rgba(255,255,255,0.25);
+    border-radius: 50%;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 26px;
+    border: 2px solid rgba(255,255,255,0.4);
+  }
+  .child-greeting { text-align: center; }
+  .child-greeting .hi { color: rgba(255,255,255,0.8); font-size: 13px; }
+  .child-greeting .name { color: white; font-size: 20px; font-weight: 800; }
+  .child-logo { color: white; font-size: 28px; font-weight: 900; }
+
+  .time-section { display: flex; flex-direction: column; align-items: center; padding: 20px 24px 16px; }
+  .time-label { font-size: 13px; color: #999; font-weight: 600; margin-bottom: 10px; }
+  .time-circle-wrap { position: relative; display: inline-block; }
+  .time-circle-wrap svg { transform: rotate(-90deg); }
+  .time-ring-bg { fill: none; stroke: #F0E0D4; stroke-width: 10; }
+  .time-ring { fill: none; stroke: var(--orange); stroke-width: 10; stroke-linecap: round; stroke-dasharray: 283; stroke-dashoffset: 94; transition: stroke-dashoffset 1s ease; }
+  .time-center { position: absolute; inset: 0; display: flex; flex-direction: column; align-items: center; justify-content: center; }
+  .time-num { font-size: 38px; font-weight: 900; color: var(--orange); line-height: 1; }
+  .time-unit { font-size: 13px; color: #999; font-weight: 600; margin-top: 2px; }
+  .time-sub { font-size: 12px; color: #BBB; margin-top: 8px; }
+
+  .status-bar { display: flex; gap: 10px; padding: 0 24px; margin-bottom: 16px; }
+  .status-pill { flex: 1; background: white; border-radius: 18px; padding: 12px 14px; display: flex; align-items: center; gap: 8px; box-shadow: 0 2px 10px rgba(0,0,0,0.06); }
+  .status-pill-icon { font-size: 20px; }
+  .status-pill-text { font-size: 11px; color: #555; font-weight: 600; line-height: 1.4; }
+  .status-pill-text b { color: var(--orange); font-size: 14px; display: block; }
+
+  .apps-label { padding: 0 24px; font-size: 13px; font-weight: 700; color: #999; margin-bottom: 12px; }
+  .apps-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 14px; padding: 0 24px; }
+  .app-item { display: flex; flex-direction: column; align-items: center; gap: 6px; cursor: pointer; }
+  .app-icon { width: 62px; height: 62px; border-radius: 18px; display: flex; align-items: center; justify-content: center; font-size: 28px; box-shadow: 0 4px 12px rgba(0,0,0,0.12); transition: transform 0.15s; }
+  .app-icon:active { transform: scale(0.9); }
+  .app-name { font-size: 10px; color: #555; font-weight: 600; text-align: center; }
+
+  .dad-msg { margin: 14px 24px; background: white; border-radius: 20px; padding: 14px 16px; display: flex; align-items: center; gap: 12px; box-shadow: 0 2px 12px rgba(200,90,26,0.1); border-right: 4px solid var(--orange); }
+  .dad-msg-icon { font-size: 24px; }
+  .dad-msg-text { font-size: 13px; color: #555; font-weight: 600; line-height: 1.5; }
+  .dad-msg-text b { color: var(--orange); }
+
+  .request-btn { margin: 10px 24px 0; background: var(--orange); color: white; border: none; border-radius: 24px; padding: 16px; font-family: 'Tajawal', sans-serif; font-size: 16px; font-weight: 700; cursor: pointer; display: flex; align-items: center; justify-content: center; gap: 8px; box-shadow: 0 6px 20px rgba(200,90,26,0.35); transition: transform 0.15s; width: calc(100% - 48px); }
+  .request-btn:active { transform: scale(0.97); }
+
+  .locked-content { display: flex; flex-direction: column; align-items: center; padding: 40px 32px; text-align: center; }
+  .lock-icon-big { font-size: 90px; margin-bottom: 24px; animation: wobble 3s ease-in-out infinite; }
+  @keyframes wobble { 0%,100% { transform: rotate(-5deg); } 50% { transform: rotate(5deg); } }
+  .locked-title { font-size: 28px; font-weight: 900; color: white; margin-bottom: 10px; }
+  .locked-sub   { font-size: 15px; color: rgba(255,255,255,0.75); line-height: 1.7; margin-bottom: 36px; }
+  .locked-time-card { background: rgba(255,255,255,0.15); border-radius: 24px; padding: 20px 32px; margin-bottom: 28px; width: 100%; backdrop-filter: blur(10px); border: 1px solid rgba(255,255,255,0.2); }
+  .locked-time-label { color: rgba(255,255,255,0.7); font-size: 13px; margin-bottom: 4px; }
+  .locked-time-val   { color: white; font-size: 32px; font-weight: 900; }
+  .request-btn-locked { background: white; color: var(--orange); border: none; border-radius: 50px; padding: 18px 36px; font-family: 'Tajawal', sans-serif; font-size: 17px; font-weight: 800; cursor: pointer; display: flex; align-items: center; gap: 10px; box-shadow: 0 8px 30px rgba(0,0,0,0.2); transition: transform 0.15s; }
+  .request-btn-locked:active { transform: scale(0.97); }
+  .locked-stars { display: flex; gap: 6px; margin-top: 28px; opacity: 0.5; }
+  .star { font-size: 20px; animation: twinkle 2s ease-in-out infinite; }
+  .star:nth-child(2) { animation-delay: 0.4s; }
+  .star:nth-child(3) { animation-delay: 0.8s; }
+  @keyframes twinkle { 0%,100% { opacity:0.3; transform:scale(0.8); } 50% { opacity:1; transform:scale(1.1); } }
+
+  .request-content { display: flex; flex-direction: column; align-items: center; padding: 40px 32px; text-align: center; }
+  .sending-anim { font-size: 80px; margin-bottom: 24px; animation: float 2s ease-in-out infinite; }
+  @keyframes float { 0%,100% { transform: translateY(0); } 50% { transform: translateY(-12px); } }
+  .request-title { font-size: 26px; font-weight: 900; color: var(--orange); margin-bottom: 10px; }
+  .request-sub   { font-size: 15px; color: #888; line-height: 1.7; margin-bottom: 32px; }
+  .waiting-card { background: white; border-radius: 24px; padding: 24px; width: 100%; box-shadow: 0 4px 20px rgba(200,90,26,0.1); margin-bottom: 28px; }
+  .waiting-dots { display: flex; justify-content: center; gap: 8px; margin-top: 12px; }
+  .dot { width: 10px; height: 10px; background: var(--orange); border-radius: 50%; animation: bounce 1.2s ease-in-out infinite; }
+  .dot:nth-child(2) { animation-delay: 0.2s; }
+  .dot:nth-child(3) { animation-delay: 0.4s; }
+  @keyframes bounce { 0%,100% { transform:translateY(0); opacity:0.4; } 50% { transform:translateY(-8px); opacity:1; } }
+
+  .switch-system-btn {
+    margin-top: auto;
+    background: #eaeaea;
+    color: #333;
+    font-size: 11px;
+    padding: 6px;
+    border-radius: 8px;
+    text-align: center;
+    cursor: pointer;
+    font-weight: bold;
+    border: none;
   }
 
-  /* تصميم نافذة الشروط والأحكام المنبثقة */
-  .modal-overlay {
-    position: absolute; top: 0; left: 0; width: 100%; height: 100%;
-    background: rgba(0,0,0,0.5); display: none; align-items: flex-end; z-index: 100;
+  /* ── الوقت والأيام ── */
+  .time-picker-row {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    background: var(--gray);
+    border-radius: 16px;
+    padding: 12px 16px;
+    margin-bottom: 10px;
   }
-  .modal-overlay.active { display: flex; }
-  .modal-content {
-    background: white; border-radius: 40px 40px 0 0; width: 100%;
-    max-height: 75%; padding: 30px 24px; display: flex; flex-direction: column;
-    box-shadow: 0 -10px 30px rgba(0,0,0,0.15);
+  .time-picker-label {
+    font-size: 14px;
+    font-weight: 700;
+    color: var(--text-dark);
   }
-  .terms-box {
-    flex: 1; overflow-y: auto; background: var(--gray); border-radius: 20px;
-    padding: 16px; font-size: 12px; color: var(--text-mid); line-height: 1.7; margin-bottom: 20px;
+  .time-picker-label span {
+    font-size: 11px;
+    color: var(--text-soft);
+    display: block;
+    margin-top: 2px;
+    font-weight: 400;
   }
-  .terms-box h4 { font-size: 14px; color: var(--text-dark); margin-bottom: 8px; font-weight: 700; }
-  .terms-box::-webkit-scrollbar { width: 4px; }
-  .terms-box::-webkit-scrollbar-thumb { background: #CCC; border-radius: 4px; }
+  .time-select {
+    border: 2px solid var(--orange);
+    border-radius: 12px;
+    padding: 8px 12px;
+    font-family: 'Tajawal', sans-serif;
+    font-size: 15px;
+    font-weight: 700;
+    color: var(--orange);
+    background: white;
+    outline: none;
+    cursor: pointer;
+    direction: ltr;
+    text-align: center;
+  }
 
-  .check-wrap { display: flex; align-items: flex-start; gap: 10px; margin-bottom: 20px; width: 100%; }
-  .check-wrap input { width: 18px; height: 18px; accent-color: var(--orange); margin-top: 2px; cursor: pointer; }
-  .check-label { font-size: 12px; color: var(--text-dark); font-weight: 600; line-height: 1.5; cursor: pointer; user-select: none; }
-
-  /* تصميم لوحة التحكم للتصفح بعد التسجيل */
-  .dash-card {
-    background: var(--gray); border-radius: 20px; padding: 16px; margin-bottom: 12px;
-    display: flex; align-items: center; gap: 14px;
+  .days-section {
+    background: var(--gray);
+    border-radius: 16px;
+    padding: 14px 16px;
+    margin-bottom: 10px;
   }
-  .dash-icon { width: 44px; height: 44px; background: white; border-radius: 12px; display: flex; align-items: center; justify-content: center; font-size: 20px; }
+  .days-section-title {
+    font-size: 13px;
+    font-weight: 700;
+    color: var(--text-mid);
+    margin-bottom: 10px;
+  }
+  .days-grid {
+    display: flex;
+    gap: 6px;
+    flex-wrap: wrap;
+    justify-content: center;
+  }
+  .day-btn {
+    width: 40px;
+    height: 40px;
+    border-radius: 12px;
+    border: 2px solid #DDD;
+    background: white;
+    font-family: 'Tajawal', sans-serif;
+    font-size: 12px;
+    font-weight: 700;
+    color: var(--text-mid);
+    cursor: pointer;
+    transition: all 0.15s;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+  .day-btn.active {
+    background: var(--orange);
+    border-color: var(--orange);
+    color: white;
+    box-shadow: 0 3px 10px rgba(200,90,26,0.35);
+  }
+  .day-btn.free-day {
+    background: #E8F5E9;
+    border-color: #4CAF50;
+    color: #2E7D32;
+  }
+
+  .schedule-summary {
+    background: var(--orange-pale);
+    border: 1.5px solid var(--orange);
+    border-radius: 14px;
+    padding: 12px 14px;
+    margin-bottom: 10px;
+    font-size: 12px;
+    color: var(--text-mid);
+    line-height: 1.8;
+  }
+  .schedule-summary b { color: var(--orange); }
+
+  /* ── تنسيق القوانين والسياسات ── */
+  .legal-text-box {
+    background: var(--gray);
+    border-radius: 18px;
+    padding: 16px;
+    font-size: 13px;
+    color: var(--text-mid);
+    line-height: 1.7;
+    margin-bottom: 14px;
+    text-align: right;
+  }
+  .legal-text-box h4 {
+    color: var(--orange);
+    font-size: 14px;
+    font-weight: 700;
+    margin-bottom: 6px;
+    margin-top: 10px;
+  }
+  .legal-text-box h4:first-child { margin-top: 0; }
+  .legal-link-container {
+    text-align: center;
+    margin-top: 12px;
+    font-size: 13px;
+  }
+  .legal-link {
+    color: var(--orange);
+    font-weight: 700;
+    text-decoration: underline;
+    cursor: pointer;
+  }
 </style>
 </head>
 <body>
 
 <div class="phone">
 
-  <!-- التدفق الرئيسي الأساسي -->
+  <!-- التدفق المشترك -->
   <div class="system-flow active" id="flow-core">
+    
     <!-- S1: SPLASH -->
     <div class="screen active" id="s1">
       <div style="flex:1;display:flex;flex-direction:column;align-items:center;justify-content:center;padding:40px 28px;">
-        <div style="background:white;border-radius:36px;padding:40px 52px;margin-bottom:44px;display:flex;flex-direction:column;align-items:center;">
+        <div style="background:white;border-radius:36px;padding:40px 52px;margin-bottom:44px;display:flex;flex-direction:column;align-items:center;box-shadow:0 24px 70px rgba(0,0,0,0.18);">
           <div style="font-size:72px;font-weight:800;color:var(--orange);line-height:1.1;">ن</div>
-          <div style="font-size:30px;font-weight:700;color:var(--orange);margin-top:6px;">نفـادل</div>
-          <div style="font-size:12px;color:var(--text-soft);margin-top:4px;">Nafadil Parental Control</div>
+          <div style="font-size:30px;font-weight:700;color:var(--orange);margin-top:6px;letter-spacing:3px;">نفـادل</div>
+          <div style="font-size:14px;font-weight:400;color:var(--orange-light);margin-top:3px;letter-spacing:1px;">Nafadil</div>
         </div>
-        <button class="btn-primary" style="background:white;color:var(--orange);" onclick="showScreen('s2')">ابدأ الآن / Start</button>
+        <p style="color:rgba(255,255,255,0.85);font-size:15px;text-align:center;line-height:1.9;margin-bottom:52px;">
+          حماية أطفالك بين يديك<br>بسيط، آمن، وذكي
+        </p>
+        <button class="btn-primary" style="background:white;color:var(--orange);box-shadow:0 8px 30px rgba(0,0,0,0.15);" onclick="showScreen('s2')">
+          ابدأ الآن
+        </button>
       </div>
     </div>
 
     <!-- S2: CHOOSE ROLE -->
     <div class="screen" id="s2">
-      <div class="top-header"><div style="font-size:21px;font-weight:700;color:white;">Nafadil Gateway</div></div>
+      <div class="top-header">
+        <div style="display:flex;align-items:center;gap:8px;margin-bottom:4px;">
+          <div style="font-size:36px;font-weight:800;color:white;line-height:1;">ن</div>
+          <div style="font-size:21px;font-weight:700;color:white;letter-spacing:1px;">نفـادل</div>
+        </div>
+      </div>
       <div class="pill-card">
         <div class="screen-title">مرحباً بك 👋</div>
-        <div class="screen-sub">يرجى تحديد الدولة ونوع الحساب للتوجيه القانوني الصحيح</div>
-        
-        <div class="identity-tabs">
-          <div class="id-tab active" id="tab-sa" onclick="toggleRegion('sa')">🇸🇦 داخل المملكة</div>
-          <div class="id-tab" id="tab-global" onclick="toggleRegion('global')">🌐 دولي (Australia / Global)</div>
+        <div class="screen-sub">كيف تريد الدخول؟</div>
+        <div class="choice-card" onclick="switchSystem('parent')">
+          <div class="choice-icon">👨‍👧</div>
+          <div class="choice-text"><h3>ولي الأمر</h3><p>تحكم وراقب أجهزة أطفالك</p></div>
+          <div style="margin-right:auto;color:#CCC;font-size:18px;">‹</div>
         </div>
+        <div class="choice-card" onclick="switchSystem('child')">
+          <div class="choice-icon">👦</div>
+          <div class="choice-text"><h3>الابن / البنت</h3><p>ربط جهازك بحساب ولي الأمر</p></div>
+          <div style="margin-right:auto;color:#CCC;font-size:18px;">‹</div>
+        </div>
+        <div class="spacer"></div>
+        <div class="legal-link-container">
+          <span class="legal-link" onclick="showScreen('s-legal')">الشروط والأحكام وسياسة الخصوصية</span>
+        </div>
+        <p style="text-align:center;font-size:11px;color:var(--text-soft);margin-top:6px;">نفادل | بريدة، المملكة العربية السعودية</p>
+      </div>
+    </div>
 
-        <div style="background: var(--gray); border-radius: 22px; padding: 20px 18px; cursor: pointer;" onclick="enterParentFlow()">
-          <div style="font-size:16px; font-weight:700; color:var(--text-dark); margin-bottom:4px;">👨‍👧 حساب ولي الأمر (Parent Account)</div>
-          <div style="font-size:12px; color:var(--text-soft);">إعداد الأذونات والتحقق من الهوية الإلزامية</div>
+    <!-- S-LEGAL: الشروط والسياسات والقوانين -->
+    <div class="screen" id="s-legal">
+      <div class="top-header">
+        <button class="back-btn" onclick="showScreen('s2')">‹ رجوع</button>
+        <div style="color:white;font-size:21px;font-weight:800;margin-bottom:5px;">السياسات والقوانين</div>
+        <div style="color:rgba(255,255,255,0.7);font-size:13px;">الرجاء قراءة شروط استخدام نفادل</div>
+      </div>
+      <div class="pill-card">
+        <div class="scroll-area">
+          <div class="screen-title" style="font-size:18px; margin-bottom:12px;">الاتفاقية القانونية وحماية البيانات</div>
+          
+          <div class="legal-text-box">
+            <h4>1. شروط الاستخدام</h4>
+            <p>تطبيق نفادل مصمم خصيصاً لتمكين أولياء الأمور من الإشراف على أجهز الأبناء القصر وتوجيههم رقمياً. يمنع منعاً باتاً استخدام التطبيق لأي أغراض تجسسية أو مراقبة أشخاص بالغين دون إذن قانوني.</p>
+            
+            <h4>2. سياسة الخصوصية وحماية البيانات</h4>
+            <p>نحن في نفادل نلتزم بأعلى معايير حماية البيانات المعمول بها في المملكة العربية السعودية. يتم تشفير بيانات الموقع الجغرافي وتقارير التطبيقات ولا يتم مشاركتها أو بيعها لأي أطراف خارجية.</p>
+            
+            <h4>3. مسؤولية ولي الأمر</h4>
+            <p>يتحمل المشترك المسؤولية الكاملة عن سرية رمز الدخول PIN الخاص بلوحة التحكم وعن الأجهزة التي يتم ربطها تحت مظلة حسابه.</p>
+            
+            <h4>4. حدود المسؤولية</h4>
+            <p>نفادل أداة مساعدة للتربية الرقمية، ولا يتحمل التطبيق مسؤولية أي خلل ناتج عن سوء ضبط الإعدادات أو انقطاع الاتصال بالإنترنت في أجهزة الأطفال.</p>
+          </div>
+          
+          <div class="spacer"></div>
+          <button class="btn-primary" onclick="showScreen('s2')">موافق واغلاق</button>
         </div>
       </div>
     </div>
   </div>
 
-  <!-- تدفق الأب المطور دولياً والمحلي -->
+
+  <!-- تدفق الأب -->
   <div class="system-flow" id="flow-parent">
-    <!-- S3: AUTHENTICATION -->
+    
+    <!-- S3: PHONE -->
     <div class="screen" id="s3">
       <div class="top-header">
-        <button class="back-btn" onclick="exitToMainMenu()">‹ خروج / Back</button>
-        <div style="color:white;font-size:20px;font-weight:800;" id="auth-title">توثيق الحساب (نفاذ)</div>
+        <button class="back-btn" onclick="exitToMainMenu()">‹ خروج</button>
+        <div style="color:white;font-size:21px;font-weight:800;margin-bottom:5px;">تسجيل ولي الأمر</div>
+        <div style="color:rgba(255,255,255,0.7);font-size:13px;">أدخل عبر النفاذ الوطني أو رقم الجوال</div>
       </div>
       <div class="pill-card">
+        <!-- إضافة بوابة نفاذ الموحدة -->
+        <button class="btn-nafath" onclick="showScreen('s-nafath')">
+          <span>🔐</span> الدخول السريع عبر نفاذ
+        </button>
+        
+        <div style="text-align:center; margin: 10px 0; color:var(--text-soft); font-size:13px; font-weight:bold;">أو عن طريق الجوال</div>
+
+        <label class="input-label">رقم الجوال</label>
+        <input class="input-field" type="tel" placeholder="05xxxxxxxx" style="font-size:20px;text-align:center;letter-spacing:2px;">
+        <div class="spacer"></div>
+        <button class="btn-primary" onclick="showScreen('s4')">إرسال رمز التحقق 📱</button>
+        <p style="text-align:center;font-size:11px;color:var(--text-soft);">ستصلك رسالة SMS برمز التحقق</p>
+      </div>
+    </div>
+
+    <!-- S-NAFATH: واجهة النفاذ الوطني المستقلة -->
+    <div class="screen" id="s-nafath">
+      <div class="top-header">
+        <button class="back-btn" onclick="showScreen('s3')">‹ رجوع</button>
+        <div style="color:white;font-size:21px;font-weight:800;margin-bottom:5px;">النفاذ الوطني الموحد</div>
+        <div style="color:rgba(255,255,255,0.7);font-size:13px;">التحقق الرقمي الآمن لطلب تسجيل الدخول</div>
+      </div>
+      <div class="pill-card" style="align-items:center; justify-content:center;">
+        <div style="text-align:center; margin-bottom:20px;">
+          <div style="background:var(--nafath-green); color:white; width:80px; height:80px; border-radius:50%; display:flex; align-items:center; justify-content:center; font-size:32px; margin:0 auto 12px;">🛡️</div>
+          <div class="screen-title" style="color:var(--nafath-green);">تأكيد الهوية الرقمية</div>
+          <div class="screen-sub" style="margin-bottom:10px;">افتح تطبيق نفاذ على جوالك واختر الرقم التالي لتأكيد الهوية:</div>
+        </div>
+        
+        <!-- رقم نفاذ العشوائي للمحاكاة -->
+        <div style="font-size:58px; font-weight:900; color:var(--nafath-green); background:#E6F0EA; border:3px dashed var(--nafath-green); border-radius:24px; padding:10px 40px; margin-bottom:24px; letter-spacing:4px;">
+          58
+        </div>
+        
+        <div class="notif-badge" style="background:#E6F0EA; color:var(--nafath-green);">
+          <span>⏱️</span>
+          <div class="notif-badge-text" style="color:var(--nafath-green);">يرجى التأكيد خلال دقيقتين تجنباً لانتهاء صلاحية الطلب.</div>
+        </div>
+        
+        <div class="spacer"></div>
+        <button class="btn-primary" style="background:var(--nafath-green); box-shadow:0 6px 18px rgba(0,108,53,0.3);" onclick="showScreen('s5')">تم التأكيد في نفاذ 🔓</button>
+      </div>
+    </div>
+
+    <!-- S4: OTP -->
+    <div class="screen" id="s4">
+      <div class="top-header">
+        <button class="back-btn" onclick="showScreen('s3')">‹ رجوع</button>
+        <div style="color:white;font-size:21px;font-weight:800;margin-bottom:5px;">رمز التحقق</div>
+        <div style="color:rgba(255,255,255,0.7);font-size:13px;">أدخل الرمز المرسل لجوالك</div>
+      </div>
+      <div class="pill-card">
+        <div style="text-align:center;font-size:50px;margin-bottom:12px;">✉️</div>
+        <div class="screen-title">تحقق من جوالك</div>
+        <div class="screen-sub">رمز مكون من 4 أرقام أُرسل إلى جوالك</div>
+        <div class="otp-wrap">
+          <input class="otp-box parent-otp" maxlength="1" type="tel">
+          <input class="otp-box parent-otp" maxlength="1" type="tel">
+          <input class="otp-box parent-otp" maxlength="1" type="tel">
+          <input class="otp-box parent-otp" maxlength="1" type="tel">
+        </div>
+        <div class="spacer"></div>
+        <button class="btn-primary" onclick="showScreen('s5')">تحقق وأدخل</button>
+        <button class="btn-outline" onclick="showScreen('s3')">إعادة إرسال الرمز</button>
+      </div>
+    </div>
+
+    <!-- S5: SET PIN -->
+    <div class="screen" id="s5">
+      <div class="top-header">
+        <div style="color:white;font-size:21px;font-weight:800;margin-bottom:5px;">رمز الدخول السري 🔐</div>
+        <div style="color:rgba(255,255,255,0.7);font-size:13px;">حدد رمزاً سرياً لكل دخول</div>
+      </div>
+      <div class="pill-card">
+        <div class="screen-sub" style="margin-bottom:6px;">أدخل رمزاً من 4 أرقام</div>
+        <div class="otp-wrap">
+          <input class="otp-box parent-otp" maxlength="1" type="tel">
+          <input class="otp-box parent-otp" maxlength="1" type="tel">
+          <input class="otp-box parent-otp" maxlength="1" type="tel">
+          <input class="otp-box parent-otp" maxlength="1" type="tel">
+        </div>
+        <div class="screen-sub" style="margin-bottom:6px;">أعد الإدخال للتأكيد</div>
+        <div class="otp-wrap">
+          <input class="otp-box parent-otp" maxlength="1" type="tel">
+          <input class="otp-box parent-otp" maxlength="1" type="tel">
+          <input class="otp-box parent-otp" maxlength="1" type="tel">
+          <input class="otp-box parent-otp" maxlength="1" type="tel">
+        </div>
+        <div class="spacer"></div>
+        <button class="btn-primary" onclick="showScreen('s6')">حفظ الرمز السري ✅</button>
+      </div>
+    </div>
+
+    <!-- S6: DASHBOARD -->
+    <div class="screen" id="s6">
+      <div class="top-header" style="padding-bottom:0;">
+        <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:4px;">
+          <div style="font-size:24px;cursor:pointer;" onclick="showScreen('s10')">🔔</div>
+          <div style="color:white;font-size:17px;font-weight:700;">لوحة التحكم</div>
+          <div style="font-size:28px;font-weight:800;color:white;line-height:1;">ن</div>
+        </div>
+        <div style="color:rgba(255,255,255,0.8);font-size:13px;text-align:center;margin-bottom:10px;">مرحباً، يوسف 👋</div>
+      </div>
+      <div class="pill-card" style="padding-top:20px;">
         <div class="scroll-area">
-          
-          <!-- مسار السعودية التلقائي -->
-          <div id="panel-sa-auth">
-            <div class="screen-sub">يرجى تسجيل الدخول الآمن لربط أبنائك داخل المملكة</div>
-            <button class="btn-iam" onclick="alert('محاكاة النفاذ الوطني: تم التحقق والمطابقة الحكومية بنجاح!')">🟢 التوثيق عبر نفاذ الموحد</button>
-            <label class="input-label" style="margin-top:15px;">رقم الجوال</label>
-            <input class="input-field" type="tel" placeholder="05xxxxxxxx" id="sa-phone-input">
-          </div>
-
-          <!-- مسار أستراليا والعالم (امتثال COPPA & FTC) -->
-          <div id="panel-global-auth" style="display: none;">
-            <div class="compliance-note">
-              🇦🇺 <b>COPPA & Online Safety Act Compliance:</b><br>
-              To protect children's privacy, international regulations require verifiable parental consent (VPC) before active tracking.
-            </div>
-
-            <label class="input-label">Email Address</label>
-            <input class="input-field global-input" type="email" placeholder="parent@domain.com">
-
-            <label class="input-label">🔒 Credit Card Verification (No Charge)</label>
-            <div class="compliance-note" style="background:#FFF8E1; border-color:#FFE082; color:#B78103; font-size:10px;">
-              A temporary $0.50 holding fee (instantly refunded) is required by global app stores to verify adult identity.
-            </div>
-            <input class="input-field global-input" type="text" placeholder="Cardholder Name">
-            <input class="input-field global-input" type="password" placeholder="Card Number">
-            
-            <div style="display:flex; gap:10px;">
-              <input class="input-field global-input" style="flex:1;" placeholder="MM/YY">
-              <input class="input-field global-input" style="flex:1;" placeholder="CVC">
+          <div class="section-label">📍 موقع الأطفال</div>
+          <div class="map-mock">
+            <div class="map-grid"></div>
+            <div class="map-pin">
+              <div class="map-pin-dot"></div>
+              <div class="map-label">نورة — بريدة</div>
             </div>
           </div>
-
-          <div class="spacer" style="min-height:20px;"></div>
-          <!-- الضغط هنا يفتح الشروط للتحقق النهائي والدخول -->
-          <button class="btn-primary" onclick="openTermsModal()">متابعة وتأكيد الحساب</button>
+          <div class="section-label">📱 الأجهزة المرتبطة</div>
+          <div class="device-card">
+            <div class="device-avatar">👧</div>
+            <div class="device-info"><h4>نورة</h4><p>آيباد — نشط الآن</p></div>
+            <div class="status-badge">نشط</div>
+          </div>
+          <div class="device-card">
+            <div class="device-avatar">👦</div>
+            <div class="device-info"><h4>محمد</h4><p>آيفون — منذ ساعة</p></div>
+            <div class="status-badge">نشط</div>
+          </div>
+          <div class="section-label">🎬 شرح الاستخدام</div>
+          <div class="video-card">
+            <div class="play-btn">▶</div>
+            <div class="video-label">كيف تضيف جهاز طفلك وتستخدم نفادل</div>
+          </div>
+          <div class="section-label">⭐ الاشتراكات</div>
+          <div class="sub-card">
+            <div class="sub-title">مجاني</div>
+            <div class="sub-price">0 ريال <span>/ شهر</span></div>
+            <div class="sub-features">✅ جهاز واحد &nbsp; ✅ تتبع الموقع<br>❌ تقارير مفصّلة &nbsp; ❌ حظر التطبيقات</div>
+          </div>
+          <div class="sub-card featured">
+            <div class="sub-badge">الأكثر طلباً ⭐</div>
+            <div class="sub-title">عائلي</div>
+            <div class="sub-price">29 ريال <span>/ شهر</span></div>
+            <div class="sub-features">✅ حتى 5 أجهزة<br>✅ تقارير يومية<br>✅ حظر التطبيقات<br>✅ وضع النوم التلقائي</div>
+          </div>
+          <div class="sub-card">
+            <div class="sub-title">سنوي</div>
+            <div class="sub-price">199 ريال <span>/ سنة</span></div>
+            <div class="sub-features">✅ كل مزايا العائلي<br>✅ أجهزة غير محدودة<br>✅ دعم أولوية</div>
+          </div>
+          <div class="section-label">🔔 تنبيهات</div>
+          <div class="notif-badge">
+            <span style="font-size:18px;">⚠️</span>
+            <div class="notif-badge-text">نورة تطلب وقتاً إضافياً</div>
+          </div>
+          <div class="notif-badge">
+            <span style="font-size:18px;">📱</span>
+            <div class="notif-badge-text">محمد حمّل تطبيقاً جديداً</div>
+          </div>
+          <button class="btn-primary" style="margin-top:16px;margin-bottom:6px;" onclick="showScreen('s7')">إضافة جهاز طفل ➕</button>
+          <button class="switch-system-btn" onclick="exitToMainMenu()">⚙️ تغيير الحساب والعودة للرئيسية</button>
+          <div style="height:10px;"></div>
+        </div>
+        <div class="tab-bar">
+          <div class="tab-item active" onclick="showScreen('s6')"><div class="tab-icon">🏠</div>الرئيسية</div>
+          <div class="tab-item" onclick="showScreen('s7')"><div class="tab-icon">📱</div>الأجهزة</div>
+          <div class="tab-item"><div class="tab-icon">📊</div>التقارير</div>
+          <div class="tab-item" onclick="showScreen('s10')"><div class="tab-icon">💬</div>الدعم</div>
         </div>
       </div>
     </div>
 
-    <!-- S4: DASHBOARD (لوحة التحكم للتصفح بعد النجاح) -->
-    <div class="screen" id="s4">
+    <!-- S7: ADD DEVICE — مع الوقت والأيام -->
+    <div class="screen" id="s7">
       <div class="top-header">
-        <div style="color:white;font-size:22px;font-weight:900;margin-bottom:4px;">لوحة التحكم الأبوية 📊</div>
-        <div style="color:rgba(255,255,255,0.8);font-size:13px;">مرحباً بك في نفادل — حالة أجهزة الأبناء</div>
+        <button class="back-btn" onclick="showScreen('s6')">‹ رجوع</button>
+        <div style="color:white;font-size:21px;font-weight:800;margin-bottom:5px;">إضافة جهاز طفل</div>
+        <div style="color:rgba(255,255,255,0.7);font-size:13px;">شارك هذا الرمز مع طفلك</div>
       </div>
       <div class="pill-card">
         <div class="scroll-area">
-          <div style="background:var(--orange-pale); border:1px solid var(--orange-light); border-radius:20px; padding:16px; margin-bottom:20px; text-align:center;">
-            <span style="color:var(--orange); font-weight:700; font-size:14px;">جهاز (الطفل 1) متصل ومحمي بنجاح 🟢</span>
+
+          <div class="screen-sub" style="margin-bottom:6px;">الرمز الخاص بجهاز الطفل</div>
+          <div class="code-display">
+            <div class="code-digit">7</div><div class="code-digit">3</div>
+            <div class="code-digit">9</div><div class="code-digit">1</div>
+          </div>
+          <div class="notif-badge" style="margin-bottom:14px;">
+            <span style="font-size:18px;">📋</span>
+            <div class="notif-badge-text">اطلب من طفلك فتح نفادل وإدخال هذا الرمز</div>
           </div>
 
-          <div class="dash-card">
-            <div class="dash-icon">📍</div>
-            <div style="flex:1;">
-              <h4 style="font-size:15px; font-weight:700; color:var(--text-dark);">تتبع الموقع الجغرافي الفوري</h4>
-              <p style="font-size:12px; color:var(--text-soft);">آخر تحديث: قبل دقيقة واحدة</p>
+          <label class="input-label">اسم الطفل</label>
+          <input class="input-field" type="text" placeholder="مثال: نورة">
+
+          <!-- ── وقت القفل والفتح ── -->
+          <div class="section-label">⏰ جدول القفل التلقائي</div>
+
+          <div class="time-picker-row">
+            <div class="time-picker-label">
+              🌙 وقت القفل
+              <span>الجهاز يقفل تلقائياً</span>
+            </div>
+            <select class="time-select" id="lock-time" onchange="updateSummary()">
+              <option value="19:00">7:00 م</option>
+              <option value="20:00">8:00 م</option>
+              <option value="21:00">9:00 م</option>
+              <option value="22:00">10:00 م</option>
+              <option value="23:00">11:00 م</option>
+            </select>
+          </div>
+
+          <div class="time-picker-row">
+            <div class="time-picker-label">
+              ☀️ وقت الفتح
+              <span>الجهاز يفتح صباحاً</span>
+            </div>
+            <select class="time-select" id="unlock-time" onchange="updateSummary()">
+              <option value="06:00">6:00 ص</option>
+              <option value="07:00" selected>7:00 ص</option>
+              <option value="08:00">8:00 ص</option>
+              <option value="09:00">9:00 ص</option>
+            </select>
+          </div>
+
+          <!-- ── أيام الأسبوع ── -->
+          <div class="days-section">
+            <div class="days-section-title">📅 أيام تطبيق الجدول — اضغط لتفعيل/إلغاء</div>
+            <div class="days-grid">
+              <button class="day-btn active" onclick="toggleDay(this,'الأحد')">أحد</button>
+              <button class="day-btn active" onclick="toggleDay(this,'الاثنين')">اثنين</button>
+              <button class="day-btn active" onclick="toggleDay(this,'الثلاثاء')">ثلاثاء</button>
+              <button class="day-btn active" onclick="toggleDay(this,'الأربعاء')">أربعاء</button>
+              <button class="day-btn active" onclick="toggleDay(this,'الخميس')">خميس</button>
+              <button class="day-btn free-day" onclick="toggleDay(this,'الجمعة')">جمعة</button>
+              <button class="day-btn free-day" onclick="toggleDay(this,'السبت')">سبت</button>
+            </div>
+            <div style="margin-top:10px;font-size:11px;color:#999;text-align:center;">
+              🟢 أخضر = يوم إجازة (بدون قفل) &nbsp;|&nbsp; 🟠 برتقالي = يوم دراسي (مقيّد)
             </div>
           </div>
 
-          <div class="dash-card">
-            <div class="dash-icon">⏳</div>
-            <div style="flex:1;">
-              <h4 style="font-size:15px; font-weight:700; color:var(--text-dark);">التحكم بوقت الشاشة</h4>
-              <p style="font-size:12px; color:var(--text-soft);">متبقي ساعتان و30 دقيقة لهذا اليوم</p>
-            </div>
+          <!-- ملخص الجدول -->
+          <div class="schedule-summary" id="schedule-summary">
+            📋 <b>ملخص الجدول:</b><br>
+            🔒 يقفل الساعة <b id="sum-lock">7:00 م</b> ويفتح الساعة <b id="sum-unlock">7:00 ص</b><br>
+            📅 أيام التقييد: <b id="sum-days">الأحد، الاثنين، الثلاثاء، الأربعاء، الخميس</b><br>
+            🎉 أيام الإجازة: <b id="sum-free">الجمعة، السبت</b>
           </div>
 
-          <div class="dash-card">
-            <div class="dash-icon">🚫</div>
-            <div style="flex:1;">
-              <h4 style="font-size:15px; font-weight:700; color:var(--text-dark);">جدار حماية التطبيقات والألعاب</h4>
-              <p style="font-size:12px; color:var(--text-soft);">تم حظر 3 تطبيقات غير مناسبة تلقائياً</p>
-            </div>
+          <!-- الصلاحيات -->
+          <div class="section-label">🛡️ الصلاحيات</div>
+          <div class="toggle-row">
+            <div><div class="toggle-label">📍 تتبع الموقع</div><div class="toggle-sub">معرفة مكان الطفل دائماً</div></div>
+            <div class="toggle"></div>
+          </div>
+          <div class="toggle-row">
+            <div><div class="toggle-label">📱 حظر التطبيقات</div><div class="toggle-sub">مراجعة التطبيقات الجديدة</div></div>
+            <div class="toggle"></div>
+          </div>
+          <div class="toggle-row">
+            <div><div class="toggle-label">🌙 وضع النوم التلقائي</div><div class="toggle-sub">حسب الجدول المحدد أعلاه</div></div>
+            <div class="toggle"></div>
+          </div>
+          <div class="toggle-row">
+            <div><div class="toggle-label">⏰ وقت الاستخدام اليومي</div><div class="toggle-sub">حدد عدد الساعات</div></div>
+            <div class="toggle"></div>
           </div>
 
-          <div class="spacer" style="min-height:30px;"></div>
-          <button class="btn-primary" style="background:#222; box-shadow:none;" onclick="exitToMainMenu()">تسجيل الخروج</button>
+          <div style="height:14px;"></div>
+          <button class="btn-primary" onclick="showScreen('s6')">تأكيد الإضافة ✅</button>
         </div>
+      </div>
+    </div>
+
+    <!-- S10: SUPPORT -->
+    <div class="screen" id="s10">
+      <div class="top-header">
+        <button class="back-btn" onclick="showScreen('s6')">‹ رجوع</button>
+        <div style="color:white;font-size:21px;font-weight:800;margin-bottom:5px;">الشكاوي والاقتراحات</div>
+        <div style="color:rgba(255,255,255,0.7);font-size:13px;">رأيك يطورنا 💡</div>
+      </div>
+      <div class="pill-card">
+        <div class="choice-card" style="margin-bottom:10px;">
+          <div class="choice-icon">🐛</div>
+          <div class="choice-text"><h3>الإبلاغ عن مشكلة</h3><p>واجهت خللاً في التطبيق?</p></div>
+        </div>
+        <div class="choice-card" style="margin-bottom:18px;">
+          <div class="choice-icon">💡</div>
+          <div class="choice-text"><h3>اقتراح فكرة</h3><p>عندك فكرة تطور التطبيق؟</p></div>
+        </div>
+        <label class="input-label">اكتب رسالتك</label>
+        <textarea class="feedback-area" placeholder="اكتب هنا..."></textarea>
+        <div class="spacer"></div>
+        <button class="btn-primary">إرسال ✉️</button>
+        <p style="text-align:center;font-size:11px;color:var(--text-soft);margin-top:8px;">يوسف الشلاحي | نفادل — بريدة</p>
       </div>
     </div>
   </div>
 
-  <!-- نافذة الشروط والأحكام المنبثقة (Modal) -->
-  <div class="modal-overlay" id="terms-modal">
-    <div class="modal-content">
-      <div class="screen-title" style="font-size:18px; margin-bottom:12px;" id="terms-title">الشروط والأحكام وسياسة الخصوصية</div>
-      
-      <div class="terms-box" id="terms-text-container">
-        <!-- النصوص التلقائية حسب الدولة -->
-      </div>
 
-      <!-- الحل البرمجي: تم ربط الحدث بـ onchange داخل عنصر input مباشرة لإنهاء مشكلة التكرار والتجميد -->
-      <div class="check-wrap">
-        <input type="checkbox" id="terms-check" onchange="validateTermsState()">
-        <label class="check-label" for="terms-check" id="check-label-text">أوافق على الشروط والأحكام وسياسة حماية البيانات الشخصية.</label>
+  <!-- تدفق الابن -->
+  <div class="system-flow" id="flow-child" style="background: linear-gradient(170deg, #FFF3EB 0%, #FFF8F4 60%, #FFF0E0 100%);">
+    
+    <!-- S8: CHILD ENTER CODE -->
+    <div class="screen" id="s8">
+      <div class="top-header">
+        <button class="back-btn" onclick="exitToMainMenu()">‹ خروج</button>
+        <div style="color:white;font-size:21px;font-weight:800;margin-bottom:5px;">ربط الجهاز 📱</div>
+        <div style="color:rgba(255,255,255,0.7);font-size:13px;">أدخل الرمز اللي أعطاك إياه ولي أمرك</div>
       </div>
-
-      <button class="btn-primary" id="btn-submit-final" onclick="processFinalRegistration()" disabled style="background:#CCC; box-shadow:none;">تأكيد وإنشاء الحساب</button>
+      <div class="pill-card">
+        <div style="text-align:center;font-size:56px;margin-bottom:14px;">👦</div>
+        <div class="screen-title">أهلاً!</div>
+        <div class="screen-sub">أدخل الرمز المكون من 4 أرقام</div>
+        <div class="otp-wrap">
+          <input class="otp-box child-otp" maxlength="1" type="tel">
+          <input class="otp-box child-otp" maxlength="1" type="tel">
+          <input class="otp-box child-otp" maxlength="1" type="tel">
+          <input class="otp-box child-otp" maxlength="1" type="tel">
+        </div>
+        <div class="spacer"></div>
+        <button class="btn-primary" onclick="showScreen('s9')">ربط الجهاز</button>
+      </div>
     </div>
+
+    <!-- S9: CHILD PERMISSIONS -->
+    <div class="screen" id="s9">
+      <div class="top-header">
+        <div style="color:white;font-size:21px;font-weight:800;margin-bottom:5px;">موافقة الصلاحيات</div>
+        <div style="color:rgba(255,255,255,0.7);font-size:13px;">ولي أمرك يطلب هذه الصلاحيات</div>
+      </div>
+      <div class="pill-card">
+        <div style="text-align:center;font-size:46px;margin-bottom:14px;">🔐</div>
+        <div class="screen-title">طلب من ولي الأمر</div>
+        <div class="screen-sub">يحتاج نفادل لهذه الأذونات لحمايتك</div>
+        <div class="toggle-row">
+          <div><div class="toggle-label">📍 الوصول للموقع</div><div class="toggle-sub">دائمًا</div></div>
+          <div style="color:var(--orange);font-size:12px;font-weight:700;">مطلوب</div>
+        </div>
+        <div class="toggle-row">
+          <div><div class="toggle-label">📱 مراقبة التطبيقات</div><div class="toggle-sub">إشعار عند تحميل تطبيق</div></div>
+          <div style="color:var(--orange);font-size:12px;font-weight:700;">مطلوب</div>
+        </div>
+        <div class="toggle-row">
+          <div><div class="toggle-label">⏰ وقت الشاشة</div><div class="toggle-sub">التحكم في وقت الاستخدام</div></div>
+          <div style="color:var(--orange);font-size:12px;font-weight:700;">مطلوب</div>
+        </div>
+        <div class="spacer"></div>
+        <button class="btn-primary" onclick="showScreen('child-dashboard')">أوافق على الكل ✅</button>
+        <p style="text-align:center;font-size:11px;color:var(--text-soft);margin-top:8px;">الموافقة إجبارية لاستخدام التطبيق</p>
+      </div>
+    </div>
+
+    <!-- CHILD HOME DASHBOARD -->
+    <div class="screen" id="child-dashboard" style="background: linear-gradient(170deg, #FFF3EB 0%, #FFF8F4 60%, #FFF0E0 100%); overflow-y: auto;">
+      <div class="child-header">
+        <div class="child-avatar">👧</div>
+        <div class="child-greeting">
+          <div class="hi">أهلاً وسهلاً</div>
+          <div class="name">نورة 🌸</div>
+        </div>
+        <div class="child-logo">ن</div>
+      </div>
+      <div class="time-section">
+        <div class="time-label">⏰ وقتك المتبقي اليوم</div>
+        <div class="time-circle-wrap">
+          <svg width="140" height="140" viewBox="0 0 100 100">
+            <circle class="time-ring-bg" cx="50" cy="50" r="45"/>
+            <circle class="time-ring" cx="50" cy="50" r="45"/>
+          </svg>
+          <div class="time-center">
+            <div class="time-num">١:٣٠</div>
+            <div class="time-unit">ساعة</div>
+          </div>
+        </div>
+        <div class="time-sub">من أصل ٣ ساعات يومياً</div>
+      </div>
+      <div class="status-bar">
+        <div class="status-pill">
+          <div class="status-pill-icon">🌙</div>
+          <div class="status-pill-text"><b>٩:٠٠ م</b>وقت النوم</div>
+        </div>
+        <div class="status-pill">
+          <div class="status-pill-icon">✅</div>
+          <div class="status-pill-text"><b>مفتوح</b>الجهاز نشط</div>
+        </div>
+      </div>
+      <div class="apps-label">التطبيقات المسموحة 📱</div>
+      <div class="apps-grid">
+        <div class="app-item">
+          <div class="app-icon" style="background:linear-gradient(135deg,#FF6B6B,#FF8E53);">📺</div>
+          <div class="app-name">يوتيوب</div>
+        </div>
+        <div class="app-item" onclick="showScreen('child-screen-locked')">
+          <div class="app-icon" style="background:linear-gradient(135deg,#4ECDC4,#44A08D);">🎮</div>
+          <div class="app-name">ألعاب (محمي)</div>
+        </div>
+        <div class="app-item">
+          <div class="app-icon" style="background:linear-gradient(135deg,#A8E063,#56AB2F);">📚</div>
+          <div class="app-name">مدرستي</div>
+        </div>
+        <div class="app-item">
+          <div class="app-icon" style="background:linear-gradient(135deg,#667eea,#764ba2);">🎨</div>
+          <div class="app-name">رسم</div>
+        </div>
+      </div>
+      <div class="dad-msg">
+        <div class="dad-msg-icon">💬</div>
+        <div class="dad-msg-text">
+          <b>رسالة من أبوكِ 👨</b>
+          ذاكري أولاً وبعدين العب ❤️
+        </div>
+      </div>
+      <button class="request-btn" onclick="showScreen('child-screen-request')">
+        🙋‍♀️ طلب وقت إضافي من أبوي
+      </button>
+      <div style="padding: 10px 24px;">
+        <button class="switch-system-btn" style="width:100%;" onclick="exitToMainMenu()">⚙️ تغيير الحساب والعودة للرئيسية</button>
+      </div>
+      <div style="height: 20px;"></div>
+    </div>
+
+    <!-- CHILD SCREEN LOCKED -->
+    <div class="screen" id="child-screen-locked" style="background: linear-gradient(160deg, #C85A1A 0%, #A04010 100%);">
+      <div class="locked-content">
+        <div class="lock-icon-big">🔒</div>
+        <div class="locked-title">انتهى وقتك اليوم</div>
+        <div class="locked-sub">خلص الوقت المسموح لك<br>استرحي وارجعي بكره 🌙</div>
+        <div class="locked-time-card">
+          <div class="locked-time-label">يفتح الجهاز بكرة في</div>
+          <div class="locked-time-val">٨:٠٠ ص ☀️</div>
+        </div>
+        <button class="request-btn-locked" onclick="showScreen('child-screen-request')">🙋‍♀️ طلب وقت من أبوي</button>
+        <div class="locked-stars"><div class="star">⭐</div><div class="star">⭐</div><div class="star">⭐</div></div>
+        <button class="back-btn" style="margin-top:20px; color:white;" onclick="showScreen('child-dashboard')">‹ العودة للشاشة الرئيسية</button>
+      </div>
+    </div>
+
+    <!-- CHILD SCREEN REQUEST SENT -->
+    <div class="screen" id="child-screen-request" style="background: linear-gradient(160deg, #FFF3EB 0%, #FFF8F4 100%);">
+      <div class="request-content">
+        <div class="sending-anim">📨</div>
+        <div class="request-title">تم إرسال الطلب!</div>
+        <div class="request-sub">أرسلنا طلبك لأبوكِ<br>انتظري موافقته 🤲</div>
+        <div class="waiting-card">
+          <div style="font-size:15px;font-weight:700;color:#333;margin-bottom:4px;">في انتظار الموافقة</div>
+          <div style="font-size:12px;color:#999;">سيصلك إشعار عند الموافقة</div>
+          <div class="waiting-dots"><div class="dot"></div><div class="dot"></div><div class="dot"></div></div>
+        </div>
+        <div style="background:linear-gradient(135deg,#E8F5E9,#F1F8E9);border-radius:24px;padding:24px;width:100%;border:2px solid #81C784; margin-bottom: 20px;">
+          <div style="font-size:40px;margin-bottom:8px;">🎉</div>
+          <div style="font-size:17px;font-weight:800;color:#2E7D32;margin-bottom:4px;">وافق أبوكِ!</div>
+          <div style="font-size:13px;color:#555;">أضاف لكِ <b style="color:var(--orange);">٣٠ دقيقة</b> إضافية</div>
+        </div>
+        <button class="btn-primary" onclick="showScreen('child-dashboard')">موافق، العودة للرئيسية</button>
+      </div>
+    </div>
+
   </div>
 
 </div>
 
 <script>
-let currentRegion = 'sa';
-
 function showScreen(screenId) {
   document.querySelectorAll('.screen').forEach(s => s.classList.remove('active'));
-  const target = document.getElementById(screenId);
-  if(target) target.classList.add('active');
-}
-
-function toggleRegion(region) {
-  currentRegion = region;
-  const tabSa = document.getElementById('tab-sa');
-  const tabGlobal = document.getElementById('tab-global');
-  
-  if(region === 'sa') {
-    tabSa.classList.add('active');
-    tabGlobal.classList.remove('active');
-  } else {
-    tabSa.classList.remove('active');
-    tabGlobal.classList.add('active');
+  const targetScreen = document.getElementById(screenId);
+  if(targetScreen) {
+    targetScreen.classList.add('active');
+    const sa = targetScreen.querySelector('.scroll-area');
+    if (sa) sa.scrollTop = 0;
   }
 }
 
-function enterParentFlow() {
+function switchSystem(systemType) {
   document.querySelectorAll('.system-flow').forEach(flow => flow.classList.remove('active'));
-  document.getElementById('flow-parent').classList.add('active');
-  
-  const authTitle = document.getElementById('auth-title');
-  const panelSa = document.getElementById('panel-sa-auth');
-  const panelGlobal = document.getElementById('panel-global-auth');
-  
-  if(currentRegion === 'sa') {
-    authTitle.innerText = "الحساب المعتمد بالمملكة 🇸🇦";
-    panelSa.style.display = 'block';
-    panelGlobal.style.display = 'none';
-  } else {
-    authTitle.innerText = "Global Parent Verification 🌐";
-    panelSa.style.display = 'none';
-    panelGlobal.style.display = 'block';
+  if(systemType === 'parent') {
+    document.getElementById('flow-parent').classList.add('active');
+    showScreen('s3');
+  } else if(systemType === 'child') {
+    document.getElementById('flow-child').classList.add('active');
+    showScreen('s8');
   }
-  
-  showScreen('s3');
 }
 
 function exitToMainMenu() {
@@ -353,75 +1087,51 @@ function exitToMainMenu() {
   showScreen('s2');
 }
 
-function openTermsModal() {
-  // التحقق من إدخال رقم الجوال للمسار المحلي كخطوة تنظيمية أولى
-  if(currentRegion === 'sa') {
-    const phoneVal = document.getElementById('sa-phone-input').value.trim();
-    if(!phoneVal) {
-      alert("يرجى إدخال رقم الجوال أولاً لمتابعة التوثيق المعتمد!");
-      return;
-    }
-  }
+function setupOtpAutofocus(className) {
+  document.querySelectorAll(className).forEach((box, i, boxes) => {
+    box.addEventListener('input', () => { if (box.value && i < boxes.length-1) boxes[i+1].focus(); });
+    box.addEventListener('keydown', e => { if (e.key==='Backspace' && !box.value && i>0) boxes[i-1].focus(); });
+  });
+}
+setupOtpAutofocus('.parent-otp');
+setupOtpAutofocus('.child-otp');
 
-  const modal = document.getElementById('terms-modal');
-  const title = document.getElementById('terms-title');
-  const container = document.getElementById('terms-text-container');
-  const labelText = document.getElementById('check-label-text');
-  
-  document.getElementById('terms-check').checked = false;
-  const submitBtn = document.getElementById('btn-submit-final');
-  submitBtn.disabled = true;
-  submitBtn.style.background = '#CCC';
-  submitBtn.style.boxShadow = 'none';
+document.querySelectorAll('.toggle').forEach(t => {
+  t.addEventListener('click', () => t.classList.toggle('off'));
+});
 
-  if (currentRegion === 'sa') {
-    title.innerText = "اتفاقية الاستخدام وحماية البيانات 🇸🇦";
-    labelText.innerText = "أوافق على شروط الاستخدام وسياسة الامتثال لنظام PDPL السعودي.";
-    submitBtn.innerText = "موافقة وتفعيل الحساب";
-    container.innerHTML = `
-      <h4>1. حوكمة البيانات والامتثال:</h4>
-      <p>يخضع تطبيق "نفادل" لنظام حماية البيانات الشخصية الصادر في المملكة العربية السعودية (PDPL). يتم تشفير كافة بيانات طفلك وموقعه الجغرافي داخل خوادم محلية آمنة.</p>
-      <br>
-      <h4>2. الصلاحيات والأذونات:</h4>
-      <p>بصفتك ولي الأمر الشرعي والموثق عبر النظام، فإنك تمنح التطبيق صلاحية تتبع الموقع الجغرافي، وإدارة أوقات الشاشة، وفحص التطبيقات على جهاز القاصر التابع لك.</p>
-    `;
+// أيام الأسبوع — toggle
+function toggleDay(btn, dayName) {
+  if(dayName === 'الجمعة' || dayName === 'السبت') {
+    btn.classList.toggle('free-day');
+    btn.classList.toggle('active');
   } else {
-    title.innerText = "Terms & COPPA Compliance 🌐";
-    labelText.innerText = "I agree to the Terms of Service and verifiable parental consent rules.";
-    submitBtn.innerText = "Agree & Confirm Account";
-    container.innerHTML = `
-      <h4>1. International Privacy Laws (COPPA / GDPR):</h4>
-      <p>By using Nafadil, you explicitly provide Verifiable Parental Consent (VPC). We do not sell or share your child's data with third-party advertisers, adhering to global strict child safety standards.</p>
-      <br>
-      <h4>2. Tracking & Monitoring:</h4>
-      <p>You confirm that you are the legal guardian of the child device being linked.</p>
-    `;
+    btn.classList.toggle('active');
   }
-  
-  modal.classList.add('active');
+  updateSummary();
 }
 
-// الدالة البرمجية المصلحة لفحص حالة التشيك بوكس بدقة وبدون تجميد
-function validateTermsState() {
-  const isChecked = document.getElementById('terms-check').checked;
-  const submitBtn = document.getElementById('btn-submit-final');
-  
-  if(isChecked) {
-    submitBtn.disabled = false;
-    submitBtn.style.background = 'var(--orange)';
-    submitBtn.style.boxShadow = '0 6px 18px rgba(200,90,26,0.3)';
-  } else {
-    submitBtn.disabled = true;
-    submitBtn.style.background = '#CCC';
-    submitBtn.style.boxShadow = 'none';
-  }
-}
+// تحديث ملخص الجدول
+function updateSummary() {
+  const lockSel  = document.getElementById('lock-time');
+  const unlockSel = document.getElementById('unlock-time');
+  if(!lockSel || !unlockSel) return;
 
-// عند الضغط على زر التأكيد النهائي يتم نقله فوراً لداخل التطبيق للتصفح
-function processFinalRegistration() {
-  document.getElementById('terms-modal').classList.remove('active');
-  // الانتقال الفوري لشاشة الواجهة الرئيسية للتطبيق (Dashboard) وتصفحه
-  showScreen('s4');
+  const lockText   = lockSel.options[lockSel.selectedIndex].text;
+  const unlockText = unlockSel.options[unlockSel.selectedIndex].text;
+
+  const allBtns = document.querySelectorAll('.day-btn');
+  const restricted = [], free = [];
+  const names = ['الأحد','الاثنين','الثلاثاء','الأربعاء','الخميس','الجمعة','السبت'];
+  allBtns.forEach((btn, i) => {
+    if(btn.classList.contains('free-day')) free.push(names[i]);
+    else if(btn.classList.contains('active')) restricted.push(names[i]);
+  });
+
+  document.getElementById('sum-lock').textContent   = lockText;
+  document.getElementById('sum-unlock').textContent = unlockText;
+  document.getElementById('sum-days').textContent   = restricted.length ? restricted.join('، ') : 'لا يوجد';
+  document.getElementById('sum-free').textContent   = free.length ? free.join('، ') : 'لا يوجد';
 }
 </script>
 </body>
