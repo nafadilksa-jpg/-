@@ -4,7 +4,7 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>نفادل — نظام مراقبة الأطفال والتحكم</title>
-<link href="https://fonts.googleapis.com/css2?family=Tajawal:wght@300;400;500;700;800;900&family=Amiri:wght@400;700&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Tajawal:wght@300;400;500;700;800;900&display=swap" rel="stylesheet">
 <style>
   :root {
     --orange: #C85A1A;
@@ -21,10 +21,6 @@
     --blue: #2196F3;
     --purple: #9C27B0;
     --bg-child: #FFF8F4;
-    --nafath-green: #006C35;
-    --quran-gold: #B8860B;
-    --quran-dark: #1A0A00;
-    --quran-bg: #FBF6EE;
   }
   
   * { box-sizing: border-box; margin: 0; padding: 0; }
@@ -65,6 +61,7 @@
     from { opacity:0; transform:translateY(10px); }
     to   { opacity:1; transform:translateY(0); }
   }
+  
   @keyframes pop {
     from { opacity:0; transform:scale(0.97); }
     to   { opacity:1; transform:scale(1); }
@@ -101,16 +98,6 @@
     font-size: 15px; font-weight: 600; cursor: pointer; width: 100%; margin-bottom: 10px;
   }
   
-  .btn-nafath {
-    background: var(--nafath-green); color: white; border: none;
-    border-radius: 50px; padding: 17px 24px;
-    font-family: 'Tajawal', sans-serif; font-size: 16px; font-weight: 700;
-    cursor: pointer; width: 100%; margin-bottom: 14px;
-    display: flex; align-items: center; justify-content: center; gap: 8px;
-    box-shadow: 0 6px 18px rgba(0,108,53,0.25);
-  }
-  .btn-nafath:active { transform: scale(0.97); }
-
   .input-label { font-size: 13px; font-weight: 600; color: var(--text-mid); margin-bottom: 7px; display: block; }
   .input-field {
     width: 100%; padding: 15px 18px; border: 2px solid #EEE;
@@ -337,6 +324,34 @@
   .request-btn { margin: 10px 24px 0; background: var(--orange); color: white; border: none; border-radius: 24px; padding: 16px; font-family: 'Tajawal', sans-serif; font-size: 16px; font-weight: 700; cursor: pointer; display: flex; align-items: center; justify-content: center; gap: 8px; box-shadow: 0 6px 20px rgba(200,90,26,0.35); transition: transform 0.15s; width: calc(100% - 48px); }
   .request-btn:active { transform: scale(0.97); }
 
+  .locked-content { display: flex; flex-direction: column; align-items: center; padding: 40px 32px; text-align: center; }
+  .lock-icon-big { font-size: 90px; margin-bottom: 24px; animation: wobble 3s ease-in-out infinite; }
+  @keyframes wobble { 0%,100% { transform: rotate(-5deg); } 50% { transform: rotate(5deg); } }
+  .locked-title { font-size: 28px; font-weight: 900; color: white; margin-bottom: 10px; }
+  .locked-sub   { font-size: 15px; color: rgba(255,255,255,0.75); line-height: 1.7; margin-bottom: 36px; }
+  .locked-time-card { background: rgba(255,255,255,0.15); border-radius: 24px; padding: 20px 32px; margin-bottom: 28px; width: 100%; backdrop-filter: blur(10px); border: 1px solid rgba(255,255,255,0.2); }
+  .locked-time-label { color: rgba(255,255,255,0.7); font-size: 13px; margin-bottom: 4px; }
+  .locked-time-val   { color: white; font-size: 32px; font-weight: 900; }
+  .request-btn-locked { background: white; color: var(--orange); border: none; border-radius: 50px; padding: 18px 36px; font-family: 'Tajawal', sans-serif; font-size: 17px; font-weight: 800; cursor: pointer; display: flex; align-items: center; gap: 10px; box-shadow: 0 8px 30px rgba(0,0,0,0.2); transition: transform 0.15s; }
+  .request-btn-locked:active { transform: scale(0.97); }
+  .locked-stars { display: flex; gap: 6px; margin-top: 28px; opacity: 0.5; }
+  .star { font-size: 20px; animation: twinkle 2s ease-in-out infinite; }
+  .star:nth-child(2) { animation-delay: 0.4s; }
+  .star:nth-child(3) { animation-delay: 0.8s; }
+  @keyframes twinkle { 0%,100% { opacity:0.3; transform:scale(0.8); } 50% { opacity:1; transform:scale(1.1); } }
+
+  .request-content { display: flex; flex-direction: column; align-items: center; padding: 40px 32px; text-align: center; }
+  .sending-anim { font-size: 80px; margin-bottom: 24px; animation: float 2s ease-in-out infinite; }
+  @keyframes float { 0%,100% { transform: translateY(0); } 50% { transform: translateY(-12px); } }
+  .request-title { font-size: 26px; font-weight: 900; color: var(--orange); margin-bottom: 10px; }
+  .request-sub   { font-size: 15px; color: #888; line-height: 1.7; margin-bottom: 32px; }
+  .waiting-card { background: white; border-radius: 24px; padding: 24px; width: 100%; box-shadow: 0 4px 20px rgba(200,90,26,0.1); margin-bottom: 28px; }
+  .waiting-dots { display: flex; justify-content: center; gap: 8px; margin-top: 12px; }
+  .dot { width: 10px; height: 10px; background: var(--orange); border-radius: 50%; animation: bounce 1.2s ease-in-out infinite; }
+  .dot:nth-child(2) { animation-delay: 0.2s; }
+  .dot:nth-child(3) { animation-delay: 0.4s; }
+  @keyframes bounce { 0%,100% { transform:translateY(0); opacity:0.4; } 50% { transform:translateY(-8px); opacity:1; } }
+
   .switch-system-btn {
     margin-top: auto;
     background: #eaeaea;
@@ -350,6 +365,7 @@
     border: none;
   }
 
+  /* ── الإضافات الجديدة: الوقت والأيام ── */
   .time-picker-row {
     display: flex;
     align-items: center;
@@ -359,166 +375,100 @@
     padding: 12px 16px;
     margin-bottom: 10px;
   }
-  .time-picker-label { font-size: 14px; font-weight: 700; color: var(--text-dark); }
-  .time-picker-label span { font-size: 11px; color: var(--text-soft); display: block; margin-top: 2px; font-weight: 400; }
-  .time-select { border: 2px solid var(--orange); border-radius: 12px; padding: 8px 12px; font-family: 'Tajawal', sans-serif; font-size: 15px; font-weight: 700; color: var(--orange); background: white; outline: none; cursor: pointer; direction: ltr; text-align: center; }
-
-  /* ═══════════════════════════════════════════
-     شاشة القفل القرآني والنبوي المتطور للابن
-  ═══════════════════════════════════════════ */
-  #child-quran-lock {
-    background: linear-gradient(160deg, #1A0A00 0%, #2A1402 50%, #1A0A00 100%);
-    overflow-y: auto;
-    display: none;
-    flex-direction: column;
-    padding-bottom: 30px;
+  .time-picker-label {
+    font-size: 14px;
+    font-weight: 700;
+    color: var(--text-dark);
   }
-  #child-quran-lock.active { display: flex; }
-
-  .quran-lock-header {
-    padding: 40px 24px 20px;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
+  .time-picker-label span {
+    font-size: 11px;
+    color: var(--text-soft);
+    display: block;
+    margin-top: 2px;
+    font-weight: 400;
+  }
+  .time-select {
+    border: 2px solid var(--orange);
+    border-radius: 12px;
+    padding: 8px 12px;
+    font-family: 'Tajawal', sans-serif;
+    font-size: 15px;
+    font-weight: 700;
+    color: var(--orange);
+    background: white;
+    outline: none;
+    cursor: pointer;
+    direction: ltr;
     text-align: center;
-    border-bottom: 1px solid rgba(184,134,11,0.2);
-  }
-  .quran-lock-icon { font-size: 54px; margin-bottom: 10px; animation: glow 3s infinite; }
-  @keyframes glow { 0%,100% { filter:drop-shadow(0 0 4px rgba(240,192,96,0.4)); } 50% { filter:drop-shadow(0 0 15px rgba(240,192,96,0.8)); } }
-  .quran-lock-title { font-size: 22px; font-weight: 900; color: #F0C060; }
-  .quran-lock-sub { font-size: 13px; color: rgba(255,255,255,0.7); margin-top: 4px; line-height: 1.6; }
-
-  /* لوحة الخطوات المتسلسلة */
-  .flow-steps-box { padding: 20px; display: flex; flex-direction: column; gap: 12px; }
-  .step-card {
-    background: rgba(255,255,255,0.04);
-    border: 1.5px solid rgba(184,134,11,0.2);
-    border-radius: 18px; padding: 16px;
-    display: flex; align-items: center; gap: 14px;
-    transition: all 0.3s ease; opacity: 0.5;
-  }
-  .step-card.active { opacity: 1; background: rgba(184,134,11,0.08); border-color: #F0C060; box-shadow: 0 4px 15px rgba(184,134,11,0.15); }
-  .step-card.completed { opacity: 1; background: rgba(76,175,80,0.1); border-color: #4CAF50; }
-  
-  .step-number {
-    width: 32px; height: 32px; border-radius: 50%;
-    background: rgba(255,255,255,0.1); border: 2px solid rgba(184,134,11,0.4);
-    display: flex; align-items: center; justify-content: center;
-    font-size: 14px; font-weight: 800; color: #F0C060;
-  }
-  .step-card.completed .step-number { background: #4CAF50; border-color: #4CAF50; color: white; }
-  .step-details { flex: 1; }
-  .step-title { font-size: 15px; font-weight: 700; color: #FFF; }
-  .step-card.completed .step-title { color: #A5D6A7; }
-  .step-desc { font-size: 11px; color: #BBB; margin-top: 2px; }
-  .step-status-icon { font-size: 18px; color: #F0C060; }
-
-  /* واجهة المصحف الشريف للقراءة سطر بسطر */
-  .quran-reader-container {
-    background: #FBF6EE; border-radius: 24px; margin: 0 20px;
-    padding: 20px 16px; border: 2px solid #E6D0B4;
-    box-shadow: inset 0 0 20px rgba(184,134,11,0.08);
-    display: none;
-  }
-  .quran-surah-title {
-    text-align: center; font-family: 'Amiri', serif; font-size: 18px;
-    color: #7A4B1B; background: #F3EADB; border-radius: 12px;
-    padding: 6px; margin-bottom: 16px; border: 1px solid #E4D5BF;
-  }
-  .quran-lines-wrapper { display: flex; flex-direction: column; gap: 8px; }
-  .quran-text-line {
-    font-family: 'Amiri', serif; font-size: 21px; color: #2C1805;
-    text-align: center; line-height: 1.8; padding: 8px; border-radius: 10px;
-    cursor: pointer; transition: all 0.2s ease; position: relative;
-    border-bottom: 1px dashed rgba(184,134,11,0.15);
-  }
-  .quran-text-line.locked { color: #A0A0A0; opacity: 0.25; filter: blur(0.5px); cursor: not-allowed; }
-  
-  /* تباين عالي وتظليل ذهبي للسطر النشط لتركيز الطفل */
-  .quran-text-line.active {
-    background: #FFF9E6; 
-    border: 2px solid #D4A373;
-    color: #5C3D11;
-    box-shadow: 0 4px 12px rgba(184,134,11,0.25); 
-    font-weight: bold;
-    transform: scale(1.02);
-  }
-  
-  /* حالة السطر الجاري قراءته صوتياً ومطالبة الطفل بالاستماع */
-  .quran-text-line.reading {
-    background: #FFE3A8;
-    border: 2px solid #C85A1A;
-    color: #000000;
-    animation: flashBorder 1.5s infinite ease-in-out;
-  }
-  @keyframes flashBorder {
-    0%, 100% { border-color: #C85A1A; box-shadow: 0 0 8px rgba(200,90,26,0.5); }
-    50% { border-color: #F0C060; box-shadow: 0 0 15px rgba(240,192,96,0.8); }
   }
 
-  .quran-text-line.completed { background: rgba(76,175,80,0.08); color: #2E7D32; border-bottom: 1px solid rgba(76,175,80,0.2); }
-  .quran-text-line.completed::after { content: '✓'; position: absolute; left: 10px; font-size: 14px; color: #4CAF50; font-family: sans-serif; }
+  .days-section {
+    background: var(--gray);
+    border-radius: 16px;
+    padding: 14px 16px;
+    margin-bottom: 10px;
+  }
+  .days-section-title {
+    font-size: 13px;
+    font-weight: 700;
+    color: var(--text-mid);
+    margin-bottom: 10px;
+  }
+  .days-grid {
+    display: flex;
+    gap: 6px;
+    flex-wrap: wrap;
+    justify-content: center;
+  }
+  .day-btn {
+    width: 40px;
+    height: 40px;
+    border-radius: 12px;
+    border: 2px solid #DDD;
+    background: white;
+    font-family: 'Tajawal', sans-serif;
+    font-size: 12px;
+    font-weight: 700;
+    color: var(--text-mid);
+    cursor: pointer;
+    transition: all 0.15s;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+  .day-btn.active {
+    background: var(--orange);
+    border-color: var(--orange);
+    color: white;
+    box-shadow: 0 3px 10px rgba(200,90,26,0.35);
+  }
+  .day-btn.free-day {
+    background: #E8F5E9;
+    border-color: #4CAF50;
+    color: #2E7D32;
+  }
 
-  /* واجهة الأحاديث النبوية الثلاثة */
-  .hadith-container { display: none; padding: 0 20px; flex-direction: column; gap: 14px; }
-  .hadith-item-card {
-    background: rgba(255,255,255,0.03); border: 1px dashed rgba(240,192,96,0.3);
-    border-radius: 20px; padding: 18px; position: relative;
-    transition: all 0.3s ease;
+  .schedule-summary {
+    background: var(--orange-pale);
+    border: 1.5px solid var(--orange);
+    border-radius: 14px;
+    padding: 12px 14px;
+    margin-bottom: 10px;
+    font-size: 12px;
+    color: var(--text-mid);
+    line-height: 1.8;
   }
-  .hadith-item-card.active { background: white; border: 2px solid #006C35; box-shadow: 0 4px 15px rgba(0,108,53,0.1); }
-  
-  /* تظليل الحديث النشط أثناء القراءة */
-  .hadith-item-card.reading { background: #EBF7EE; border: 2px solid #006C35; }
-  
-  .hadith-badge { font-size: 11px; font-weight: 700; color: #006C35; margin-bottom: 8px; display: inline-block; background: #E8F5E9; padding: 2px 8px; border-radius: 10px; }
-  .hadith-content-text { font-family: 'Amiri', serif; font-size: 17px; color: #CCC; line-height: 1.8; }
-  .hadith-item-card.active .hadith-content-text { color: #1A1A1A; }
-  .hadith-check-btn {
-    background: #006C35; color: white; border: none; border-radius: 12px;
-    padding: 10px; width: 100%; font-family: 'Tajawal', sans-serif;
-    font-size: 13px; font-weight: 700; margin-top: 12px; cursor: pointer; display: none;
-  }
-  .hadith-item-card.active .hadith-check-btn { display: block; }
-  .hadith-item-card.active .hadith-check-btn:disabled { background: #999; cursor: not-allowed; opacity: 0.6; }
-  
-  .hadith-item-card.completed { background: rgba(76,175,80,0.12); border-color: #4CAF50; }
-  .hadith-item-card.completed .hadith-content-text { color: #333; opacity: 0.5; text-decoration: line-through; }
-  .hadith-item-card.completed .hadith-check-btn { display: none; }
-
-  /* أزرار الإجراء السفلية للتأكيد */
-  .action-box { padding: 20px; margin-top: auto; }
-  .btn-gold-lock {
-    background: linear-gradient(135deg, #B8860B, #F0C060); color: #1A0A00;
-    border: none; border-radius: 24px; padding: 18px; width: 100%;
-    font-family: 'Tajawal', sans-serif; font-size: 17px; font-weight: 900;
-    cursor: pointer; display: flex; align-items: center; justify-content: center; gap: 8px;
-    box-shadow: 0 6px 20px rgba(184,134,11,0.3); transition: all 0.2s;
-  }
-  .btn-gold-lock:disabled { background: #333; color: #666; box-shadow: none; cursor: not-allowed; }
-
-  /* شاشة نجاح الختم الإيماني */
-  #child-success-screen {
-    background: linear-gradient(160deg, #005C2E 0%, #008C45 100%);
-    display: none; flex-direction: column; align-items: center; justify-content: center;
-    text-align: center; padding: 30px; color: white; width: 100%; height: 100%;
-  }
-  #child-success-screen.active { display: flex; }
-  .success-badge-star { font-size: 74px; animation: popCheck 0.6s cubic-bezier(0.175, 0.885, 0.32, 1.275); }
-  @keyframes popCheck { from { transform: scale(0); } to { transform: scale(1); } }
-  
-  .legal-link-container { text-align: center; margin-top: 15px; }
-  .legal-link { font-size: 12px; color: var(--orange); cursor: pointer; text-decoration: underline; }
-  .legal-text-box h4 { font-size: 14px; font-weight: 700; color: var(--text-dark); margin-top: 10px; }
-  .legal-text-box p { font-size: 13px; color: var(--text-mid); margin-bottom: 10px; line-height: 1.6; }
+  .schedule-summary b { color: var(--orange); }
 </style>
 </head>
 <body>
 
 <div class="phone">
 
-  <!-- [1] تدفق البداية والسياسات المشتركة -->
+  <!-- التدفق المشترك -->
   <div class="system-flow active" id="flow-core">
+    
+    <!-- S1: SPLASH -->
     <div class="screen active" id="s1">
       <div style="flex:1;display:flex;flex-direction:column;align-items:center;justify-content:center;padding:40px 28px;">
         <div style="background:white;border-radius:36px;padding:40px 52px;margin-bottom:44px;display:flex;flex-direction:column;align-items:center;box-shadow:0 24px 70px rgba(0,0,0,0.18);">
@@ -526,11 +476,16 @@
           <div style="font-size:30px;font-weight:700;color:var(--orange);margin-top:6px;letter-spacing:3px;">نفـادل</div>
           <div style="font-size:14px;font-weight:400;color:var(--orange-light);margin-top:3px;letter-spacing:1px;">Nafadil</div>
         </div>
-        <p style="color:rgba(255,255,255,0.85);font-size:15px;text-align:center;line-height:1.9;margin-bottom:52px;">حماية أطفالك بين يديك<br>بسيط، آمن، وذكي</p>
-        <button class="btn-primary" style="background:white;color:var(--orange);box-shadow:0 8px 30px rgba(0,0,0,0.15);" onclick="showScreen('s2')">ابدأ الآن</button>
+        <p style="color:rgba(255,255,255,0.85);font-size:15px;text-align:center;line-height:1.9;margin-bottom:52px;">
+          حماية أطفالك بين يديك<br>بسيط، آمن، وذكي
+        </p>
+        <button class="btn-primary" style="background:white;color:var(--orange);box-shadow:0 8px 30px rgba(0,0,0,0.15);" onclick="showScreen('s2')">
+          ابدأ الآن
+        </button>
       </div>
     </div>
 
+    <!-- S2: CHOOSE ROLE -->
     <div class="screen" id="s2">
       <div class="top-header">
         <div style="display:flex;align-items:center;gap:8px;margin-bottom:4px;">
@@ -552,274 +507,440 @@
           <div style="margin-right:auto;color:#CCC;font-size:18px;">‹</div>
         </div>
         <div class="spacer"></div>
-        <div class="legal-link-container">
-          <span class="legal-link" onclick="showScreen('s-legal')">الشروط والأحكام وسياسة الخصوصية</span>
-        </div>
-        <p style="text-align:center;font-size:11px;color:var(--text-soft);margin-top:6px;">نفادل | بريدة، المملكة العربية السعودية</p>
-      </div>
-    </div>
-
-    <div class="screen" id="s-legal">
-      <div class="top-header">
-        <button class="back-btn" onclick="showScreen('s2')">‹ رجوع</button>
-        <div style="color:white;font-size:21px;font-weight:800;margin-bottom:5px;">السياسات والقوانين</div>
-      </div>
-      <div class="pill-card">
-        <div class="scroll-area">
-          <div class="screen-title" style="font-size:18px;margin-bottom:12px;">الاتفاقية القانونية وحماية البيانات</div>
-          <div class="legal-text-box">
-            <h4>1. شروط الاستخدام</h4>
-            <p>تطبيق نفادل مصمم خصيصاً لتمكين أولياء الأمور من الإشراف على أجهزة الأبناء القصر وتوجيههم رقمياً.</p>
-            <h4>2. سياسة الخصوصية وحماية البيانات</h4>
-            <p>نحن في نفادل نلتزم بأعلى معايير حماية البيانات المعمول بها في المملكة العربية السعودية.</p>
-          </div>
-          <button class="btn-primary" onclick="showScreen('s2')">موافق واغلاق</button>
-        </div>
+        <p style="text-align:center;font-size:11px;color:var(--text-soft);">نفادل | بريدة، المملكة العربية السعودية</p>
       </div>
     </div>
   </div>
 
-  <!-- [2] تدفق ولي الأمر -->
+
+  <!-- تدفق الأب -->
   <div class="system-flow" id="flow-parent">
+    
+    <!-- S3: PHONE -->
     <div class="screen" id="s3">
       <div class="top-header">
         <button class="back-btn" onclick="exitToMainMenu()">‹ خروج</button>
         <div style="color:white;font-size:21px;font-weight:800;margin-bottom:5px;">تسجيل ولي الأمر</div>
+        <div style="color:rgba(255,255,255,0.7);font-size:13px;">أدخل رقم جوالك لاستقبال رمز التحقق</div>
       </div>
       <div class="pill-card">
-        <button class="btn-nafath" onclick="showScreen('s-nafath')"><span>🔐</span> الدخول السريع عبر نفاذ</button>
-        <div style="text-align:center;margin:10px 0;color:var(--text-soft);font-size:13px;font-weight:bold;">أو عن طريق الجوال</div>
         <label class="input-label">رقم الجوال</label>
-        <input class="input-field" type="tel" placeholder="05xxxxxxxx" style="font-size:20px;text-align:center;">
+        <input class="input-field" type="tel" placeholder="05xxxxxxxx" style="font-size:20px;text-align:center;letter-spacing:2px;">
         <div class="spacer"></div>
         <button class="btn-primary" onclick="showScreen('s4')">إرسال رمز التحقق 📱</button>
+        <p style="text-align:center;font-size:11px;color:var(--text-soft);">ستصلك رسالة SMS برمز التحقق</p>
       </div>
     </div>
-    <div class="screen" id="s-nafath">
+
+    <!-- S4: OTP -->
+    <div class="screen" id="s4">
       <div class="top-header">
         <button class="back-btn" onclick="showScreen('s3')">‹ رجوع</button>
-        <div style="color:white;font-size:21px;font-weight:800;margin-bottom:5px;">النفاذ الوطني الموحد</div>
-      </div>
-      <div class="pill-card" style="align-items:center;justify-content:center;">
-        <div style="font-size:58px;font-weight:900;color:var(--nafath-green);background:#E6F0EA;border:3px dashed var(--nafath-green);border-radius:24px;padding:10px 40px;">58</div>
-        <button class="btn-primary" style="background:var(--nafath-green);margin-top:20px;" onclick="showScreen('s6')">تم التأكيد في نفاذ 🔓</button>
-      </div>
-    </div>
-    <div class="screen" id="s4"><div class="pill-card"><button class="btn-primary" onclick="showScreen('s6')">تحقق ودخول</button></div></div>
-    <div class="screen" id="s6">
-      <div class="top-header">
-        <div style="color:white;font-size:17px;font-weight:700;text-align:center;">لوحة تحكم المشرف</div>
+        <div style="color:white;font-size:21px;font-weight:800;margin-bottom:5px;">رمز التحقق</div>
+        <div style="color:rgba(255,255,255,0.7);font-size:13px;">أدخل الرمز المرسل لجوالك</div>
       </div>
       <div class="pill-card">
-        <div class="screen-title" style="font-size:16px;">مرحباً بك في لوحة تحكم نفادل الاستراتيجية</div>
-        <button class="btn-primary" style="margin-top:20px;" onclick="showScreen('s7')">إعدادات قفل أجهزة الأبناء ⚙️</button>
-        <div class="spacer"></div>
-        <button class="switch-system-btn" onclick="exitToMainMenu()">⚙️ العودة للرئيسية</button>
-      </div>
-    </div>
-    <div class="screen" id="s7">
-      <div class="top-header"><button class="back-btn" onclick="showScreen('s6')">‹ رجوع</button></div>
-      <div class="pill-card">
-        <div class="screen-title" style="font-size:16px;">تفعيل نظام القفل القرآني الذكي</div>
-        <div class="notif-badge" style="background:#FBF6EE; border:1px solid #B8860B; margin-top:15px;">
-          <div class="notif-badge-text" style="color:#B8860B;">نظام الختمة الآلي نشط: قفل كل ساعتين، إجبارية قراءة وجه كامل بالتتبع + 3 أحاديث نبوية شريفة.</div>
+        <div style="text-align:center;font-size:50px;margin-bottom:12px;">✉️</div>
+        <div class="screen-title">تحقق من جوالك</div>
+        <div class="screen-sub">رمز مكون من 4 أرقام أُرسل إلى جوالك</div>
+        <div class="otp-wrap">
+          <input class="otp-box parent-otp" maxlength="1" type="tel">
+          <input class="otp-box parent-otp" maxlength="1" type="tel">
+          <input class="otp-box parent-otp" maxlength="1" type="tel">
+          <input class="otp-box parent-otp" maxlength="1" type="tel">
         </div>
         <div class="spacer"></div>
-        <button class="btn-primary" onclick="showScreen('s6')">حفظ الإعدادات بنجاح</button>
+        <button class="btn-primary" onclick="showScreen('s5')">تحقق وأدخل</button>
+        <button class="btn-outline" onclick="showScreen('s3')">إعادة إرسال الرمز</button>
+      </div>
+    </div>
+
+    <!-- S5: SET PIN -->
+    <div class="screen" id="s5">
+      <div class="top-header">
+        <div style="color:white;font-size:21px;font-weight:800;margin-bottom:5px;">رمز الدخول السري 🔐</div>
+        <div style="color:rgba(255,255,255,0.7);font-size:13px;">حدد رمزاً سرياً لكل دخول</div>
+      </div>
+      <div class="pill-card">
+        <div class="screen-sub" style="margin-bottom:6px;">أدخل رمزاً من 4 أرقام</div>
+        <div class="otp-wrap">
+          <input class="otp-box parent-otp" maxlength="1" type="tel">
+          <input class="otp-box parent-otp" maxlength="1" type="tel">
+          <input class="otp-box parent-otp" maxlength="1" type="tel">
+          <input class="otp-box parent-otp" maxlength="1" type="tel">
+        </div>
+        <div class="screen-sub" style="margin-bottom:6px;">أعد الإدخال للتأكيد</div>
+        <div class="otp-wrap">
+          <input class="otp-box parent-otp" maxlength="1" type="tel">
+          <input class="otp-box parent-otp" maxlength="1" type="tel">
+          <input class="otp-box parent-otp" maxlength="1" type="tel">
+          <input class="otp-box parent-otp" maxlength="1" type="tel">
+        </div>
+        <div class="spacer"></div>
+        <button class="btn-primary" onclick="showScreen('s6')">حفظ الرمز السري ✅</button>
+      </div>
+    </div>
+
+    <!-- S6: DASHBOARD -->
+    <div class="screen" id="s6">
+      <div class="top-header" style="padding-bottom:0;">
+        <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:4px;">
+          <div style="font-size:24px;cursor:pointer;" onclick="showScreen('s10')">🔔</div>
+          <div style="color:white;font-size:17px;font-weight:700;">لوحة التحكم</div>
+          <div style="font-size:28px;font-weight:800;color:white;line-height:1;">ن</div>
+        </div>
+        <div style="color:rgba(255,255,255,0.8);font-size:13px;text-align:center;margin-bottom:10px;">مرحباً، يوسف 👋</div>
+      </div>
+      <div class="pill-card" style="padding-top:20px;">
+        <div class="scroll-area">
+          <div class="section-label">📍 موقع الأطفال</div>
+          <div class="map-mock">
+            <div class="map-grid"></div>
+            <div class="map-pin">
+              <div class="map-pin-dot"></div>
+              <div class="map-label">نورة — بريدة</div>
+            </div>
+          </div>
+          <div class="section-label">📱 الأجهزة المرتبطة</div>
+          <div class="device-card">
+            <div class="device-avatar">👧</div>
+            <div class="device-info"><h4>نورة</h4><p>آيباد — نشط الآن</p></div>
+            <div class="status-badge">نشط</div>
+          </div>
+          <div class="device-card">
+            <div class="device-avatar">👦</div>
+            <div class="device-info"><h4>محمد</h4><p>آيفون — منذ ساعة</p></div>
+            <div class="status-badge">نشط</div>
+          </div>
+          <div class="section-label">🎬 شرح الاستخدام</div>
+          <div class="video-card">
+            <div class="play-btn">▶</div>
+            <div class="video-label">كيف تضيف جهاز طفلك وتستخدم نفادل</div>
+          </div>
+          <div class="section-label">⭐ الاشتراكات</div>
+          <div class="sub-card">
+            <div class="sub-title">مجاني</div>
+            <div class="sub-price">0 ريال <span>/ شهر</span></div>
+            <div class="sub-features">✅ جهاز واحد &nbsp; ✅ تتبع الموقع<br>❌ تقارير مفصّلة &nbsp; ❌ حظر التطبيقات</div>
+          </div>
+          <div class="sub-card featured">
+            <div class="sub-badge">الأكثر طلباً ⭐</div>
+            <div class="sub-title">عائلي</div>
+            <div class="sub-price">29 ريال <span>/ شهر</span></div>
+            <div class="sub-features">✅ حتى 5 أجهزة<br>✅ تقارير يومية<br>✅ حظر التطبيقات<br>✅ وضع النوم التلقائي</div>
+          </div>
+          <div class="sub-card">
+            <div class="sub-title">سنوي</div>
+            <div class="sub-price">199 ريال <span>/ سنة</span></div>
+            <div class="sub-features">✅ كل مزايا العائلي<br>✅ أجهزة غير محدودة<br>✅ دعم أولوية</div>
+          </div>
+          <div class="section-label">🔔 تنبيهات</div>
+          <div class="notif-badge">
+            <span style="font-size:18px;">⚠️</span>
+            <div class="notif-badge-text">نورة تطلب وقتاً إضافياً</div>
+          </div>
+          <div class="notif-badge">
+            <span style="font-size:18px;">📱</span>
+            <div class="notif-badge-text">محمد حمّل تطبيقاً جديداً</div>
+          </div>
+          <button class="btn-primary" style="margin-top:16px;margin-bottom:6px;" onclick="showScreen('s7')">إضافة جهاز طفل ➕</button>
+          <button class="switch-system-btn" onclick="exitToMainMenu()">⚙️ تغيير الحساب والعودة للرئيسية</button>
+          <div style="height:10px;"></div>
+        </div>
+        <div class="tab-bar">
+          <div class="tab-item active" onclick="showScreen('s6')"><div class="tab-icon">🏠</div>الرئيسية</div>
+          <div class="tab-item" onclick="showScreen('s7')"><div class="tab-icon">📱</div>الأجهزة</div>
+          <div class="tab-item"><div class="tab-icon">📊</div>التقارير</div>
+          <div class="tab-item" onclick="showScreen('s10')"><div class="tab-icon">💬</div>الدعم</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- S7: ADD DEVICE — مع الوقت والأيام -->
+    <div class="screen" id="s7">
+      <div class="top-header">
+        <button class="back-btn" onclick="showScreen('s6')">‹ رجوع</button>
+        <div style="color:white;font-size:21px;font-weight:800;margin-bottom:5px;">إضافة جهاز طفل</div>
+        <div style="color:rgba(255,255,255,0.7);font-size:13px;">شارك هذا الرمز مع طفلك</div>
+      </div>
+      <div class="pill-card">
+        <div class="scroll-area">
+
+          <div class="screen-sub" style="margin-bottom:6px;">الرمز الخاص بجهاز الطفل</div>
+          <div class="code-display">
+            <div class="code-digit">7</div><div class="code-digit">3</div>
+            <div class="code-digit">9</div><div class="code-digit">1</div>
+          </div>
+          <div class="notif-badge" style="margin-bottom:14px;">
+            <span style="font-size:18px;">📋</span>
+            <div class="notif-badge-text">اطلب من طفلك فتح نفادل وإدخال هذا الرمز</div>
+          </div>
+
+          <label class="input-label">اسم الطفل</label>
+          <input class="input-field" type="text" placeholder="مثال: نورة">
+
+          <!-- ── وقت القفل والفتح ── -->
+          <div class="section-label">⏰ جدول القفل التلقائي</div>
+
+          <div class="time-picker-row">
+            <div class="time-picker-label">
+              🌙 وقت القفل
+              <span>الجهاز يقفل تلقائياً</span>
+            </div>
+            <select class="time-select" id="lock-time" onchange="updateSummary()">
+              <option value="19:00">7:00 م</option>
+              <option value="20:00">8:00 م</option>
+              <option value="21:00">9:00 م</option>
+              <option value="22:00">10:00 م</option>
+              <option value="23:00">11:00 م</option>
+            </select>
+          </div>
+
+          <div class="time-picker-row">
+            <div class="time-picker-label">
+              ☀️ وقت الفتح
+              <span>الجهاز يفتح صباحاً</span>
+            </div>
+            <select class="time-select" id="unlock-time" onchange="updateSummary()">
+              <option value="06:00">6:00 ص</option>
+              <option value="07:00" selected>7:00 ص</option>
+              <option value="08:00">8:00 ص</option>
+              <option value="09:00">9:00 ص</option>
+            </select>
+          </div>
+
+          <!-- ── أيام الأسبوع ── -->
+          <div class="days-section">
+            <div class="days-section-title">📅 أيام تطبيق الجدول — اضغط لتفعيل/إلغاء</div>
+            <div class="days-grid">
+              <button class="day-btn active" onclick="toggleDay(this,'الأحد')">أحد</button>
+              <button class="day-btn active" onclick="toggleDay(this,'الاثنين')">اثنين</button>
+              <button class="day-btn active" onclick="toggleDay(this,'الثلاثاء')">ثلاثاء</button>
+              <button class="day-btn active" onclick="toggleDay(this,'الأربعاء')">أربعاء</button>
+              <button class="day-btn active" onclick="toggleDay(this,'الخميس')">خميس</button>
+              <button class="day-btn free-day" onclick="toggleDay(this,'الجمعة')">جمعة</button>
+              <button class="day-btn free-day" onclick="toggleDay(this,'السبت')">سبت</button>
+            </div>
+            <div style="margin-top:10px;font-size:11px;color:#999;text-align:center;">
+              🟢 أخضر = يوم إجازة (بدون قفل) &nbsp;|&nbsp; 🟠 برتقالي = يوم دراسي (مقيّد)
+            </div>
+          </div>
+
+          <!-- ملخص الجدول -->
+          <div class="schedule-summary" id="schedule-summary">
+            📋 <b>ملخص الجدول:</b><br>
+            🔒 يقفل الساعة <b id="sum-lock">7:00 م</b> ويفتح الساعة <b id="sum-unlock">7:00 ص</b><br>
+            📅 أيام التقييد: <b id="sum-days">الأحد، الاثنين، الثلاثاء، الأربعاء، الخميس</b><br>
+            🎉 أيام الإجازة: <b id="sum-free">الجمعة، السبت</b>
+          </div>
+
+          <!-- الصلاحيات -->
+          <div class="section-label">🛡️ الصلاحيات</div>
+          <div class="toggle-row">
+            <div><div class="toggle-label">📍 تتبع الموقع</div><div class="toggle-sub">معرفة مكان الطفل دائماً</div></div>
+            <div class="toggle"></div>
+          </div>
+          <div class="toggle-row">
+            <div><div class="toggle-label">📱 حظر التطبيقات</div><div class="toggle-sub">مراجعة التطبيقات الجديدة</div></div>
+            <div class="toggle"></div>
+          </div>
+          <div class="toggle-row">
+            <div><div class="toggle-label">🌙 وضع النوم التلقائي</div><div class="toggle-sub">حسب الجدول المحدد أعلاه</div></div>
+            <div class="toggle"></div>
+          </div>
+          <div class="toggle-row">
+            <div><div class="toggle-label">⏰ وقت الاستخدام اليومي</div><div class="toggle-sub">حدد عدد الساعات</div></div>
+            <div class="toggle"></div>
+          </div>
+
+          <div style="height:14px;"></div>
+          <button class="btn-primary" onclick="showScreen('s6')">تأكيد الإضافة ✅</button>
+        </div>
+      </div>
+    </div>
+
+    <!-- S10: SUPPORT -->
+    <div class="screen" id="s10">
+      <div class="top-header">
+        <button class="back-btn" onclick="showScreen('s6')">‹ رجوع</button>
+        <div style="color:white;font-size:21px;font-weight:800;margin-bottom:5px;">الشكاوي والاقتراحات</div>
+        <div style="color:rgba(255,255,255,0.7);font-size:13px;">رأيك يطورنا 💡</div>
+      </div>
+      <div class="pill-card">
+        <div class="choice-card" style="margin-bottom:10px;">
+          <div class="choice-icon">🐛</div>
+          <div class="choice-text"><h3>الإبلاغ عن مشكلة</h3><p>واجهت خللاً في التطبيق?</p></div>
+        </div>
+        <div class="choice-card" style="margin-bottom:18px;">
+          <div class="choice-icon">💡</div>
+          <div class="choice-text"><h3>اقتراح فكرة</h3><p>عندك فكرة تطور التطبيق؟</p></div>
+        </div>
+        <label class="input-label">اكتب رسالتك</label>
+        <textarea class="feedback-area" placeholder="اكتب هنا..."></textarea>
+        <div class="spacer"></div>
+        <button class="btn-primary">إرسال ✉️</button>
+        <p style="text-align:center;font-size:11px;color:var(--text-soft);margin-top:8px;">يوسف الشلاحي | نفادل — بريدة</p>
       </div>
     </div>
   </div>
 
 
-  <!-- [3] تدفق الابن المطور والمحدث بالكامل -->
-  <div class="system-flow" id="flow-child">
+  <!-- تدفق الابن -->
+  <div class="system-flow" id="flow-child" style="background: linear-gradient(170deg, #FFF3EB 0%, #FFF8F4 60%, #FFF0E0 100%);">
     
-    <!-- شاشة ربط جهاز الطفل -->
+    <!-- S8: CHILD ENTER CODE -->
     <div class="screen" id="s8">
       <div class="top-header">
         <button class="back-btn" onclick="exitToMainMenu()">‹ خروج</button>
-        <div style="color:white;font-size:21px;font-weight:800;margin-bottom:5px;">ربط جهاز الابن 📱</div>
-        <div style="color:rgba(255,255,255,0.7);font-size:13px;">أدخل رمز الاقتران المستلم من ولي الأمر</div>
+        <div style="color:white;font-size:21px;font-weight:800;margin-bottom:5px;">ربط الجهاز 📱</div>
+        <div style="color:rgba(255,255,255,0.7);font-size:13px;">أدخل الرمز اللي أعطاك إياه ولي أمرك</div>
       </div>
       <div class="pill-card">
         <div style="text-align:center;font-size:56px;margin-bottom:14px;">👦</div>
-        <div class="screen-title">أهلاً بك يا بطل!</div>
-        <div class="screen-sub">أدخل الرمز المكون من 4 أرقام لربط الهاتف</div>
+        <div class="screen-title">أهلاً!</div>
+        <div class="screen-sub">أدخل الرمز المكون من 4 أرقام</div>
         <div class="otp-wrap">
-          <input class="otp-box child-otp" value="7" maxlength="1" type="tel">
-          <input class="otp-box child-otp" value="3" maxlength="1" type="tel">
-          <input class="otp-box child-otp" value="9" maxlength="1" type="tel">
-          <input class="otp-box child-otp" value="1" maxlength="1" type="tel">
+          <input class="otp-box child-otp" maxlength="1" type="tel">
+          <input class="otp-box child-otp" maxlength="1" type="tel">
+          <input class="otp-box child-otp" maxlength="1" type="tel">
+          <input class="otp-box child-otp" maxlength="1" type="tel">
         </div>
         <div class="spacer"></div>
-        <button class="btn-primary" onclick="showScreen('s9')">تأكيد الرمز والربط</button>
+        <button class="btn-primary" onclick="showScreen('s9')">ربط الجهاز</button>
       </div>
     </div>
 
-    <!-- شاشة أذونات وصلاحيات نظام القفل -->
+    <!-- S9: CHILD PERMISSIONS -->
     <div class="screen" id="s9">
       <div class="top-header">
-        <div style="color:white;font-size:21px;font-weight:800;margin-bottom:5px;">صلاحيات النظام الرقمي</div>
+        <div style="color:white;font-size:21px;font-weight:800;margin-bottom:5px;">موافقة الصلاحيات</div>
+        <div style="color:rgba(255,255,255,0.7);font-size:13px;">ولي أمرك يطلب هذه الصلاحيات</div>
       </div>
       <div class="pill-card">
-        <div style="text-align:center;font-size:46px;margin-bottom:14px;">🛡️</div>
-        <div class="screen-title">تفعيل الحماية المتقدمة</div>
-        <div class="screen-sub">يتطلب نظام نفادل الصلاحيات التالية لتنظيم وقت الهاتف</div>
+        <div style="text-align:center;font-size:46px;margin-bottom:14px;">🔐</div>
+        <div class="screen-title">طلب من ولي الأمر</div>
+        <div class="screen-sub">يحتاج نفادل لهذه الأذونات لحمايتك</div>
         <div class="toggle-row">
-          <div><div class="toggle-label">🔒 قفل الهاتف الدوري الآلي</div><div class="toggle-sub">كل ساعتين لمنع الإدمان الرقمي</div></div>
-          <div style="color:var(--orange);font-size:12px;font-weight:700;">نشط إجبارياً</div>
+          <div><div class="toggle-label">📍 الوصول للموقع</div><div class="toggle-sub">دائمًا</div></div>
+          <div style="color:var(--orange);font-size:12px;font-weight:700;">مطلوب</div>
         </div>
         <div class="toggle-row">
-          <div><div class="toggle-label">📖 تتبع خطى القرآن والأحاديث</div><div class="toggle-sub">تأكيد القراءة والختم سطر بسطر</div></div>
-          <div style="color:var(--orange);font-size:12px;font-weight:700;">مطلوب للفتح</div>
+          <div><div class="toggle-label">📱 مراقبة التطبيقات</div><div class="toggle-sub">إشعار عند تحميل تطبيق</div></div>
+          <div style="color:var(--orange);font-size:12px;font-weight:700;">مطلوب</div>
+        </div>
+        <div class="toggle-row">
+          <div><div class="toggle-label">⏰ وقت الشاشة</div><div class="toggle-sub">التحكم في وقت الاستخدام</div></div>
+          <div style="color:var(--orange);font-size:12px;font-weight:700;">مطلوب</div>
         </div>
         <div class="spacer"></div>
-        <button class="btn-primary" onclick="showScreen('child-dashboard')">تفعيل النظام والبدء ✅</button>
+        <button class="btn-primary" onclick="showScreen('child-dashboard')">أوافق على الكل ✅</button>
+        <p style="text-align:center;font-size:11px;color:var(--text-soft);margin-top:8px;">الموافقة إجبارية لاستخدام التطبيق</p>
       </div>
     </div>
 
-    <!-- لوحة تحكم الطفل الرئيسية -->
-    <div class="screen" id="child-dashboard" style="background:linear-gradient(170deg,#FFF3EB 0%,#FFF8F4 60%,#FFF0E0 100%); overflow-y:auto;">
+    <!-- CHILD HOME DASHBOARD -->
+    <div class="screen" id="child-dashboard" style="background: linear-gradient(170deg, #FFF3EB 0%, #FFF8F4 60%, #FFF0E0 100%); overflow-y: auto;">
       <div class="child-header">
-        <div class="child-avatar">👦</div>
+        <div class="child-avatar">👧</div>
         <div class="child-greeting">
-          <div class="hi">جاهز للختم?</div>
-          <div class="name">محمد الشلاحي 🌟</div>
+          <div class="hi">أهلاً وسهلاً</div>
+          <div class="name">نورة 🌸</div>
         </div>
         <div class="child-logo">ن</div>
       </div>
-
       <div class="time-section">
-        <div class="time-label">⏳ الوقت المتبقي قبل القفل القرآني الآلي</div>
+        <div class="time-label">⏰ وقتك المتبقي اليوم</div>
         <div class="time-circle-wrap">
           <svg width="140" height="140" viewBox="0 0 100 100">
             <circle class="time-ring-bg" cx="50" cy="50" r="45"/>
-            <circle class="time-ring" cx="50" cy="50" r="45" style="stroke-dashoffset: 210; stroke: #E74C3C;"/>
+            <circle class="time-ring" cx="50" cy="50" r="45"/>
           </svg>
           <div class="time-center">
-            <div class="time-num" style="color:#E74C3C; font-size: 30px;">٠٠:٠٠</div>
-            <div class="time-unit">انتهت الـساعتان</div>
+            <div class="time-num">١:٣٠</div>
+            <div class="time-unit">ساعة</div>
           </div>
         </div>
-        <div class="time-sub" style="color:#E74C3C; font-weight:700;">⚠️ تم قفل الجوال! لن يفتح إلا بإتمام الورد الحركي</div>
+        <div class="time-sub">من أصل ٣ ساعات يومياً</div>
       </div>
-
-      <!-- بطاقة تنبيه القفل السريعة -->
-      <div style="margin:0 24px 14px; background:linear-gradient(135deg,#1A0A00,#3C2210); border-radius:22px; padding:18px; display:flex; align-items:center; gap:12px; box-shadow:0 6px 20px rgba(0,0,0,0.2);" onclick="triggerQuranLockFlow()">
-        <div style="font-size:36px; animation: glow 2s infinite;">📖</div>
-        <div style="flex:1;">
-          <div style="color:#F0C060; font-size:16px; font-weight:800;">اضغط هنا لفتح قفل الجوال</div>
-          <div style="color:rgba(255,255,255,0.7); font-size:12px; margin-top:2px;">مطلوب الاستماع والتتبع: سطر بسطر + ٣ أحاديث</div>
+      <div class="status-bar">
+        <div class="status-pill">
+          <div class="status-pill-icon">🌙</div>
+          <div class="status-pill-text"><b>٩:٠٠ م</b>وقت النوم</div>
         </div>
-        <div style="color:#F0C060; font-size:24px;">◀</div>
+        <div class="status-pill">
+          <div class="status-pill-icon">✅</div>
+          <div class="status-pill-text"><b>مفتوح</b>الجهاز نشط</div>
+        </div>
       </div>
-
-      <div class="apps-label">التطبيقات المقفلة حالياً 🔒</div>
-      <div class="apps-grid" style="opacity: 0.35; pointer-events: none;">
-        <div class="app-item"><div class="app-icon" style="background:#95a5a6;">🎮</div><div class="app-name">ألعاب البطل</div></div>
-        <div class="app-item"><div class="app-icon" style="background:#95a5a6;">📺</div><div class="app-name">يوتيوب</div></div>
-        <div class="app-item"><div class="app-icon" style="background:#95a5a6;">🎨</div><div class="app-name">الرسم والترفيه</div></div>
-        <div class="app-item"><div class="app-icon" style="background:#95a5a6;">🌐</div><div class="app-name">تصفح آمن</div></div>
+      <div class="apps-label">التطبيقات المسموحة 📱</div>
+      <div class="apps-grid">
+        <div class="app-item">
+          <div class="app-icon" style="background:linear-gradient(135deg,#FF6B6B,#FF8E53);">📺</div>
+          <div class="app-name">يوتيوب</div>
+        </div>
+        <div class="app-item" onclick="showScreen('child-screen-locked')">
+          <div class="app-icon" style="background:linear-gradient(135deg,#4ECDC4,#44A08D);">🎮</div>
+          <div class="app-name">ألعاب (محمي)</div>
+        </div>
+        <div class="app-item">
+          <div class="app-icon" style="background:linear-gradient(135deg,#A8E063,#56AB2F);">📚</div>
+          <div class="app-name">مدرستي</div>
+        </div>
+        <div class="app-item">
+          <div class="app-icon" style="background:linear-gradient(135deg,#667eea,#764ba2);">🎨</div>
+          <div class="app-name">رسم</div>
+        </div>
       </div>
-      
       <div class="dad-msg">
-        <div class="dad-msg-icon">👨‍💼</div>
-        <div class="dad-msg-text" id="dad-motivational-text"><b>رسالة التوجيه من الوالد:</b> الالتزام بالقراءة سطر بسطر ينمي عقلك ويبني آخرتك يا بني.</div>
+        <div class="dad-msg-icon">💬</div>
+        <div class="dad-msg-text">
+          <b>رسالة من أبوكِ 👨</b>
+          ذاكري أولاً وبعدين العب ❤️
+        </div>
+      </div>
+      <button class="request-btn" onclick="showScreen('child-screen-request')">
+        🙋‍♀️ طلب وقت إضافي من أبوي
+      </button>
+      <div style="padding: 10px 24px;">
+        <button class="switch-system-btn" style="width:100%;" onclick="exitToMainMenu()">⚙️ تغيير الحساب والعودة للرئيسية</button>
+      </div>
+      <div style="height: 20px;"></div>
+    </div>
+
+    <!-- CHILD SCREEN LOCKED -->
+    <div class="screen" id="child-screen-locked" style="background: linear-gradient(160deg, #C85A1A 0%, #A04010 100%);">
+      <div class="locked-content">
+        <div class="lock-icon-big">🔒</div>
+        <div class="locked-title">انتهى وقتك اليوم</div>
+        <div class="locked-sub">خلص الوقت المسموح لك<br>استرحي وارجعي بكره 🌙</div>
+        <div class="locked-time-card">
+          <div class="locked-time-label">يفتح الجهاز بكرة في</div>
+          <div class="locked-time-val">٨:٠٠ ص ☀️</div>
+        </div>
+        <button class="request-btn-locked" onclick="showScreen('child-screen-request')">🙋‍♀️ طلب وقت من أبوي</button>
+        <div class="locked-stars"><div class="star">⭐</div><div class="star">⭐</div><div class="star">⭐</div></div>
+        <button class="back-btn" style="margin-top:20px; color:white;" onclick="showScreen('child-dashboard')">‹ العودة للشاشة الرئيسية</button>
       </div>
     </div>
 
-    <!-- شاشة القفل والخطوات الإيمانية المتسلسلة المحدثة -->
-    <div class="screen" id="child-quran-lock">
-      <div class="quran-lock-header">
-        <div class="quran-lock-icon">📿</div>
-        <div class="quran-lock-title" id="quran-flow-title">خطوات الفتح المبارك</div>
-        <div class="quran-lock-sub" id="quran-flow-sub">استمع بتركيز للسطر المظلل ثم اضغط عليه لتأكيده بالتتابع</div>
+    <!-- CHILD SCREEN REQUEST SENT -->
+    <div class="screen" id="child-screen-request" style="background: linear-gradient(160deg, #FFF3EB 0%, #FFF8F4 100%);">
+      <div class="request-content">
+        <div class="sending-anim">📨</div>
+        <div class="request-title">تم إرسال الطلب!</div>
+        <div class="request-sub">أرسلنا طلبك لأبوكِ<br>انتظري موافقته 🤲</div>
+        <div class="waiting-card">
+          <div style="font-size:15px;font-weight:700;color:#333;margin-bottom:4px;">في انتظار الموافقة</div>
+          <div style="font-size:12px;color:#999;">سيصلك إشعار عند الموافقة</div>
+          <div class="waiting-dots"><div class="dot"></div><div class="dot"></div><div class="dot"></div></div>
+        </div>
+        <div style="background:linear-gradient(135deg,#E8F5E9,#F1F8E9);border-radius:24px;padding:24px;width:100%;border:2px solid #81C784; margin-bottom: 20px;">
+          <div style="font-size:40px;margin-bottom:8px;">🎉</div>
+          <div style="font-size:17px;font-weight:800;color:#2E7D32;margin-bottom:4px;">وافق أبوكِ!</div>
+          <div style="font-size:13px;color:#555;">أضاف لكِ <b style="color:var(--orange);">٣٠ دقيقة</b> إضافية</div>
+        </div>
+        <button class="btn-primary" onclick="showScreen('child-dashboard')">موافق، العودة للرئيسية</button>
       </div>
-
-      <!-- شريط الخطوات الاستراتيجي للمتابعة -->
-      <div class="flow-steps-box" id="flow-steps-indicator">
-        <div class="step-card active" id="step-card-1">
-          <div class="step-number">١</div>
-          <div class="step-details">
-            <div class="step-title">الاستماع والتتبع (سطر بسطر)</div>
-            <div class="step-desc">انتظر انتهاء القارئ ثم اضغط على السطر المتباين لتأكيده</div>
-          </div>
-          <div class="step-status-icon" id="step-icon-1">⏳</div>
-        </div>
-
-        <div class="step-card" id="step-card-2">
-          <div class="step-number">٢</div>
-          <div class="step-details">
-            <div class="step-title">تأكيد قراءة الوجه كاملاً</div>
-            <div class="step-desc">مراجعة وتأكيد حفظ وفهم الصفحة القرآنية الحالية</div>
-          </div>
-          <div class="step-status-icon" id="step-icon-2">🔒</div>
-        </div>
-
-        <div class="step-card" id="step-card-3">
-          <div class="step-number">٣</div>
-          <div class="step-details">
-            <div class="step-title">الأحاديث النبوية الشريفة</div>
-            <div class="step-desc">استمع للحديث المختار ثم اضغط على زر الاستيعاب للتأكيد</div>
-          </div>
-          <div class="step-status-icon" id="step-icon-3">🔒</div>
-        </div>
-      </div>
-
-      <!-- [المرحلة الأولى والثانية]: واجهة المصحف الشريف داخل القفل -->
-      <div class="quran-reader-container" id="quran-interactive-book">
-        <div class="quran-surah-title">سُورَةُ المَائِـدَةِ (صَفْحَة ١١٠)</div>
-        <div class="quran-lines-wrapper">
-          <div class="quran-text-line locked" onclick="clickQuranLine(1)" id="qline-1">يَا أَيُّهَا الَّذِينَ آمَنُوا أَوْفُوا بِالْعُقُودِ ۚ</div>
-          <div class="quran-text-line locked" onclick="clickQuranLine(2)" id="qline-2">أُحِلَّتْ لَكُم بَهِيمَةُ الْأَنْعَامِ إِلَّا مَا يُتْلَىٰ عَلَيْكُمْ</div>
-          <div class="quran-text-line locked" onclick="clickQuranLine(3)" id="qline-3">غَيْرَ مُحِلِّي الصَّيْدِ وَأَنتُمْ حُرُمٌ ۗ إِنَّ اللَّهَ يَحْكُمُ مَا يُرِيدُ</div>
-          <div class="quran-text-line locked" onclick="clickQuranLine(4)" id="qline-4">يَا أَيُّهَا الَّذِينَ آمَنُوا لَا تُحِلُّوا شَعَائِرَ اللَّهِ وَلَا الشَّهْرَ الْحَرَامَ</div>
-          <div class="quran-text-line locked" onclick="clickQuranLine(5)" id="qline-5">وَلَا الْهَدْيَ وَلَا الْقَلَائدَ وَلَا آمِّينَ الْبَيْتَ الْحَرَامَ يَبْتَغُونَ فَضْلًا مِّن رَّبِّهِمْ وَرِضْوَانًا ۚ</div>
-        </div>
-      </div>
-
-      <!-- [المرحلة الثالثة]: واجهة الأحاديث النبوية الثلاثة المنتقاة -->
-      <div class="hadith-container" id="hadith-interactive-box">
-        <div class="hadith-item-card" id="hadith-card-1">
-          <span class="hadith-badge">الحديث الأول</span>
-          <p class="hadith-content-text" id="hadith-text-1">"إنَّما الأعْمالُ بالنِّيّاتِ، وإنَّما لِكُلِّ امْرِئٍ ما نَوَى..."</p>
-          <div style="font-size:11px; color:#666; text-align:left; font-weight:600;">رواه البخاري</div>
-          <button class="hadith-check-btn" id="hadith-btn-1" onclick="confirmHadith(1)">قرأت واستوعبت الحديث الأول ✓</button>
-        </div>
-
-        <div class="hadith-item-card" id="hadith-card-2">
-          <span class="hadith-badge">الحديث الثاني</span>
-          <p class="hadith-content-text" id="hadith-text-2">"المسلمُ من سلِم المسلمونَ من لسانِهِ ويدِهِ..."</p>
-          <div style="font-size:11px; color:#666; text-align:left; font-weight:600;">رواه مسلم</div>
-          <button class="hadith-check-btn" id="hadith-btn-2" onclick="confirmHadith(2)">قرأت واستوعبت الحديث الثاني ✓</button>
-        </div>
-
-        <div class="hadith-item-card" id="hadith-card-3">
-          <span class="hadith-badge">الحديث الثالث</span>
-          <p class="hadith-content-text" id="hadith-text-3">"لا يؤمنُ أحدُكم حتى يحبَّ لأخيه ما يحبُّ لنفسِه..."</p>
-          <div style="font-size:11px; color:#666; text-align:left; font-weight:600;">رواه البخاري</div>
-          <button class="hadith-check-btn" id="hadith-btn-3" onclick="confirmHadith(3)">قرأت واستوعبت الحديث الثالث ✓</button>
-        </div>
-      </div>
-
-      <!-- زر الإجراء والتحويل التلقائي السفلي -->
-      <div class="action-box">
-        <button class="btn-gold-lock" id="quran-main-action-btn" onclick="nextQuranFlowStage()">ابدأ التلاوة التتبعية الآن 📖</button>
-      </div>
-    </div>
-
-    <!-- شاشة النجاح التام وفتح الجوال -->
-    <div class="screen" id="child-success-screen">
-      <div class="success-badge-star">🏆</div>
-      <h2 style="font-size: 26px; font-weight: 900; margin-top: 14px;">مُبارك يا بطل محمد!</h2>
-      <p style="font-size: 14px; opacity: 0.9; margin: 10px 20px 24px; line-height: 1.7;">قمت بقراءة السطور، والصفحة كاملة، والـ 3 أحاديث بنجاح.<br>تم إرسال تقرير الفخر لوالدك يوسف وتم فتح الجوال لمدة ساعتين!</p>
-      
-      <div style="background:rgba(255,255,255,0.15); padding:16px 30px; border-radius:20px; margin-bottom:30px; border:1px solid rgba(255,255,255,0.3);">
-        <div style="font-size:12px; opacity:0.8;">التقدم الحالي في الختمة</div>
-        <div style="font-size:24px; font-weight:900; color:#F0C060; margin-top:4px;">صفحة ١١١ جاهزة للمرة القادمة</div>
-      </div>
-
-      <button class="btn-primary" style="background:white; color:#006C35; font-weight:900; width:80%;" onclick="unlockDeviceCompletely()">الدخول إلى الجوال الآن 🔓</button>
     </div>
 
   </div>
@@ -827,260 +948,80 @@
 </div>
 
 <script>
-  // مصفوفة الرسائل التحفيزية
-  const dadMessages = [
-    "<b>رسالة التوجيه من الوالد:</b> الالتزام بالقراءة سطر بسطر ينمي عقلك ويبني آخرتك يا بني.",
-    "<b>رسالة التوجيه من الوالد:</b> كفو يا بطل! فخور بحرصك على وردك القرآني وهِمتك العالية اليوم.",
-    "<b>رسالة التوجيه من الوالد:</b> يا محمد، قراءتك بتدبر تنير قلبك وتجعل يومك مباركاً ومليئاً بالتوفيق.",
-    "<b>رسالة التوجيه من الوالد:</b> العلم بالتعلم والبركة بالقرآن، استعن بالله وأكمل وردك بكل شغف وتفوق.",
-    "<b>رسالة التوجيه من الوالد:</b> ما أجمل أن تبدأ وقتك بذكر الله! قرة عيني أنت بحفظك وسلوكك النبيل."
-  ];
-
-  function rotateDadMessage() {
-    const msgElement = document.getElementById('dad-motivational-text');
-    if (msgElement) {
-      const randomIndex = Math.floor(Math.random() * dadMessages.length);
-      msgElement.innerHTML = dadMessages[randomIndex];
-    }
+function showScreen(screenId) {
+  document.querySelectorAll('.screen').forEach(s => s.classList.remove('active'));
+  const targetScreen = document.getElementById(screenId);
+  if(targetScreen) {
+    targetScreen.classList.add('active');
+    const sa = targetScreen.querySelector('.scroll-area');
+    if (sa) sa.scrollTop = 0;
   }
+}
 
-  function showScreen(screenId) {
-    document.querySelectorAll('.screen').forEach(s => s.classList.remove('active'));
-    const target = document.getElementById(screenId);
-    if(target) target.classList.add('active');
+function switchSystem(systemType) {
+  document.querySelectorAll('.system-flow').forEach(flow => flow.classList.remove('active'));
+  if(systemType === 'parent') {
+    document.getElementById('flow-parent').classList.add('active');
+    showScreen('s3');
+  } else if(systemType === 'child') {
+    document.getElementById('flow-child').classList.add('active');
+    showScreen('s8');
   }
+}
 
-  function switchSystem(role) {
-    document.getElementById('flow-core').classList.remove('active');
-    document.getElementById('flow-parent').classList.remove('active');
-    document.getElementById('flow-child').classList.remove('active');
-    
-    if(role === 'parent') {
-      document.getElementById('flow-parent').classList.add('active');
-      showScreen('s3');
-    } else if(role === 'child') {
-      document.getElementById('flow-child').classList.add('active');
-      showScreen('s8');
-    }
-  }
+function exitToMainMenu() {
+  document.querySelectorAll('.system-flow').forEach(flow => flow.classList.remove('active'));
+  document.getElementById('flow-core').classList.add('active');
+  showScreen('s2');
+}
 
-  function exitToMainMenu() {
-    document.getElementById('flow-parent').classList.remove('active');
-    document.getElementById('flow-child').classList.remove('active');
-    document.getElementById('flow-core').classList.add('active');
-    showScreen('s2');
-  }
-
-  // ═══════════════════════════════════════════
-  // محرك إدارة القفل والورد الحركي والقراءة الصوتية
-  // ═══════════════════════════════════════════
-  let currentStage = 1; 
-  let currentQuranLine = 1;
-  const totalQuranLines = 5;
-  let currentHadithIndex = 1;
-  const totalHadiths = 3;
-  let isSpeaking = false; // لمتابعة حالة الصوت ومنع التخطي العشوائي بالضغط السريع
-
-  // دالة النطق الصوتي المتقدمة المخصصة للغة العربية
-  function speakText(text, callback) {
-    // إلغاء أي صوت يعمل حالياً لضمان عدم التداخل
-    window.speechSynthesis.cancel();
-    
-    const utterance = new SpeechSynthesisUtterance(text);
-    utterance.lang = 'ar-SA'; 
-    utterance.rate = 0.85; // إبطاء السرعة قليلاً ليتمكن الطفل من المتابعة والتركيز
-    utterance.pitch = 1.0;
-
-    isSpeaking = true;
-
-    utterance.onend = function() {
-      isSpeaking = false;
-      if (callback) callback();
-    };
-
-    utterance.onerror = function() {
-      isSpeaking = false;
-      if (callback) callback();
-    };
-
-    window.speechSynthesis.speak(utterance);
-  }
-
-  function triggerQuranLockFlow() {
-    currentStage = 1;
-    currentQuranLine = 1;
-    currentHadithIndex = 1;
-    isSpeaking = false;
-    window.speechSynthesis.cancel();
-    
-    document.getElementById('quran-interactive-book').style.display = 'none';
-    document.getElementById('hadith-interactive-box').style.display = 'none';
-    
-    document.getElementById('step-card-1').className = 'step-card active';
-    document.getElementById('step-card-2').className = 'step-card';
-    document.getElementById('step-card-3').className = 'step-card';
-    
-    document.getElementById('step-icon-1').innerText = '⏳';
-    document.getElementById('step-icon-2').innerText = '🔒';
-    document.getElementById('step-icon-3').innerText = '🔒';
-    
-    for(let i=1; i<=totalQuranLines; i++) {
-      let lineObj = document.getElementById(`qline-${i}`);
-      if(lineObj) {
-        lineObj.className = 'quran-text-line locked';
-      }
-    }
-    
-    for(let j=1; j<=totalHadiths; j++) {
-      let hadithCard = document.getElementById(`hadith-card-${j}`);
-      if(hadithCard) {
-        hadithCard.className = 'hadith-item-card';
-        document.getElementById(`hadith-btn-${j}`).disabled = true;
-      }
-    }
-
-    document.getElementById('quran-main-action-btn').disabled = false;
-    document.getElementById('quran-main-action-btn').innerText = 'ابدأ التلاوة التتبعية الآن 📖';
-    
-    showScreen('child-quran-lock');
-  }
-
-  function nextQuranFlowStage() {
-    if (currentStage === 1) {
-      document.getElementById('quran-interactive-book').style.display = 'block';
-      document.getElementById('quran-main-action-btn').disabled = true;
-      document.getElementById('quran-main-action-btn').innerText = 'استمع للسطر جيداً ثم اضغط عليه لتأكيده 👇';
-      
-      // تفعيل السطر الأول والبدء بقراءته فوراً
-      startReadingLine(1);
-    } 
-    else if (currentStage === 2) {
-      document.getElementById('step-card-1').className = 'step-card completed';
-      document.getElementById('step-icon-1').innerText = '✓';
-      
-      document.getElementById('step-card-2').className = 'step-card completed';
-      document.getElementById('step-icon-2').innerText = '✓';
-      
-      document.getElementById('step-card-3').className = 'step-card active';
-      document.getElementById('step-icon-3').innerText = '⏳';
-      
-      document.getElementById('quran-interactive-book').style.display = 'none';
-      document.getElementById('hadith-interactive-box').style.display = 'flex';
-      
-      currentStage = 3;
-      document.getElementById('quran-main-action-btn').disabled = true;
-      document.getElementById('quran-main-action-btn').innerText = 'استمع للحديث ثم اضغط على زر الاستيعاب';
-      
-      // بدء قراءة الحديث الأول آلياً
-      startReadingHadith(1);
-    }
-    else if (currentStage === 4) {
-      showScreen('child-success-screen');
-    }
-  }
-
-  // دالة تجهيز السطر الحالي وقراءته صوتياً مع تظليله بلون متباين
-  function startReadingLine(lineNumber) {
-    let lineObj = document.getElementById(`qline-${lineNumber}`);
-    if (!lineObj) return;
-
-    // تمييز السطر باللون المتباين المخصص للقراءة
-    lineObj.className = 'quran-text-line reading';
-    
-    // تنظيف الحركات الصعبة لتسهيل النطق الآلي الواضح
-    let textToSpeak = lineObj.innerText.replace(/[^\u0621-\u064A\s]/g, '');
-    
-    speakText(textToSpeak, () => {
-      // بعد انتهاء الصوت، يتحول السطر إلى حالة (نشط وجاهز للضغط من الطفل)
-      lineObj.className = 'quran-text-line active';
-    });
-  }
-
-  // تتبع الضغط والقراءة سطر بسطر للقرآن
-  function clickQuranLine(lineNumber) {
-    if (currentStage !== 1) return;
-    if (lineNumber !== currentQuranLine) return; 
-    
-    // إجبار الطفل: إذا كان القارئ لا يزال يتحدث، لن يُسمح له بالانتقال ويُطلب منه الاستماع
-    if (isSpeaking) {
-      let lineObj = document.getElementById(`qline-${lineNumber}`);
-      lineObj.style.transform = 'scale(0.98)';
-      setTimeout(() => lineObj.style.transform = 'scale(1.02)', 150);
-      return; 
-    }
-    
-    let currentLineObj = document.getElementById(`qline-${lineNumber}`);
-    currentLineObj.className = 'quran-text-line completed';
-    
-    if (currentQuranLine < totalQuranLines) {
-      currentQuranLine++;
-      // الانتقال للسطر التالي وقراءته صوتياً وتظليله
-      startReadingLine(currentQuranLine);
-    } else {
-      currentStage = 2;
-      document.getElementById('step-card-1').className = 'step-card completed';
-      document.getElementById('step-icon-1').innerText = '✓';
-      
-      document.getElementById('step-card-2').className = 'step-card active';
-      document.getElementById('step-icon-2').innerText = '⏳';
-      
-      document.getElementById('quran-main-action-btn').disabled = false;
-      document.getElementById('quran-main-action-btn').innerText = 'تمت السطور! اضغط لتأكيد قراءة الصفحة كاملة 🕌';
-    }
-  }
-
-  // دالة قراءة الحديث وتظليله
-  function startReadingHadith(hadithNumber) {
-    let hadithCard = document.getElementById(`hadith-card-${hadithNumber}`);
-    let hadithTextObj = document.getElementById(`hadith-text-${hadithNumber}`);
-    let hadithBtn = document.getElementById(`hadith-btn-${hadithNumber}`);
-    
-    if (!hadithCard) return;
-
-    hadithCard.className = 'hadith-item-card active reading';
-    hadithBtn.disabled = true; // تعطيل زر التأكيد حتى ينتهي الصوت تماماً
-    
-    speakText(hadithTextObj.innerText, () => {
-      hadithCard.className = 'hadith-item-card active';
-      hadithBtn.disabled = false; // تفعيل الزر للطفل ليضغط عليه الآن بعد انتهاء الاستماع
-      hadithBtn.innerText = "استمعت واستوعبت الحديث ✓";
-    });
-  }
-
-  // تتبع قراءة واستيعاب الـ 3 أحاديث النبوية
-  function confirmHadith(hadithNumber) {
-    if (currentStage !== 3) return;
-    if (hadithNumber !== currentHadithIndex) return;
-    if (isSpeaking) return; // منع الضغط السريع أثناء النطق
-    
-    let currentHadithCard = document.getElementById(`hadith-card-${hadithNumber}`);
-    currentHadithCard.className = 'hadith-item-card completed';
-    
-    if (currentHadithIndex < totalHadiths) {
-      currentHadithIndex++;
-      // تشغيل الحديث التالي صوتياً وتظليله
-      startReadingHadith(currentHadithIndex);
-    } else {
-      document.getElementById('step-card-3').className = 'step-card completed';
-      document.getElementById('step-icon-3').innerText = '✓';
-      
-      currentStage = 4;
-      document.getElementById('quran-main-action-btn').disabled = false;
-      document.getElementById('quran-main-action-btn').innerText = 'أحسنت بارك الله فيك! افتح الجوال الآن 🎉';
-      document.getElementById('hadith-interactive-box').style.display = 'none';
-    }
-  }
-
-  function unlockDeviceCompletely() {
-    window.speechSynthesis.cancel(); // إيقاف أي أصوات معلقة عند الخروج
-    showScreen('child-dashboard');
-    rotateDadMessage(); 
-  }
-
-  window.addEventListener('DOMContentLoaded', () => {
-    rotateDadMessage();
+function setupOtpAutofocus(className) {
+  document.querySelectorAll(className).forEach((box, i, boxes) => {
+    box.addEventListener('input', () => { if (box.value && i < boxes.length-1) boxes[i+1].focus(); });
+    box.addEventListener('keydown', e => { if (e.key==='Backspace' && !box.value && i>0) boxes[i-1].focus(); });
   });
-</script>
+}
+setupOtpAutofocus('.parent-otp');
+setupOtpAutofocus('.child-otp');
 
+document.querySelectorAll('.toggle').forEach(t => {
+  t.addEventListener('click', () => t.classList.toggle('off'));
+});
+
+// أيام الأسبوع — toggle
+function toggleDay(btn, dayName) {
+  // الجمعة والسبت: toggle بين إجازة وعادي
+  if(dayName === 'الجمعة' || dayName === 'السبت') {
+    btn.classList.toggle('free-day');
+    btn.classList.toggle('active');
+  } else {
+    btn.classList.toggle('active');
+  }
+  updateSummary();
+}
+
+// تحديث ملخص الجدول
+function updateSummary() {
+  const lockSel  = document.getElementById('lock-time');
+  const unlockSel = document.getElementById('unlock-time');
+  if(!lockSel || !unlockSel) return;
+
+  const lockText   = lockSel.options[lockSel.selectedIndex].text;
+  const unlockText = unlockSel.options[unlockSel.selectedIndex].text;
+
+  const allBtns = document.querySelectorAll('.day-btn');
+  const restricted = [], free = [];
+  const names = ['الأحد','الاثنين','الثلاثاء','الأربعاء','الخميس','الجمعة','السبت'];
+  allBtns.forEach((btn, i) => {
+    if(btn.classList.contains('free-day')) free.push(names[i]);
+    else if(btn.classList.contains('active')) restricted.push(names[i]);
+  });
+
+  document.getElementById('sum-lock').textContent   = lockText;
+  document.getElementById('sum-unlock').textContent = unlockText;
+  document.getElementById('sum-days').textContent   = restricted.length ? restricted.join('، ') : 'لا يوجد';
+  document.getElementById('sum-free').textContent   = free.length ? free.join('، ') : 'لا يوجد';
+}
+</script>
 </body>
 </html>
